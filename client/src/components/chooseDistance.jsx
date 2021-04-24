@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 const ChooseDistance = (props) => {
   const {style} = props;
-  const {chooseRadio, chooseTitle, customDistance} = style;
+  const {chooseRadio, chooseTitle, chooseDistance, customDistance} = style;
 
   if (props.sport === 'Swim') {
     return (

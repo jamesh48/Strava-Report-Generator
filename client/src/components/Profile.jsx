@@ -1,5 +1,5 @@
 // import parse from 'html-react-parser';
-
+import React from 'react';
 const Profile = (props) => {
   if (Object.keys(props.profile).length === 0) {
     return null

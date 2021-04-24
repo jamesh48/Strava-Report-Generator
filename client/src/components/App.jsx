@@ -42,6 +42,7 @@ export default class App extends React.Component {
   };
 
   authorize = (props) => {
+    console.log('authorizing')
     window.open(`https://www.strava.com/oauth/authorize?client_id=${61039}&response_type=code&redirect_uri=http://localhost:8000/exchange_token&approval_prompt=force&scope=activity:read_all`)
   }
 
@@ -54,6 +55,7 @@ export default class App extends React.Component {
 
     return axios(config)
       .then((loggedInUser) => {
+        console.log(loggedInUser);
         callback(loggedInUser.data)
       })
       .catch((error) => {
@@ -61,6 +63,7 @@ export default class App extends React.Component {
           console.log(`Error ${error.status}: ${error.statusText}`);
           callback(this.props.profileTestData);
         } else {
+          console.log('time to authorize!')
           console.log(`Error ${error.status}: ${error.statusText}`);
           this.authorize();
         }
@@ -85,7 +88,6 @@ export default class App extends React.Component {
     return axios(config)
       .then((userEntries) => {
         clearInterval(moveProgressBar)
-        updateProgressBar('end');
         callback(userEntries.data);
       })
       .catch((err) => {
@@ -180,7 +182,7 @@ export default class App extends React.Component {
       return {
         isLoaded: true,
         totalEntries: report,
-        // entries: report.filter((entry) => entry.type === 'Run')
+        entries: report.filter((entry) => entry.type === 'Run')
       }
     }
     );
