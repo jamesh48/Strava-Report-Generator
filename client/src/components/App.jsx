@@ -5,7 +5,6 @@ import '../App.css';
 import Report from './Report.jsx';
 import Buttons from './Buttons.jsx';
 import Profile from './Profile.jsx';
-import Entry from './Entry.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ export default class App extends React.Component {
     this.updateReport = this.updateReport.bind(this);
     this.showUserProfile = this.showUserProfile.bind(this);
     this.updateProgressBar = this.updateProgressBar.bind(this);
-    this.renderEmpty = this.renderEmpty.bind(this);
     this.showIndividualEntry = this.showIndividualEntry.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setSport = this.setSport.bind(this);
@@ -183,33 +181,10 @@ export default class App extends React.Component {
     this.updateReport(results);
   }
 
-  // This Function is called inside of render so don't set state!
-  renderEmpty() {
-    return (
-      <li className={this.props.styles.innerEntry}>
-        <h4 className={this.props.styles.entryTitle} id='no-entries-found'>~No Entries Found~</h4>
-        <p id={this.props.styles.champ}>But keep up the Good Work Champ!</p>
-      </li>
-    )
-  }
-
   render() {
     const { currentActivity, entries, currentPage, entriesPerPage, profile, checked, progressBarProgress, sport, distance, format, invalidEntry, isLoaded } = this.state;
-    const { handleClick, updateReport, setSport, setDistance, setFormat, updateProgressBar, renderEmpty, renderPageNumbers } = this;
+    const { handleClick, updateReport, setSport, setDistance, setFormat, updateProgressBar, showIndividualEntry } = this;
     const { styles } = this.props;
-
-    // https://stackoverflow.com/questions/40232847/how-to-implement-pagination-in-reactjs
-    const currentEntries = entries.slice(((currentPage * entriesPerPage) - entriesPerPage), (currentPage * entriesPerPage))
-
-    const renderEntries = currentEntries.map((entry, index) => {
-
-      if (currentPage === 1 && (index >= 0 && index <= 3)) {
-        return <li key={index}><Entry style={styles} currentActivity={currentActivity} showIndividualEntry={this.showIndividualEntry} no={index} sport={sport} entry={entry} format={format} /></li>
-      } else {
-        return <li className='entry' key={index}><Entry style={styles} currentActivity={currentActivity} showIndividualEntry={this.showIndividualEntry} sport={sport} entry={entry} format={format} /></li>
-      }
-
-    })
 
     return (
       <div id='body' >
@@ -217,7 +192,7 @@ export default class App extends React.Component {
           <Profile style={styles} profile={profile} />
           <Buttons style={styles} setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
         </div>
-        <Report handleClick={handleClick} style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentEntries={currentEntries} currentPage={currentPage} entries={entries} entriesPerPage={entriesPerPage} renderEmpty={renderEmpty} renderEntries={renderEntries} />
+        <Report sport={sport} format={format} entries={entries} handleClick={handleClick} style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentActivity={currentActivity}  currentPage={currentPage} entries={entries} entriesPerPage={entriesPerPage} showIndividualEntry ={showIndividualEntry} />
       </div>
 
     )

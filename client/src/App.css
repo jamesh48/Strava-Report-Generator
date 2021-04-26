@@ -168,7 +168,7 @@ body {
   color: ivory;
 }
 
-#no-entries-found {
+#noEntriesFound {
   padding-bottom: 0px;
 }
 
@@ -190,7 +190,7 @@ body {
   color: orangered;
 }
 
-.ytd-TotalsTitle {
+.ytdTotalsTitle {
   text-decoration: underline;
   color: orangered;
 }
@@ -269,6 +269,4 @@ body {
   background-color: coral;
   border-radius: 50px;
   margin: 1% 2.5% 1% 2.5%;
-
 }
-/* -Progress Bar- */
