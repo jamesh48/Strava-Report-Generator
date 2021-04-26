@@ -46,61 +46,53 @@ export default class App extends React.Component {
     window.open(`https://www.strava.com/oauth/authorize?client_id=${61039}&response_type=code&redirect_uri=http://localhost:8000/exchange_token&approval_prompt=force&scope=activity:read_all`)
   }
 
-  getLoggedInUser = (callback) => {
-    const config = {
-      'method': 'GET',
-      'url': 'http://localhost:8000/getLoggedInUser',
-      // 'url': 'https://aqueous-fjord-59533.herokuapp.com/getLoggedInUser',
+  getLoggedInUser = async (callback) => {
+    try {
+      const loggedInUser = await axios(`http://localhost:8000/getLoggedInUser`);
+      return loggedInUser.data;
+    } catch (err) {
+      this.authorize();
     }
 
-    return axios(config)
-      .then((loggedInUser) => {
-        console.log(loggedInUser);
-        callback(loggedInUser.data)
-      })
-      .catch((error) => {
-        if (error.status === 429) {
-          console.log(`Error ${error.status}: ${error.statusText}`);
-          callback(this.props.profileTestData);
-        } else {
-          console.log('time to authorize!')
-          console.log(`Error ${error.status}: ${error.statusText}`);
-          this.authorize();
-        }
-      })
+    // return axios(config)
+    //   .then((loggedInUser) => {
+    //     console.log(loggedInUser);
+    //     callback(loggedInUser.data)
+    //   })
+    //   .catch((error) => {
+    //     if (error.status === 429) {
+    //       console.log(`Error ${error.status}: ${error.statusText}`);
+    //       callback(this.props.profileTestData);
+    //     } else {
+    //       console.log('time to authorize!')
+    //       console.log(`Error ${error.status}: ${error.statusText}`);
+    //       this.authorize();
+    //     }
+    //   })
   }
 
-  getUserActivities = (updateProgressBar, callback) => {
-    // callback(testData)
+  getUserActivities = async (updateProgressBar) => {
     const moveProgressBar = setInterval(() => {
-      var test = updateProgressBar()
+      var test = this.updateProgressBar()
       if (test === true) {
         clearInterval(moveProgressBar);
       }
     }, 90);
 
-    const config = {
-      'method': 'GET',
-      url: 'http://127.0.0.1:8000/getResults',
-      // url: 'https://aqueous-fjord-59533.herokuapp.com/getResults',
-    }
-
-    return axios(config)
-      .then((userEntries) => {
-        clearInterval(moveProgressBar)
-        callback(userEntries.data);
-      })
-      .catch((err) => {
+    try {
+      const userEntries = await axios(`http://127.0.0.1:8000/getResults`);
+      await clearInterval(moveProgressBar);
+      await this.updateProgressBar('end')
+      setTimeout(() => {
+        this.updateProgressBar(null, 'reset');
+      }, 400)
+      return userEntries.data;
+    } catch(err) {
         clearInterval(moveProgressBar);
-        updateProgressBar('end');
-        callback(this.props.testData);
+        this.updateProgressBar('end');
+        // callback(this.props.testData);
         console.log(err.statusText);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          updateProgressBar(null, 'reset');
-        }, 400)
-      })
+    }
   }
 
   handleClick = ({ target: { id } }) => {
@@ -209,14 +201,19 @@ export default class App extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     document.title = 'Strava Report Generator';
-    this.getLoggedInUser((user) => {
-      this.showUserProfile(user);
-      this.getUserActivities(this.updateProgressBar, (results) => {
-        this.updateReport(results);
-      });
-    });
+    const user = await this.getLoggedInUser();
+    this.showUserProfile(user);
+    const results = await this.getUserActivities(this.updateProgressBar);
+    this.updateReport(results);
+
+    // this.getLoggedInUser((user) => {
+    //   this.showUserProfile(user);
+    //   this.getUserActivities(this.updateProgressBar, (results) => {
+    //     this.updateReport(results);
+    //   });
+    // });
   }
 
   // This Function is called inside of render so don't set state!
@@ -263,7 +260,7 @@ export default class App extends React.Component {
   render() {
     const { currentActivity, entries, currentPage, entriesPerPage, profile, checked, progressBarProgress, sport, distance, format, invalidEntry, isLoaded } = this.state;
     const { updateReport, setSport, setDistance, setFormat, updateProgressBar, renderEmpty, renderPageNumbers } = this;
-    const {styles} = this.props;
+    const { styles } = this.props;
 
     // https://stackoverflow.com/questions/40232847/how-to-implement-pagination-in-reactjs
     const currentEntries = entries.slice(((currentPage * entriesPerPage) - entriesPerPage), (currentPage * entriesPerPage))
@@ -282,7 +279,7 @@ export default class App extends React.Component {
       <div id='body' >
         <div id={this.props.styles.upperSection}>
           <Profile profile={profile} />
-          <Buttons style={styles}  setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
+          <Buttons style={styles} setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
         </div>
         <Report style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentEntries={currentEntries} renderEmpty={renderEmpty} renderPageNumbers={renderPageNumbers} renderEntries={renderEntries} />
       </div>

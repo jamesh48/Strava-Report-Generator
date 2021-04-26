@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ProgressBar = (props) => {
+  const { styleX } = props;
+  const {progressBarContainer} = styleX;
 
   const fillerStyles = {
     width: `${props.completed}%`,
@@ -17,14 +19,14 @@ const ProgressBar = (props) => {
     fontWeight: 'bold'
   }
 
-return props.completed === 0 ? <div><br/><br/></div> :
- (
-    <div id='progress-bar-container'>
-      <div style={fillerStyles}>
-        <span style={labelStyles}>{`${props.completed}%`}</span>
+  return props.completed === 0 ? <div><br /><br /></div> :
+    (
+      <div id={progressBarContainer}>
+        <div style={fillerStyles}>
+          <span style={labelStyles}>{`${props.completed}%`}</span>
+        </div>
       </div>
-    </div>
-  )
+    )
 }
 
 export default ProgressBar;

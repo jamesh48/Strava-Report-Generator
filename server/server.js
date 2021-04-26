@@ -79,7 +79,6 @@ router.get('/getResults', (req, res, next) => {
             } else {
               var totalEntries = data.concat(secondData);
               totalEntries = totalEntries.sort((a, b) => (b.distance / b.moving_time) - (a.distance / a.moving_time));
-              console.log(totalEntries)
               res.status(200).send(totalEntries);
             }
           }, config);
@@ -116,12 +115,10 @@ router.get('/getResults', (req, res, next) => {
 // });
 
 router.get('/getLoggedInUser', (req, res, next) => {
-  console.log('hello!')
   fs.readFile('./server/storage.txt', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('DATA-> ' + data)
       const config = {
         method: 'GET',
         url: 'https://www.strava.com/api/v3/athlete',
@@ -134,7 +131,6 @@ router.get('/getLoggedInUser', (req, res, next) => {
 
       return axios(config)
         .then((athlete) => {
-          console.log(athlete)
           const statsConfig = {
             method: 'GET',
             url: `https://www.strava.com/api/v3/athletes/${athlete.data.id}/stats/`,
@@ -200,7 +196,6 @@ router.get('/individualEntry', (req, res, next) => {
         console.log(err);
         res.status(400).send(err);
       } else {
-        console.log(entry.data);
         res.status(200).send(entry)
       }
     }, config)

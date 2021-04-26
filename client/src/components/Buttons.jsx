@@ -17,7 +17,7 @@ const Buttons = (props) => {
           <ChooseDistance distance={props.distance} sport={props.sport} setDistance={props.setDistance}  checked={props.checked} style={style}/>
           <ChooseFormat format={props.format} sport={props.sport} setFormat={props.setFormat} style={style}/>
         </div>
-        <ProgressBar completed={props.progressBarProgress} style={style}/>
+        <ProgressBar completed={props.progressBarProgress} styleX={style}/>
       </div>
     </div>
   );
