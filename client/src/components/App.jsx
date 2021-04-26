@@ -5,7 +5,7 @@ import '../App.css';
 import Report from './Report.jsx';
 import Buttons from './Buttons.jsx';
 import Profile from './Profile.jsx';
-import Entry from './entry.jsx';
+import Entry from './Entry.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +17,6 @@ export default class App extends React.Component {
     this.showUserProfile = this.showUserProfile.bind(this);
     this.updateProgressBar = this.updateProgressBar.bind(this);
     this.renderEmpty = this.renderEmpty.bind(this);
-    this.renderPageNumbers = this.renderPageNumbers.bind(this);
     this.showIndividualEntry = this.showIndividualEntry.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setSport = this.setSport.bind(this);
@@ -75,7 +74,7 @@ export default class App extends React.Component {
       clearInterval(moveProgressBar);
       this.updateProgressBar('end');
       // callback(this.props.testData);
-      console.log(err.statusText);
+      console.log(err);
     }
   }
 
@@ -101,6 +100,7 @@ export default class App extends React.Component {
   }
 
   showIndividualEntry = async ({ target: { dataset: { testid } } }) => {
+    event.preventDefault();
     try {
       const individualEntryResponse = await axios('http://localhost:8000/individualEntry', { params: { 'entryid': testid } });
       this.setState({ currentActivity: individualEntryResponse.data });
@@ -191,19 +191,6 @@ export default class App extends React.Component {
         <p id={this.props.styles.champ}>But keep up the Good Work Champ!</p>
       </li>
     )
-  }
-
-  // This Function is called inside of render so don't set state!
-  renderPageNumbers() {
-    const { entries, currentPage, entriesPerPage } = this.state;
-
-    return [...new Array(Math.ceil(entries.length / entriesPerPage))].map((x, index) => {
-      return (index + 1);
-    }).map(number => {
-      return (
-        <PageNo key={number} styleX={this.props.styles} number={number} page={this.state.currentPage} handleClick={this.handleClick} />
-      )
-    });
   }
 
   render() {

@@ -16,7 +16,7 @@ h4 {
   border-right: none;
 }
 
-#activity-photo {
+#activityPhoto {
   height: 150px;
 }
 
@@ -46,16 +46,16 @@ body {
   color: ivory;
 } */
 
-.detailed-entry {
+.detailedEntry {
   background-color: coral;
   border: 2px solid orangered;
 }
 
-.general-entry > p, .detailed-entry > p {
+.generalEntry > p, .detailedEntry > p {
   padding-left: 1.5%;
 }
 
-.general-entry {
+.generalEntry {
   padding: 10px;
 }
 
@@ -146,11 +146,11 @@ body {
   color: ivory;
 }
 
-.special-entry > a {
+.specialEntry > a {
   color: ivory;
   padding-left: 5px;
 }
-.special-entry > a:hover {
+.specialEntry > a:hover {
   color: blue;
 }
 
@@ -207,18 +207,18 @@ body {
   margin-left: 5%
 }
 
-#fun-stats {
+#funStats {
   display: grid;
   margin-left: 2.5%;
   grid-template-columns: 14% 20.5% 17.5% 2% auto;
   grid-template-rows: auto;
 }
 
-#top-activity-gear {
+#topActivityGear {
   margin-left: 1.5%;
 }
 
-#golden-heart-rate, #kudos, #trophy-case {
+#goldenHeartRate, #kudosX, #trophyCase {
   display: grid;
   grid-template-columns: 60px auto;
   grid-template-rows: 25px 25px;
@@ -227,35 +227,35 @@ body {
   "photo mhr";
 }
 
-#heart-rate-img, #kudos-img, #trophy-img {
+#heartRateImg, #kudosImg, #trophyImg {
   height: 50px;
   width: 50px;
   grid-area: photo;
 }
 
-#max-heart-rate, #comment-count, #empty-count {
+#maxHeartRate, #commentCount, #emptyCount {
   grid-area: mhr;
 }
 
-#avg-heart-rate, #kudos-count, #achievement-count {
+#avgHeartRate, #kudosCount, #achievementCount {
   grid-area: ahr;
 }
 
-#top-activity-description {
+.topActivityDescription {
   margin-left: 1%;
   margin-bottom: 1%;
 }
 
 
 
-#top-activity-description > h4, #top-activity-description > p, .kudos, .heart-rate, .achievements, #top-activity-gear {
+.topActivityDescription > h4, .topActivityDescription > p, .kudos, .heartRate, .achievements, #topActivityGear {
  color: ivory;
 }
 
-.heart-rate, .kudos, .achievements {
+.heartRate, .kudos, .achievements {
   margin: 0;
 }
-.heart-rate, .heart-rate > p, .kudos, .kudos > p, .achievements, .achievements > p {
+.heartRate, .heartRate > p, .kudos, .kudos > p, .achievements, .achievements > p {
   display: inline-block;
 }
 

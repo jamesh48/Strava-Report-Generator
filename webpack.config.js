@@ -53,30 +53,12 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
-        include: `${SRC_DIR}/fonts`,
-        loader: "file-loader",
-        options: {
-          name: '[name].[ext]',
-          outputPath: '/fonts',
-        },
-      },
-      {
-        test: /\.(webp|svg)$/,
+        test: /\.(png|jpeg)$/,
         include: `${SRC_DIR}/images`,
         loader: "file-loader",
         options: {
           name: '[name].[ext]',
-          outputPath: '/images',
-        },
-      },
-      {
-        test: /\.(webp|svg)$/,
-        include: `${SRC_DIR}/images/flagIcons`,
-        loader: "file-loader",
-        options: {
-          name: '[name].[ext]',
-          outputPath: '/images/flagIcons',
+          outputPath: `/images`,
         },
       },
       {

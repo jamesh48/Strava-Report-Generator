@@ -6,9 +6,7 @@ export default (props) => {
   const { pageNoUls } = style;
 
   const renderPageNumbers = () => {
-    // const { entries, currentPage, entriesPerPage } = this.state;
-    console.log(entries.length, entriesPerPage);
-    return [...new Array(Math.ceil(entries.length / entriesPerPage) || 0)].map((x, index) => {
+    return [...new Array(Math.ceil(entries.length / entriesPerPage))].map((x, index) => {
       return (index + 1);
     }).map(number => {
       return (
