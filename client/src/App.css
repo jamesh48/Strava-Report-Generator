@@ -12,7 +12,7 @@ h4 {
   margin-bottom: 6px;
 }
 
-#user-img {
+#userImg {
   border-right: none;
 }
 
@@ -21,7 +21,7 @@ h4 {
 }
 
 
-ul, #user-profile, .form-buttons {
+ul, #userProfile, .form-buttons {
  margin: 0 2.5% 0 2.5%;
 }
 
@@ -59,7 +59,7 @@ body {
   padding: 10px;
 }
 
-.page-no-uls, .entryUls {
+.pageNoUls, .entryUls {
   list-style-type: none;
   margin-bottom: 1%;
 }
@@ -69,7 +69,7 @@ body {
   box-shadow: 0 0 10px coral;
 }
 
-.pagenos {
+.pageNos {
   display: inline-block;
   border: 1px solid coral;
   padding: 5px 10px 5px 10px;
@@ -77,7 +77,7 @@ body {
   margin-top: 5px;
 }
 
-.pagenos:hover {
+.pageNos:hover {
   cursor: pointer;
   background-color: coral;
 }
@@ -94,7 +94,7 @@ body {
   padding-left: 12.5px;
 }
 
-#user-profile {
+#userProfile {
   display: grid;
   grid-template-columns: 10% 20% auto auto;
   margin-top: .5%;
@@ -133,7 +133,7 @@ body {
   box-shadow: 2.5px 2.5px 5px 0px orangered;
 }
 
-#user-info {
+#userInfo {
   /* background-color: lime; */
 
   color: orangered;
@@ -178,7 +178,7 @@ body {
   padding-bottom: 10px;
 }
 
-.ytd-totals {
+.ytdTotals {
   background-color: turquoise;
   border-left: none;
   display: inline-block;
@@ -190,7 +190,7 @@ body {
   color: orangered;
 }
 
-.ytd-totals-title {
+.ytd-TotalsTitle {
   text-decoration: underline;
   color: orangered;
 }

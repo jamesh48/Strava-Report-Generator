@@ -53,22 +53,6 @@ export default class App extends React.Component {
     } catch (err) {
       this.authorize();
     }
-
-    // return axios(config)
-    //   .then((loggedInUser) => {
-    //     console.log(loggedInUser);
-    //     callback(loggedInUser.data)
-    //   })
-    //   .catch((error) => {
-    //     if (error.status === 429) {
-    //       console.log(`Error ${error.status}: ${error.statusText}`);
-    //       callback(this.props.profileTestData);
-    //     } else {
-    //       console.log('time to authorize!')
-    //       console.log(`Error ${error.status}: ${error.statusText}`);
-    //       this.authorize();
-    //     }
-    //   })
   }
 
   getUserActivities = async (updateProgressBar) => {
@@ -87,11 +71,11 @@ export default class App extends React.Component {
         this.updateProgressBar(null, 'reset');
       }, 400)
       return userEntries.data;
-    } catch(err) {
-        clearInterval(moveProgressBar);
-        this.updateProgressBar('end');
-        // callback(this.props.testData);
-        console.log(err.statusText);
+    } catch (err) {
+      clearInterval(moveProgressBar);
+      this.updateProgressBar('end');
+      // callback(this.props.testData);
+      console.log(err.statusText);
     }
   }
 
@@ -116,24 +100,14 @@ export default class App extends React.Component {
     });
   }
 
-  showIndividualEntry = ({ target: { dataset: { testid } } }) => {
-    var config = {
-      'method': 'GET',
-      'url': 'http://localhost:8000/individualEntry',
-      // url: 'https://aqueous-fjord-59533.herokuapp.com/individualEntry',
-      'contentType': 'application/json',
-      params: {
-        'entryid': testid
-      }
+  showIndividualEntry = async ({ target: { dataset: { testid } } }) => {
+    try {
+      const individualEntryResponse = await axios('http://localhost:8000/individualEntry', { params: { 'entryid': testid } });
+      this.setState({ currentActivity: individualEntryResponse.data });
+      return individualEntryResponse;
+    } catch (err) {
+      console.log(err);
     }
-
-    return axios(config)
-      .then((response) => {
-        this.setState({ currentActivity: response.data });
-      })
-      .catch((err) => {
-        console.log(err)
-      })
   }
 
 
@@ -207,13 +181,6 @@ export default class App extends React.Component {
     this.showUserProfile(user);
     const results = await this.getUserActivities(this.updateProgressBar);
     this.updateReport(results);
-
-    // this.getLoggedInUser((user) => {
-    //   this.showUserProfile(user);
-    //   this.getUserActivities(this.updateProgressBar, (results) => {
-    //     this.updateReport(results);
-    //   });
-    // });
   }
 
   // This Function is called inside of render so don't set state!
@@ -228,38 +195,20 @@ export default class App extends React.Component {
 
   // This Function is called inside of render so don't set state!
   renderPageNumbers() {
-    const { entries, currentPage, entriesPerPage, sport, distance } = this.state;
-    const pageNumbers = [];
+    const { entries, currentPage, entriesPerPage } = this.state;
 
-    for (let i = 1; i <= Math.ceil(entries.length / entriesPerPage); i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers.map(number => {
-      const style = {
-        backgroundColor: 'coral'
-      }
-
+    return [...new Array(Math.ceil(entries.length / entriesPerPage))].map((x, index) => {
+      return (index + 1);
+    }).map(number => {
       return (
-        <li
-          key={number}
-          id={number}
-          style={Number(this.state.currentPage) === number ? style : null}
-          onClick={this.handleClick}
-          className='pagenos'
-        >
-          {number}
-        </li>
+        <PageNo key={number} styleX={this.props.styles} number={number} page={this.state.currentPage} handleClick={this.handleClick} />
       )
     });
   }
 
-
-
-
   render() {
     const { currentActivity, entries, currentPage, entriesPerPage, profile, checked, progressBarProgress, sport, distance, format, invalidEntry, isLoaded } = this.state;
-    const { updateReport, setSport, setDistance, setFormat, updateProgressBar, renderEmpty, renderPageNumbers } = this;
+    const { handleClick, updateReport, setSport, setDistance, setFormat, updateProgressBar, renderEmpty, renderPageNumbers } = this;
     const { styles } = this.props;
 
     // https://stackoverflow.com/questions/40232847/how-to-implement-pagination-in-reactjs
@@ -278,10 +227,10 @@ export default class App extends React.Component {
     return (
       <div id='body' >
         <div id={this.props.styles.upperSection}>
-          <Profile profile={profile} />
+          <Profile style={styles} profile={profile} />
           <Buttons style={styles} setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
         </div>
-        <Report style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentEntries={currentEntries} renderEmpty={renderEmpty} renderPageNumbers={renderPageNumbers} renderEntries={renderEntries} />
+        <Report handleClick={handleClick} style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentEntries={currentEntries} currentPage={currentPage} entries={entries} entriesPerPage={entriesPerPage} renderEmpty={renderEmpty} renderEntries={renderEntries} />
       </div>
 
     )
