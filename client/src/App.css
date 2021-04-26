@@ -82,7 +82,7 @@ body {
   background-color: coral;
 }
 
-#choose-sport, #chooseDistance, #choose-format {
+#chooseSport, #chooseDistance, #chooseFormat {
   /* text-decoration: underline; */
   margin-bottom: .5%;
   padding-bottom: 0;
