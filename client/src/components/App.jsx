@@ -3,8 +3,8 @@ const axios = require('axios');
 
 import '../App.css';
 import Report from './Report.jsx';
-import Buttons from './Buttons.jsx';
-import Profile from './Profile.jsx';
+import Buttons from './Buttons/Buttons.jsx';
+import Profile from './UserProfile/Profile.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -110,10 +110,10 @@ export default class App extends React.Component {
 
 
 
-  setDistance = ({ target: { value } }, checked) => {
+  setDistance = ({ target: { value, placeholder } }) => {
     if (typeof Number(value) !== 'number') {
       this.setState({ invalidEntry: true });
-    } else if (checked) {
+    } else if (placeholder === 'Custom Distance' && Number(value) !== 0) {
       this.setState((prevState, props) => {
         return {
           currentPage: 1,
@@ -185,14 +185,15 @@ export default class App extends React.Component {
     const { currentActivity, entries, currentPage, entriesPerPage, profile, checked, progressBarProgress, sport, distance, format, invalidEntry, isLoaded } = this.state;
     const { handleClick, updateReport, setSport, setDistance, setFormat, updateProgressBar, showIndividualEntry } = this;
     const { styles } = this.props;
+    const { upperSection } = styles;
 
     return (
       <div id='body' >
-        <div id={this.props.styles.upperSection}>
+        <div id={upperSection}>
           <Profile style={styles} profile={profile} />
-          <Buttons style={styles} setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
+          <Buttons style={styles} isLoaded={isLoaded} setSport={setSport} updateReport={updateReport} sport={sport} checked={checked} updateProgressBar={updateProgressBar} progressBarProgress={progressBarProgress} distance={distance} setDistance={setDistance} setFormat={setFormat} format={format} />
         </div>
-        <Report sport={sport} format={format} entries={entries} handleClick={handleClick} style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentActivity={currentActivity}  currentPage={currentPage} entries={entries} entriesPerPage={entriesPerPage} showIndividualEntry ={showIndividualEntry} />
+        <Report sport={sport} format={format} entries={entries} handleClick={handleClick} style={styles} invalidEntry={invalidEntry} isLoaded={isLoaded} progressBarProgress={progressBarProgress} currentActivity={currentActivity} currentPage={currentPage} entries={entries} entriesPerPage={entriesPerPage} showIndividualEntry={showIndividualEntry} />
       </div>
 
     )
