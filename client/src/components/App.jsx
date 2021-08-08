@@ -2,6 +2,7 @@ import React from 'react';
 const axios = require('axios');
 
 import '../App.css';
+import '../images/favicon.png';
 import Report from './Report.jsx';
 import Buttons from './Buttons/Buttons.jsx';
 import Profile from './UserProfile/Profile.jsx';
@@ -71,7 +72,7 @@ export default class App extends React.Component {
     } catch (err) {
       clearInterval(moveProgressBar);
       this.updateProgressBar('end');
-      // callback(this.props.testData);
+      callback(this.props.testData);
       console.log(err);
     }
   }
@@ -143,6 +144,7 @@ export default class App extends React.Component {
 
   updateReport(report) {
     this.setState((prevState, props) => {
+      console.log(report)
       return {
         isLoaded: true,
         totalEntries: report,
@@ -156,7 +158,7 @@ export default class App extends React.Component {
     this.setState({ profile: userProfile })
   }
 
-  updateProgressBar(end, reset) {
+  updateProgressBar = (end, reset) => {
     if (end) {
       this.setState({ progressBarProgress: 100 })
     } else if (this.state.progressBarProgress === 95) {
@@ -180,6 +182,13 @@ export default class App extends React.Component {
     const results = await this.getUserActivities(this.updateProgressBar);
     this.updateReport(results);
   }
+
+  // componentDidMount() {
+  //   document.title = 'Test Report Generator';
+  //   const user = this.props.profileTestData;
+  //   const results = this.props.testData;
+  //   this.updateReport(results);
+  // }
 
   render() {
     const { currentActivity, entries, currentPage, entriesPerPage, profile, checked, progressBarProgress, sport, distance, format, invalidEntry, isLoaded } = this.state;

@@ -23,6 +23,7 @@ const router = express.Router();
 const cors = require('cors');
 // const cookieParser = require('cookie-parser');
 const path = require('path');
+const addAllActivities = require('../database/controllers.js').addAllActivities;
 // const auth = require('./storage.txt')
 const returnStravaResults = require('./getStravaResults').returnStravaResults;
 let port = process.env.PORT;
@@ -44,6 +45,10 @@ router.use((req, res, next) => {
   next();
 })
 
+router.get('/test', async (req, res) => {
+  const test = await addAllActivities();
+  res.send('ok');
+})
 router.get('/', (req, res) => {
   res.status(200).end();
 })
@@ -159,8 +164,8 @@ router.get('/getLoggedInUser', (req, res, next) => {
 router.get('/exchange_token', (req, res, next) => {
   const authCodeFromStrava = req.query.code;
   return axios.post(`https://www.strava.com/oauth/token`, {
-    client_id: process.env.userId || 61039,
-    client_secret: process.env.client_secret || '6fc05c73bd3bff4203650315ed04e90683b96677',
+    client_id: process.env.userId,
+    client_secret: process.env.client_secret,
     code: authCodeFromStrava,
     grant_type: 'authorization_code'
   })

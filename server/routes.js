@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const addActivity = require('../database/controllers.js').addActivity;
 
 
 router.get('/', (req, res) => {
