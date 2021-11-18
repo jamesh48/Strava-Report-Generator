@@ -1,3 +1,8 @@
 node_modules
 .env
-database/config
+database/configx
+Login_Scripts
+src/server/storage.txt
+database/testData
+oauth2instructions.txt
+.DS_Store

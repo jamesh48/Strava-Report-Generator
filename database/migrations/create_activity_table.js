@@ -1,30 +1,3 @@
-// activity_name
-// distance
-// elasped_time
-// moving_time
-// total_elevation_gain
-// type
-
-// start_date
-
-// location_city
-// location_state
-// location_country
-
-// acheievement_count
-
-// kudos_count
-// comment_count
-
-// avg_speed
-// max_speed
-// avg_hr
-// max_hr
-// elev_high
-// elev_low
-
-// pr_count
-
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
