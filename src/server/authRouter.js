@@ -1,8 +1,8 @@
-require("dotenv").config();
+require("dotenv").config({ path: "configs/dotenv/.env" });
+const path = require("path");
 const express = require("express");
 const authRouter = express();
 const axios = require("axios");
-const path = require("path");
 const { upsertAccessToken, upsertRefreshToken } = require(path.resolve(
   "database/controllers"
 ));
@@ -27,13 +27,13 @@ authRouter.get(
         expires_in,
         refresh_token,
         access_token,
-        athlete: { id: athleteId, username },
-      },
+        athlete: { id: athleteId, username }
+      }
     } = await axios.post(`https://www.strava.com/oauth/token`, {
       client_id: process.env.USER_ID,
       client_secret: process.env.CLIENT_SECRET,
       code: authCodeFromStrava,
-      grant_type: "authorization_code",
+      grant_type: "authorization_code"
     });
 
     // Save in Express Session
@@ -51,17 +51,21 @@ authRouter.get(
       readScope: true,
       readAllScope: readAllScope,
       // expires at is in seconds, sequelize requires ms
-      expiresAt: expires_at * 1000,
+      expiresAt: expires_at * 1000
     });
 
     await upsertRefreshToken({
       athleteId: athleteId,
       refreshToken: refresh_token,
       readScope: true,
-      readAllScope: readAllScope,
+      readAllScope: readAllScope
     });
 
-    res.redirect("http://ec2-3-135-119-109.us-east-2.compute.amazonaws.com");
+    res.redirect(
+      process.env.NODE_ENV
+        ? "http://localhost:8000"
+        : "https://stravareportgenerator.app"
+    );
   }
 );
 

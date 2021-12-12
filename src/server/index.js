@@ -22,7 +22,7 @@ const { getStravaResults, getCurrCredentials } = require("./serverUtils");
 
 app.use(
   cors({
-    origin: "http://ec2-3-135-119-109.us-east-2.compute.amazonaws.com/",
+    origin: process.env.NODE_ENV ? "http://localhost:8000" :"https://www.stravareportgenerator.app",
     credentials: true
   })
 );
