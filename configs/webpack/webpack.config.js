@@ -21,7 +21,7 @@ const clientConfig = {
       ),
       StravaEntries: rootPath("src/client/components/StravaEntries"),
       StaticImages: rootPath("src/client/images"),
-      GlobalStore: rootPath("src/client/components/GlobalStore/GlobalStore.js")
+      GlobalStore: rootPath("src/client/components/GlobalStore/globalStore.js")
     }
   },
   plugins: [
