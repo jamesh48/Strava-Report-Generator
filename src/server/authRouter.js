@@ -36,10 +36,6 @@ authRouter.get(
       grant_type: "authorization_code"
     });
 
-    // Save in Express Session
-    session.athleteId = athleteId;
-    session.save(() => {});
-
     const authBearer = `${token_type} ${access_token}`;
     const scopes = scope.split(",");
     const readAllScope = !!scopes.indexOf("activity:read_all");
@@ -61,11 +57,13 @@ authRouter.get(
       readAllScope: readAllScope
     });
 
-    res.redirect(
-      process.env.NODE_ENV
-        ? "http://localhost:8000"
-        : "https://stravareportgenerator.app"
-    );
+
+    // Save in Express Session
+    session.athleteId = athleteId;
+    session.save(() => {
+      res.redirect('/');
+    });
+
   }
 );
 

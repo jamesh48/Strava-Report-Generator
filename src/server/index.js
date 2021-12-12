@@ -22,7 +22,7 @@ const { getStravaResults, getCurrCredentials } = require("./serverUtils");
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV ? "http://localhost:8000" :"https://www.stravareportgenerator.app",
+    origin: ["http://localhost:8000", "https://www.stravareportgenerator.app"],
     credentials: true
   })
 );
@@ -32,19 +32,19 @@ app.use(express.static(path.resolve("public")));
 app.use(
   session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
-    store: new redisStore({
-      client: redisClient,
-      disableTouch: true
-    }),
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
       httpOnly: true,
       sameSite: "lax",
-      secure: !process.env.NODE_ENV
+      secure: false
     },
-    saveUninitialized: false,
-    secret: process.env.EXPRESS_SESSION_SECRET,
-    resave: false
+    store: new redisStore({
+      client: redisClient,
+      disableTouch: true
+    }),
   })
 );
 

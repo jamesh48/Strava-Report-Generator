@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "7th Grunt push, working on deployment... redirect page"
+          message: "8th Grunt Push, Finally got the redirect to work with express.session"
         }
       }
     },
