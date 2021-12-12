@@ -7,7 +7,7 @@ module.exports = {
       headers: {
         Authorization: currentAccessToken,
       },
-      scope: "activity:read_all",
+      scope: "activity:read_all"
     };
   },
   getAllEntriesConfig: (currentAccessToken) => {

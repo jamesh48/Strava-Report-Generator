@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import UserNameSection from "UserProfile/UserNameSection.js";
 import RunningTotals from "UserProfile/RunningTotals.js";
 import SwimmingTotals from "UserProfile/SwimmingTotals.js";
-import { fetchDataUser } from "../TestUtils.js";
+import { fetchDataUser } from "../FetchUser.js";
 
 const resource = fetchDataUser();
 

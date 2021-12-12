@@ -1,9 +1,11 @@
 import React, { Suspense } from "react";
 import { useGlobalContext } from "GlobalStore";
 import { getUserActivities } from "./AppUtils.js";
+
 import Report from "./Report";
+import FBUserProfile from "UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "UserProfile/Profile";
-import AllRadios from "OptionsProfile/Radios/AllRadios";
+import Radios from "OptionsProfile/Radios/Radios";
 import "../App.scss";
 
 const App = () => {
@@ -13,15 +15,15 @@ const App = () => {
   const [sport, setSport] = React.useState("Run");
   const [format, setFormat] = React.useState("kph");
   const [distance, setDistance] = React.useState(0);
-  const [checked, setChecked] = React.useState(false);
+  const [customDistance, setCustomDistance] = React.useState(false);
   const [progressBarProgress, setProgressBarProgress] = React.useState(0);
 
   // When Total Entries is defined, set isLoaded to true
-  entries_loaded_signal: React.useEffect(() => {
-    if (totalEntries.length) {
-      globalDispatch({ type: "TOGGLE LOADED ON" });
-    }
-  }, [totalEntries]);
+  // entries_loaded_signal: React.useEffect(() => {
+  //   if (totalEntries.length) {
+  //     globalDispatch({ type: "TOGGLE LOADED ON" });
+  //   }
+  // }, [totalEntries]);
 
   componentDidMount: React.useEffect(() => {
     document.title = "Strava Report Generator";
@@ -41,7 +43,7 @@ const App = () => {
   }, [sport]);
 
   reset_checked_on_sport_change: React.useEffect(() => {
-    setChecked(false);
+    setCustomDistance(false);
   }, [sport]);
 
   const setSportCallback = ({ target: { value } }) => {
@@ -52,9 +54,9 @@ const App = () => {
     setDistance(Number(value));
 
     if (placeholder === "Custom Distance" && Number(value) !== 0) {
-      setChecked(true);
+      setCustomDistance(true);
     } else {
-      setChecked(false);
+      setCustomDistance(false);
     }
   };
 
@@ -64,16 +66,28 @@ const App = () => {
 
   return (
     <div id="body">
-      <Suspense fallback={<div>Loading Profile...</div>}>
+      <Suspense
+        fallback={
+          <div id="upper-section">
+            <FBUserProfile />
+            <Radios
+              sport={sport}
+              customDistance={customDistance}
+              distance={distance}
+              format={format}
+            />
+          </div>
+        }
+      >
         <div id="upper-section">
           <UserProfile />
 
-          <AllRadios
+          <Radios
             setSport={setSportCallback}
             setDistance={setDistanceCallback}
             setFormat={setFormatCallback}
             sport={sport}
-            checked={checked}
+            customDistance={customDistance}
             distance={distance}
             format={format}
             // updateProgressBar={updateProgressBar}

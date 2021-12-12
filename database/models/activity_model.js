@@ -7,6 +7,14 @@ module.exports = (sequelize, DataTypes) => {
       // This is important for making sure that ignoreDuplicates works correctly
       unique: true
     },
+    activityId: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    athleteId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: true,

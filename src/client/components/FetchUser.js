@@ -1,26 +1,13 @@
 import axios from "axios";
-
-const authorizeApp = async () => {
-  const { data: authLink } = await axios("/authLink");
-  window.open(authLink);
-};
-
+import { authorizeApp } from "./AppUtils";
 export const fetchDataUser = () => {
   const userPromise = fetchUser();
   return {
-    user: wrapPromise(userPromise),
+    user: wrapPromise(userPromise)
   };
 };
 
-export const fetchDataEntries = () => {
-  const entriesPromise = fetchEntries();
-  return {
-    entries: wrapPromise(entriesPromise)
-  }
-}
-
 const wrapPromise = (promise) => {
-
   // set initial status;
   let status = "pending";
   // Store Result
@@ -45,7 +32,7 @@ const wrapPromise = (promise) => {
       } else if (status === "success") {
         return result;
       }
-    },
+    }
   };
 };
 
@@ -54,13 +41,7 @@ const fetchUser = async () => {
     const { data } = await axios("/loggedInUser");
     return data;
   } catch (err) {
+    console.log(err);
     authorizeApp();
   }
-};
-
-const fetchEntries = () => {
-  console.log("Fetching Entries...");
-  return axios('/allEntries')
-    .then(res => res.data)
-    .catch(err => console.log(err))
 };

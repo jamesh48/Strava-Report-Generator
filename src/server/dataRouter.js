@@ -1,24 +1,30 @@
+const { performance } = require("perf_hooks");
 const axios = require("axios");
 const express = require("express");
 const dataRouter = express.Router();
 const path = require("path");
-const { addActivity } = require(path.resolve("database/controllers"));
+const {
+  addActivity,
+  addAllActivities,
+  getAllUserActivities
+} = require(path.resolve("database/controllers"));
 const {
   getAthleteAuthConfig,
   getAllEntriesConfig,
   getStatsConfig,
   getIndEntryConfig,
-  getRefreshedAccessTokenConfig,
+  getRefreshedAccessTokenConfig
 } = require("./apiConfigs.js");
 const {
   getStravaResults,
   recurseResults,
-  refreshAccessToken,
+  refreshAccessToken
 } = require("./serverUtils.js");
 const { getCurrCredentials } = require("./serverUtils");
 const { send400, send500 } = require("./sendErrorCodes");
 
 dataRouter.use(async (req, res, next) => {
+  console.log(performance.now());
   if (!req.session.athleteId) return send500(res, "No Cookied User");
   try {
     const { accessToken, expiresAt } = await getCurrCredentials(
@@ -44,29 +50,27 @@ dataRouter.use(async (req, res, next) => {
 dataRouter.get("/loggedInUser", async ({ currentAccessToken }, res, next) => {
   try {
     const athleteAuthConfig = getAthleteAuthConfig(currentAccessToken);
-    athlete = await axios(athleteAuthConfig);
+    var athlete = await axios(athleteAuthConfig);
   } catch (err) {
     return send500(res, err.message);
   }
-
-  const statsConfig = getStatsConfig(currentAccessToken, athlete.data.id);
-  const stats = await axios(statsConfig);
+  try {
+    const statsConfig = getStatsConfig(currentAccessToken, athlete.data.id);
+    var stats = await axios(statsConfig);
+  } catch (err) {
+    return send500(res, err.message);
+  }
 
   const fullAthlete = Object.assign(athlete.data, stats.data);
   res.status(200).send(fullAthlete);
 });
 
 dataRouter.get("/allEntries", async ({ currentAccessToken }, res) => {
-  let first200Results, second200Results;
-
-  const callback = (finalEntriesArr) => {
-    const totalEntries = finalEntriesArr.sort(
+  res.send(
+    (await getAllUserActivities(currentAccessToken)).sort(
       (a, b) => b.distance / b.moving_time - a.distance / a.moving_time
-    );
-    res.status(200).send(totalEntries);
-  };
-
-  recurseResults(getAllEntriesConfig(currentAccessToken), [], callback);
+    )
+  );
 });
 
 dataRouter.get(
@@ -82,9 +86,25 @@ dataRouter.get(
   }
 );
 
-dataRouter.post("/addAllActivities", async (req, res) => {
-  const allActivities = await addAllActivities();
-  res.send("ok");
+dataRouter.post("/addAllActivities", async ({ currentAccessToken }, res) => {
+  const callback = async (finalEntriesArr) => {
+    const totalEntries = finalEntriesArr
+      .sort((a, b) => b.distance / b.moving_time - a.distance / a.moving_time)
+      .filter(
+        (x) =>
+          x.type === "Walk" ||
+          x.type === "Swim" ||
+          x.type === "Run" ||
+          x.type === "Ride"
+      );
+    console.log(`Done: ${totalEntries.length} Results Fetched`.red);
+    console.log(`Uploading ${totalEntries.length} Entries to Database`);
+    const allActivities = await addAllActivities(totalEntries);
+    console.log(`Done- Uploaded ${allActivities.length} Entries to Database`);
+    res.json(allActivities);
+  };
+
+  recurseResults(getAllEntriesConfig(currentAccessToken), [], callback);
 });
 
 module.exports = dataRouter;

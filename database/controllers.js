@@ -5,13 +5,42 @@ const testEntries = require("./testData/testEntries.js");
 const upsert = require("./utils.js");
 
 module.exports = {
-  addAllActivities: async () => {
-    const { Activity } = sequelize.models;
+  getAllUserActivities: async (accessToken) => {
+    const { AccessToken, Activity } = sequelize.models;
+    await sequelize.connect();
+
+    try {
+      const {
+        dataValues: { athleteId }
+      } = await AccessToken.findOne({
+        where: { accessToken: accessToken }
+      });
+
+      const userActivities = await Activity.findAll({
+        where: { athleteId: athleteId }
+      });
+
+      return userActivities;
+    } catch (err) {
+      console.log(err.message);
+      return err.message;
+    }
+  },
+
+  addAllActivities: async (totalEntries) => {
+    const { Activity, AccessToken } = sequelize.models;
+
+    totalEntries = totalEntries.map((entry) => {
+      return { ...entry, athleteId: entry.athlete.id, activityId: entry.id };
+    });
+
     await sequelize.connect();
     try {
-      const newActivities = await Activity.bulkCreate(testEntries, {
+      const newActivities = await Activity.bulkCreate(totalEntries, {
         fields: [
           "id",
+          "athleteId",
+          "activityId",
           "name",
           "type",
           "start_date",
@@ -31,13 +60,14 @@ module.exports = {
           "achievement_count",
           "kudos_count",
           "comment_count",
-          "pr_count",
+          "pr_count"
         ],
-        ignoreDuplicates: true,
+        ignoreDuplicates: false,
         updateOnDuplicate: [
           "name",
           "type",
           "start_date",
+          "activityId",
           "distance",
           "moving_time",
           "elapsed_time",
@@ -54,8 +84,8 @@ module.exports = {
           "achievement_count",
           "kudos_count",
           "comment_count",
-          "pr_count",
-        ],
+          "pr_count"
+        ]
       });
       return newActivities;
     } catch (err) {
@@ -69,11 +99,11 @@ module.exports = {
     await sequelize.connect();
     try {
       await upsert(AccessToken, newAccessTokenObj, {
-        athleteId: newAccessTokenObj.athleteId,
+        athleteId: newAccessTokenObj.athleteId
       });
       return "ok";
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
       throw new Error(err.message);
     }
   },
@@ -83,7 +113,7 @@ module.exports = {
     await sequelize.connect();
     try {
       await upsert(RefreshToken, newRefreshTokenObj, {
-        athleteId: newRefreshTokenObj.athleteId,
+        athleteId: newRefreshTokenObj.athleteId
       });
       return "ok";
     } catch (err) {
@@ -97,7 +127,7 @@ module.exports = {
     await sequelize.connect();
     try {
       const accessToken = await AccessToken.findOne({
-        where: { athleteId: cookiedAthleteId },
+        where: { athleteId: cookiedAthleteId }
       });
       return accessToken;
     } catch (err) {
@@ -109,11 +139,11 @@ module.exports = {
     await sequelize.connect();
     try {
       const refreshToken = await RefreshToken.findOne({
-        where: {athleteId: cookiedAthleteId}
+        where: { athleteId: cookiedAthleteId }
       });
       return refreshToken;
-    } catch(err) {
+    } catch (err) {
       throw new Error(err.message);
     }
-  },
+  }
 };

@@ -3,7 +3,7 @@ const axios = require("axios");
 import "../App.scss";
 import "../images/favicon.png";
 import Report from "./Report.js";
-import AllRadios from "OptionsProfile/Radios/AllRadios";
+import Radios from "OptionsProfile/Radios/AllRadios";
 import Profile from "./UserProfile/Profile.js";
 
 export default class App extends React.Component {
@@ -220,7 +220,7 @@ export default class App extends React.Component {
       <div id="body">
         <div id="upper-section">
           <Profile profile={profile} />
-          <AllRadios
+          <Radios
             isLoaded={isLoaded}
             setSport={setSport}
             updateReport={updateReport}

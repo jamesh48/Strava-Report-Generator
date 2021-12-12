@@ -1,21 +1,11 @@
 import axios from "axios";
 
-const authorizeApp = async () => {
-  const authLink = await axios('/authLink')
+export const authorizeApp = async () => {
+  const { data: authLink } = await axios("/authLink");
   window.open(authLink);
 };
 
-const getLoggedInUser = async (callback) => {
-  try {
-    const { data: loggedInUser } = await axios(`/loggedInUser`);
-    return loggedInUser;
-  } catch (err) {
-    authorizeApp();
-  }
-};
-
-const getUserActivities = async () => {
-  // todo- implement progress bar.
+export const getUserActivities = async () => {
   try {
     const { data: userEntries } = await axios(`/allEntries`);
     return userEntries;
@@ -24,15 +14,13 @@ const getUserActivities = async () => {
   }
 };
 
-const getIndividualEntry = async (entryId) => {
+export const getIndividualEntry = async (entryId) => {
   try {
     const { data: individualEntryResponse } = await axios("/individualEntry", {
-      params: { entryid: entryId },
+      params: { entryid: entryId }
     });
     return individualEntryResponse;
   } catch (err) {
     console.log(err);
   }
 };
-
-export { getLoggedInUser, getIndividualEntry, getUserActivities };

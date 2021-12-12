@@ -1,5 +1,6 @@
 html {
   text-rendering: geometricPrecision;
+  font-family: 'Raleway';
 }
 ul,
 p,
@@ -23,7 +24,7 @@ h4 {
 }
 
 body {
-  background-color: ivory;
+  background-color: darkslategray;
   #upper-section {
     display: flex;
     flex-direction: column;
@@ -34,12 +35,13 @@ body {
     border: 1px solid coral;
     -webkit-box-shadow: 0 0 10px coral;
     box-shadow: 0 0 10px coral;
-    background-color: paleturquoise;
+    background-color: darkturquoise;
     #user-profile {
+      text-rendering: geometricPrecision;
       display: flex;
       margin: 2.5% 0;
       width: 95%;
-      background-color: turquoise;
+      background-color: #52fff3;
       border: 1px solid orangered;
       border-top: none;
       border-left: none;
@@ -59,7 +61,7 @@ body {
 
       .ytd-totals {
         flex: 1;
-        background-color: turquoise;
+        background-color: #52fff3;
         border-left: none;
         padding-left: 5px;
         border-left: 1px solid coral;
@@ -79,16 +81,23 @@ body {
         display: flex;
         justify-content: center;
         width: 95%;
-        margin: 2.5% auto;
+        margin: 2.5% auto 0 auto;
         border: 1px solid orangered;
         border-top: none;
         border-left: none;
-        background-color: turquoise;
+        background-color: #52fff3;
         box-shadow: 2.5px 2.5px 5px 0px orangered;
         .choose-radio-container {
           display: flex;
           flex-direction: column;
           flex: 1;
+          align-items: center;
+          &:first-child {
+            border-right: 1px solid coral;
+          }
+          &:last-child {
+            border-left: 1px solid coral;
+          }
           .multiple-radio-button-container {
             display: flex;
             flex-direction: column;
@@ -179,6 +188,8 @@ body {
         &:hover {
           cursor: pointer;
           background-color: coral;
+          border-left: 2px solid ivory;
+          border-right: 2px solid ivory;
         }
       }
     }
@@ -218,6 +229,14 @@ body {
 .ytd-totals-title {
   text-decoration: underline;
   color: orangered;
+}
+
+.ytd-totals-title,
+#user-location,
+.ytd-descriptor,
+#user-name,
+.entry-descriptor {
+  cursor: default;
 }
 
 .speed {
@@ -302,11 +321,67 @@ body {
 
 /* Progress Bar */
 #progress-bar-container {
-  height: 20px;
   width: 95%;
   border: 1px solid coral;
   box-shadow: 0 0 5px coral;
   background-color: coral;
   border-radius: 50px;
   margin: 1% 2.5% 1% 2.5%;
+  .progress-bar-filler {
+    height: 100%;
+    background: linear-gradient(
+      99deg,
+      rgba(73, 81, 255, 1) 15%,
+      rgba(0, 241, 255, 1) 42%,
+      rgba(21, 221, 51, 1) 100%
+    );
+    border-radius: inherit;
+    text-align: right;
+    transition: width 0.1s ease-in-out;
+    .progress-bar-counter {
+      padding: 5;
+      color: ivory;
+      font-weight: 900;
+    }
+  }
+}
+
+.update-button-container {
+  min-height: 5vmax;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .update-button {
+    cursor: pointer;
+    text-rendering: geometricPrecision;
+    background-color: #52fff3;
+    color: orangered;
+    border: 2px solid coral;
+    box-shadow: 0 0 5px coral;
+    padding: 0.5vmax 1vmax;
+    &:hover {
+      background-color: coral;
+      color: ivory;
+      border: 2px solid ivory;
+    }
+  }
+}
+
+.progress-bar-counter {
+  padding: 5;
+  color: ivory;
+  font-weight: 900;
+}
+
+.progress-bar-filler {
+  height: 100%;
+  background: linear-gradient(
+    99deg,
+    rgba(73, 81, 255, 1) 15%,
+    rgba(0, 241, 255, 1) 42%,
+    rgba(21, 221, 51, 1) 100%
+  );
+  border-radius: inherit;
+  text-align: right;
+  transition: width 0.1s ease-in-out;
 }

@@ -16,10 +16,12 @@ const totalEntries = (state = [], action) => {
   }
 };
 
-const isLoaded = (state = false, action) => {
+const isLoaded = (state = null, action) => {
   switch (action.type) {
     case "TOGGLE LOADED ON":
       return true;
+    case "TOGGLE LOADED OFF":
+      return false;
     default:
       return state;
   }

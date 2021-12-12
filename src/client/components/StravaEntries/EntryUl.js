@@ -20,6 +20,7 @@ export default ({
   );
 
   const renderEntries = currentEntries.map((entry, index) => {
+    console.log(currentActivity);
     return (
       <li key={index}>
         <StravaEntry

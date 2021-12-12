@@ -15,7 +15,11 @@ const Report = (props) => {
   const [currentActivity, setCurrentActivity] = React.useState({});
   const [entries, setEntries] = React.useState([]);
 
-  React.useEffect(() => {
+  reset_page_on_sport_change: React.useEffect(() => {
+    setCurrentPage(1);
+  }, [props.sport]);
+
+  set_invalid_entry_on_distance_change: React.useEffect(() => {
     if (typeof Number(props.distance) !== "number") {
       setInvalidEntry(true);
     } else {
@@ -24,14 +28,14 @@ const Report = (props) => {
   }, [props.distance]);
 
   React.useEffect(() => {
-    if (isLoaded) {
+    if (totalEntries.length) {
       setEntries(
         totalEntries
           .filter((entry) => Number(props.distance) <= Number(entry.distance))
           .filter((remainingEntry) => props.sport === remainingEntry.type)
       );
     }
-  }, [props.distance, props.sport, isLoaded]);
+  }, [props.distance, props.sport, totalEntries]);
 
   const handlePaginationClick = ({ target: { id } }) => {
     setCurrentPage(Number(id));

@@ -8,7 +8,7 @@ const sequelize = new Sequelize(process.env.PG_DATABASE, process.env.PG_USER, pr
 
 const connect = async () => {
   try {
-    // This Line enables emojis in the name field. (activity name)- why isn't it working?
+    // This Line enables emojis in the name field. (activity name)- why isn't it working? (is a mysql query)
     // await sequelize.query("ALTER TABLE activities MODIFY name TEXT CHARSET utf8mb4");
     await sequelize.authenticate();
     await sequelize.sync();

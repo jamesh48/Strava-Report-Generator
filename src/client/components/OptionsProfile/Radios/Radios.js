@@ -5,7 +5,7 @@ import ProgressBar from "OptionsProfile/ProgressBar/ProgressBar";
 import { useGlobalContext } from "GlobalStore";
 
 export default (props) => {
-  const [{ isLoaded }] = useGlobalContext();
+  const [{ totalEntries }] = useGlobalContext();
 
   const initArr = [
     {
@@ -22,7 +22,7 @@ export default (props) => {
           : props.sport === "Swim"
           ? InputJSON.distanceSwimRadios
           : [],
-      checked: props.checked,
+      customDistance: props.customDistance,
       distance: props.distance,
     },
     {
@@ -43,7 +43,7 @@ export default (props) => {
       <div id="button-layout">
         {initArr.map((radioColumn, index) => {
           return (
-            <RadioColumn key={index} {...radioColumn} isLoaded={isLoaded} />
+            <RadioColumn key={index} {...radioColumn} isLoaded={!!totalEntries.length} />
           );
         })}
       </div>

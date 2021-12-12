@@ -23,7 +23,7 @@ export default (props) => {
         name={props.name}
         disabled
         hidden
-        checked={props.checked ? "Checked" : null}
+        checked={props.customDistance ? "Checked" : null}
       />
       <input
         disabled={!props.isLoaded ? true : false}
@@ -32,7 +32,7 @@ export default (props) => {
         onChange={props.setCallback}
         type="text"
         placeholder={props.placeholder}
-        value={props.checked ? null : ""}
+        value={props.customDistance ? null : ""}
       />
     </div>
   ) : null;

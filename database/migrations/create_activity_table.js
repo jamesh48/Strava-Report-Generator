@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('activities', {
+    await queryInterface.createTable("activities", {
       xid: {
         allowNull: false,
         autoIncrement: true,
@@ -14,6 +14,16 @@ module.exports = {
         type: Sequelize.BIGINT,
         // This is important for making sure that ignoreDuplicates works correctly
         unique: true
+      },
+      activityId: {
+        allowNull: false,
+        primaryKey: false,
+        type: Sequelize.BIGINT
+      },
+      athleteId: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING,
@@ -106,6 +116,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('product_descriptions');
+    await queryInterface.dropTable("product_descriptions");
   }
 };
