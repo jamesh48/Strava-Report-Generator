@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const path = require("path");
 const sequelize = require("./config.js");
-const testEntries = require("./testData/testEntries.js");
+// const testEntries = require("./testData/testEntries.js");
 const upsert = require("./utils.js");
 
 module.exports = {

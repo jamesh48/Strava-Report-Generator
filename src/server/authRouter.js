@@ -61,7 +61,7 @@ authRouter.get(
       readAllScope: readAllScope,
     });
 
-    res.redirect("http://localhost:8000");
+    res.redirect("http://ec2-3-135-119-109.us-east-2.compute.amazonaws.com");
   }
 );
 
