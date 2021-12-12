@@ -49,7 +49,8 @@
   },
   "scripts": {
     "start": "nodemon ./src/server/index.js",
-    "build": "grunt build --gruntfile configs/grunt/Gruntfile.js",
+    "build": "webpack --config configs/webpack/webpack.config.js",
+    "grunt:build": "grunt build --gruntfile configs/grunt/Gruntfile.js",
     "postbuild": "pm2 startOrRestart strava-report-generator",
     "dev:start": "nodemon src/server/index.js",
     "dev:build": "export NODE_ENV=dev && webpack --config configs/webpack/webpack.config.js && concurrently \"webpack --config configs/webpack/webpack.config.js --watch\" \"npm run dev:start\"",
