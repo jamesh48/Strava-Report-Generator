@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Second Grunt push"
+          message: "3rd Grunt push"
         }
       }
     },

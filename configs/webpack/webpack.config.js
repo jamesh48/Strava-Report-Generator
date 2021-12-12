@@ -1,17 +1,17 @@
 const { rootPath, relativePath } = require("../paths.js");
 require("dotenv").config({ path: rootPath("configs/dotenv/.env") });
-
+const { cssRules, jsRules, imageRules } = require("./webpack.config.rules.js");
 const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-
-const moduleRules = require(relativePath("webpack/webpack.config.rules.js"));
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const clientConfig = merge(moduleRules, {
+const clientConfig = {
   target: "web",
   mode: "development",
   devtool: "eval-source-map",
   // Req by webpack 5/ala dotenv-environment variables
+  module: {
+    rules: [jsRules, cssRules, imageRules]
+  },
   resolve: {
     alias: {
       OptionsProfile: rootPath("src/client/components/OptionsProfile"),
@@ -37,6 +37,6 @@ const clientConfig = merge(moduleRules, {
     path: rootPath("public"),
     filename: "bundle.js"
   }
-});
+};
 
 module.exports = [clientConfig];
