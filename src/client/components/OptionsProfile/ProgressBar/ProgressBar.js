@@ -6,8 +6,12 @@ import { useGlobalContext } from "GlobalStore";
 
 const ProgressBar = (props) => {
   const [{ isLoaded }, globalDispatch] = useGlobalContext();
-  const {progressBarProgress, incrementProgressBarProgress, completeProgressBarProgress, resetProgressBarProgress } =
-    useProgressBarProgressStore((state) => state);
+  const {
+    progressBarProgress,
+    incrementProgressBarProgress,
+    completeProgressBarProgress,
+    resetProgressBarProgress
+  } = useProgressBarProgressStore((state) => state);
 
   useInterval(
     () => {
@@ -37,14 +41,26 @@ const ProgressBar = (props) => {
     });
   };
 
+  const setSortCondition = (e) => {
+    globalDispatch({ type: "SET SORT CONDITION", payload: e.target.value });
+  };
+
   return progressBarProgress === 0 ? (
     <div className="update-button-container">
+      <select className="update-button" onChange={setSortCondition}>
+        <option value="speedDesc">Speed: Fastest First</option>
+        <option value="movingTimeDesc">Moving Time: Longest First</option>
+        <option value="movingTimeAsc">Moving Time: Shortest First</option>
+        <option value="timeElapsedDesc">Time Elapsed: Longest First</option>
+        <option value="timeElapsedAsc">Time Elapsed: Shortest First</option>
+      </select>
       <input
         type="button"
         className="update-button"
         value="Update!"
         onClick={updateEntries}
       />
+      <input type="button" className="update-button" value="Destroy!" />
     </div>
   ) : (
     <div className="update-button-container">

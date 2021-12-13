@@ -94,6 +94,23 @@ module.exports = {
     }
   },
 
+  updateOneActivity: async (activityId, newName) => {
+    const { Activity } = sequelize.models;
+    await sequelize.connect();
+    try {
+      const updatedActivity = await Activity.update(
+        {
+          name: newName
+        },
+        { where: { activityId: activityId }, returning: true, plain: true }
+      );
+
+      return "ok";
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
+
   upsertAccessToken: async (newAccessTokenObj) => {
     const { AccessToken } = sequelize.models;
     await sequelize.connect();

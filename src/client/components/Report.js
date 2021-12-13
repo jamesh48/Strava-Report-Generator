@@ -3,17 +3,20 @@ import EntryUl from "StravaEntries/EntryUl.js";
 import PageNoUl from "PaginationContainer/PageNoUl.js";
 import { getIndividualEntry } from "./AppUtils.js";
 import { useGlobalContext } from "GlobalStore";
+import { useEntriesStore } from "./useEntries.js";
 
 const Report = (props) => {
   // Global Context
-  const [{ totalEntries, isLoaded }] = useGlobalContext();
+  const [{ totalEntries, isLoaded, sortCondition }] = useGlobalContext();
   // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
   const [entriesPerPage, setEntriesPerPage] = React.useState(7);
   // Entries
   const [invalidEntry, setInvalidEntry] = React.useState(false);
   const [currentActivity, setCurrentActivity] = React.useState({});
-  const [entries, setEntries] = React.useState([]);
+  // const [entries, setEntries] = React.useState([]);
+
+  const { entries, filterAndSortEntries } = useEntriesStore((state) => state);
 
   reset_page_on_sport_change: React.useEffect(() => {
     setCurrentPage(1);
@@ -27,15 +30,16 @@ const Report = (props) => {
     }
   }, [props.distance]);
 
-  React.useEffect(() => {
+  change_filtered_entries_on_change: React.useEffect(() => {
     if (totalEntries.length) {
-      setEntries(
-        totalEntries
-          .filter((entry) => Number(props.distance) <= Number(entry.distance))
-          .filter((remainingEntry) => props.sport === remainingEntry.type)
+      filterAndSortEntries(
+        totalEntries,
+        sortCondition,
+        props.distance,
+        props.sport
       );
     }
-  }, [props.distance, props.sport, totalEntries]);
+  }, [sortCondition, props.distance, props.sport, totalEntries]);
 
   const handlePaginationClick = ({ target: { id } }) => {
     setCurrentPage(Number(id));
@@ -43,11 +47,16 @@ const Report = (props) => {
 
   const showIndividualEntry = async ({
     target: {
-      dataset: { indentry },
-    },
+      dataset: { indentry }
+    }
   }) => {
     event.preventDefault();
     const individualEntry = await getIndividualEntry(indentry);
+    setCurrentActivity(individualEntry);
+  };
+
+  const updateIndividualEntry = async (entryId) => {
+    const individualEntry = await getIndividualEntry(entryId);
     setCurrentActivity(individualEntry);
   };
 
@@ -61,6 +70,7 @@ const Report = (props) => {
         entriesPerPage={entriesPerPage}
         currentActivity={currentActivity}
         showIndividualEntry={showIndividualEntry}
+        updateIndividualEntry={updateIndividualEntry}
       />
       <PageNoUl
         {...props}

@@ -64,8 +64,15 @@ export default ({ no, entry, sport, format, showIndividualEntry }) => {
           </p>
         )}
         <p className="entry-descriptor">
-          Time Elapsed- {handleTime(entry.moving_time)}
+          Time Elapsed- {handleTime(entry.elapsed_time)}
         </p>
+
+        <p className="entry-descriptor">
+          Moving Time- {handleTime(entry.moving_time)}
+        </p>
+
+        {/* For Debugging  */}
+        {/* <p className="entry-descriptor">id = {entry.activityId}</p> */}
 
         {/* Format */}
         {format === "kph" ? (

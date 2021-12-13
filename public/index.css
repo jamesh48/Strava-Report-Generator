@@ -3,7 +3,7 @@
   \**************************************************************************************************************/
 html {
   text-rendering: geometricPrecision;
-  font-family: 'Raleway'; }
+  font-family: "Raleway"; }
 
 ul,
 p,
@@ -156,7 +156,30 @@ body {
 } */
 .detailed-entry {
   background-color: coral;
-  border: 2px solid orangered; }
+  border: 2px solid orangered;
+  display: flex;
+  flex-direction: column;
+  text-rendering: geometricPrecision; }
+  .detailed-entry .top-activity-description {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1%;
+    margin-bottom: 1%; }
+    .detailed-entry .top-activity-description .editing-activity-textarea {
+      width: 75%;
+      height: 3.5vmax;
+      align-self: center; }
+  .detailed-entry .editing-container {
+    align-self: flex-end;
+    padding: 0.5% 1.25%; }
+    .detailed-entry .editing-container .editing-submit-link {
+      margin-right: 1%; }
+    .detailed-entry .editing-container .editing-link {
+      color: blue;
+      cursor: pointer;
+      margin-right: 10%; }
+      .detailed-entry .editing-container .editing-link:hover {
+        color: ivory; }
 
 .general-entry > p,
 .detailed-entry > p {
@@ -225,10 +248,6 @@ body {
 #achievement-count {
   grid-area: ahr; }
 
-.top-activity-description {
-  margin-left: 1%;
-  margin-bottom: 1%; }
-
 .top-activity-description > h4,
 .top-activity-description > p,
 .kudos,
@@ -281,7 +300,9 @@ body {
     color: orangered;
     border: 2px solid coral;
     box-shadow: 0 0 5px coral;
-    padding: 0.5vmax 1vmax; }
+    padding: 0.5vmax 1vmax;
+    min-width: 10%;
+    margin: 0 0.5vmax; }
     .update-button-container .update-button:hover {
       background-color: coral;
       color: ivory;

@@ -12,6 +12,7 @@ export default ({
   invalidEntry,
   sport,
   format,
+  updateIndividualEntry
 }) => {
   const [{isLoaded}] = useGlobalContext();
   const currentEntries = entries.slice(
@@ -20,12 +21,12 @@ export default ({
   );
 
   const renderEntries = currentEntries.map((entry, index) => {
-    console.log(currentActivity);
     return (
       <li key={index}>
         <StravaEntry
           currentActivity={currentActivity}
           showIndividualEntry={showIndividualEntry}
+          updateIndividualEntry={updateIndividualEntry}
           no={currentPage === 1 && index >= 0 && index <= 3 ? index : undefined}
           sport={sport}
           entry={entry}

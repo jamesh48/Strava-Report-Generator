@@ -6,7 +6,8 @@ const path = require("path");
 const {
   addActivity,
   addAllActivities,
-  getAllUserActivities
+  getAllUserActivities,
+  updateOneActivity
 } = require(path.resolve("database/controllers"));
 const {
   getAthleteAuthConfig,
@@ -105,6 +106,28 @@ dataRouter.post("/addAllActivities", async ({ currentAccessToken }, res) => {
   };
 
   recurseResults(getAllEntriesConfig(currentAccessToken), [], callback);
+});
+
+dataRouter.put("/putActivityUpdate", async (req, res) => {
+  const putActivityUpdateConfig = {
+    method: "PUT",
+    url: encodeURI(`https://www.strava.com/api/v3/activities/${req.query.activityId}?name=${req.query.name}&description=${req.query.description}`),
+    headers: {
+      Authorization: req.currentAccessToken
+    }
+  };
+
+  try {
+    const { data: updatedActivity } = await axios(putActivityUpdateConfig);
+
+    const { name, id } = updatedActivity;
+    await updateOneActivity(id, name);
+
+    res.send('updatedActivity');
+  } catch (err) {
+    console.log(err.message);
+    res.send(err.message);
+  }
 });
 
 module.exports = dataRouter;

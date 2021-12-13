@@ -34,7 +34,7 @@ app.use(
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
     secret: process.env.EXPRESS_SESSION_SECRET,
     saveUninitialized: false,
-    resave: false
+    resave: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
       httpOnly: true,
@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 
 app.use(/(exchange_token|authLink)?/, authRouter);
 app.use(
-  /(loggedInUser|allEntries|individualEntry|addAllActivities)?/,
+  /(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate)?/,
   dataRouter
 );
 

@@ -2,7 +2,7 @@ const combineReducers = (slices) => (state, action) =>
   Object.keys(slices).reduce(
     (acc, prop) => ({
       ...acc,
-      [prop]: slices[prop](acc[prop], action),
+      [prop]: slices[prop](acc[prop], action)
     }),
     state
   );
@@ -10,6 +10,15 @@ const combineReducers = (slices) => (state, action) =>
 const totalEntries = (state = [], action) => {
   switch (action.type) {
     case "SET TOTAL ENTRIES":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const sortCondition = (state = "speedDesc", action) => {
+  switch (action.type) {
+    case "SET SORT CONDITION":
       return action.payload;
     default:
       return state;
@@ -25,6 +34,6 @@ const isLoaded = (state = null, action) => {
     default:
       return state;
   }
-}
+};
 
-export default combineReducers({ totalEntries, isLoaded });
+export default combineReducers({ totalEntries, isLoaded, sortCondition });

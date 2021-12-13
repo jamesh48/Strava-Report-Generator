@@ -4,7 +4,8 @@ const GlobalStoreContext = React.createContext();
 
 const initialState = {
   totalEntries: [],
-  isLoaded: null
+  isLoaded: null,
+  sortCondition: 'speedDesc'
 };
 
 const GlobalStoreProvider = ({ children }) => {
