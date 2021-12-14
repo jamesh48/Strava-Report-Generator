@@ -1,9 +1,10 @@
 const { rootPath } = require("../paths");
+const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports.imageRules = {
   test: /\.(png|jpeg)$/,
-  include: rootPath("src/client/images"),
+  include: rootPath("build/dist/client/images"),
   loader: "file-loader",
   options: {
     name: "[name].[ext]",
@@ -13,14 +14,14 @@ module.exports.imageRules = {
 
 module.exports.cssRules = {
   test: /\.(css|scss)$/,
-  include: rootPath("src/client"),
+  include: rootPath("build/dist/client"),
   exclude: /node_modules/,
   use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
 };
 
 module.exports.jsRules = {
   test: /\.(js|jsx)$/,
-  exclude: /node_modules/,
+  exclude: [/node_modules/, /src/],
   use: {
     loader: "babel-loader",
     options: {

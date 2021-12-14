@@ -1,6 +1,6 @@
-import regeneratorRuntime from "regenerator-runtime";
 import React from "react";
 import ReactDOM from "react-dom";
+import regeneratorRuntime from "regenerator-runtime";
 import App from "./components/App.js";
 import { GlobalStoreProvider } from "GlobalStore";
 // import testData from './Test Data/testData.js';

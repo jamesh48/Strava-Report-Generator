@@ -5,7 +5,7 @@ module.exports = {
   apps: [
     {
       name: "strava-report-generator",
-      script: path.join(rootPath, "src/server/index.js")
+      script: path.join(rootPath, "build/dist/server/index.js")
     }
   ],
   deploy: {

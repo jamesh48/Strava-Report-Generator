@@ -13,15 +13,16 @@ const clientConfig = {
     rules: [jsRules, cssRules, imageRules]
   },
   resolve: {
+    extensions: [".ts", ".tsx", ".js"],
     alias: {
-      OptionsProfile: rootPath("src/client/components/OptionsProfile"),
-      UserProfile: rootPath("src/client/components/UserProfile"),
+      OptionsProfile: rootPath("build/dist/client/components/OptionsProfile"),
+      UserProfile: rootPath("build/dist/client/components/UserProfile"),
       PaginationContainer: rootPath(
-        "src/client/components/PaginationContainer"
+        "build/dist/client/components/PaginationContainer"
       ),
-      StravaEntries: rootPath("src/client/components/StravaEntries"),
-      StaticImages: rootPath("src/client/images"),
-      GlobalStore: rootPath("src/client/components/GlobalStore/globalStore.js")
+      StravaEntries: rootPath("build/dist/client/components/StravaEntries"),
+      StaticImages: rootPath("build/dist/client/images"),
+      GlobalStore: rootPath("build/dist/client/components/GlobalStore/globalStore.js")
     }
   },
   plugins: [
@@ -31,10 +32,10 @@ const clientConfig = {
     })
   ],
   entry: {
-    index: rootPath("src/client/index.jsx")
+    index: rootPath("build/dist/client/index.js")
   },
   output: {
-    path: rootPath("public"),
+    path: rootPath("build/dist/public"),
     filename: "bundle.js"
   }
 };

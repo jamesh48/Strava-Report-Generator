@@ -3,8 +3,8 @@ import { useGlobalContext } from "GlobalStore";
 import { getUserActivities } from "./AppUtils.js";
 
 import Report from "./Report";
-import FBUserProfile from "UserProfile/FallbackProfile/FBUserProfile";
-import UserProfile from "UserProfile/Profile";
+import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
+import UserProfile from "./UserProfile/UserProfile";
 import Radios from "OptionsProfile/Radios/Radios";
 import "../App.scss";
 

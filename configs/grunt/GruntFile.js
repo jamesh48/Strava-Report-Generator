@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Introducing more sort parameters, and the ability to update the description of an activity- title to come, destroy button not yet functional"
+          message: "Deploying some typescript"
         }
       }
     },

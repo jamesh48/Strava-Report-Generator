@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-app.use(express.static(path.resolve("public")));
+app.use(express.static(path.resolve("build/dist/public")));
 
 app.use(
   session({

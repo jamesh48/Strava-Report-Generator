@@ -1,6 +1,6 @@
 import React from "react";
 import StravaEntry from "StravaEntries/StravaEntry.js";
-import EmptyEntry from "StravaEntries/EmptyEntry.js";
+import EmptyEntry from "./EmptyEntry";
 import { useGlobalContext } from "GlobalStore";
 
 export default ({
