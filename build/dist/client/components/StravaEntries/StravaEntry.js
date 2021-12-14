@@ -64,9 +64,7 @@ var StravaEntry = function (_a) {
                         })];
                 case 1:
                     _updatedActivity = (_a.sent()).data;
-                    return [4, updateIndividualEntry(currentActivity.id)];
-                case 2:
-                    _a.sent();
+                    updateIndividualEntry(currentActivity.id);
                     return [2];
             }
         });

@@ -1,7 +1,7 @@
 import React from "react";
 import GeneralEntry from "./GeneralEntry";
 import DetailedEntry from "./DetailedEntry.js";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { StravaEntryProps } from "./EntryTypes";
 
 const StravaEntry: React.FC<StravaEntryProps> = ({
@@ -14,7 +14,6 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
   updateIndividualEntry
 }) => {
   const [editing, toggleEditing] = React.useState(false);
-  // const [currentActivityId, setCurrentActivityId] = React.useState(-1);
   const [editedName, setEditedName] = React.useState("");
   const [editedDescription, setEditedDescription] = React.useState("");
 
@@ -22,13 +21,12 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
     if (currentActivity.id === Number(entry.activityId)) {
       setEditedName(currentActivity.name);
       setEditedDescription(currentActivity.description);
-      // setCurrentActivityId(currentActivity.id);
     }
   }, [currentActivity]);
 
   const handleActivityUpdate = async () => {
     toggleEditing(false);
-    const { data: _updatedActivity } = await axios.put(
+    const { data: _updatedActivity }: AxiosResponse = await axios.put(
       "/putActivityUpdate",
       null,
       {
@@ -41,7 +39,7 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
     );
 
     // Update the entry
-    await updateIndividualEntry(currentActivity.id);
+    updateIndividualEntry(currentActivity.id);
   };
 
   const handleDescriptionChange: (e: { target: { value: string } }) => void = (

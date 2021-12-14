@@ -66,7 +66,12 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         value="Update!"
         onClick={updateEntries}
       />
-      <input type="button" className="update-button" value="Destroy!" />
+      <input
+        type="button"
+        className="update-button"
+        value="Destroy!"
+        onClick={() => alert("This button does not do anything currently")}
+      />
     </div>
   ) : (
     <div className="update-button-container">

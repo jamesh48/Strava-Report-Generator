@@ -35,20 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import React, { Suspense } from "react";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
 import Report from "./Report";
 import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
-import Radios from "OptionsProfile/Radios/Radios";
+import Radios from "./OptionsProfile/Radios/Radios";
 import "../App.scss";
 var App = function () {
-    var _a = useGlobalContext(), totalEntries = _a[0].totalEntries, globalDispatch = _a[1];
-    var _b = React.useState("Run"), sport = _b[0], setSport = _b[1];
-    var _c = React.useState("kph"), format = _c[0], setFormat = _c[1];
-    var _d = React.useState(0), distance = _d[0], setDistance = _d[1];
-    var _e = React.useState(false), customDistance = _e[0], setCustomDistance = _e[1];
-    var _f = React.useState(0), progressBarProgress = _f[0], setProgressBarProgress = _f[1];
+    var _a = useGlobalContext(), _b = _a[0], globalDispatch = _a[1];
+    var _c = React.useState("Run"), sport = _c[0], setSport = _c[1];
+    var _d = React.useState("kph"), format = _d[0], setFormat = _d[1];
+    var _e = React.useState(0), distance = _e[0], setDistance = _e[1];
+    var _f = React.useState(false), customDistance = _f[0], setCustomDistance = _f[1];
     componentDidMount: React.useEffect(function () {
         document.title = "Strava Report Generator";
         var fetchEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -75,11 +74,11 @@ var App = function () {
         setCustomDistance(false);
     }, [sport]);
     var setSportCallback = function (_a) {
-        var value = _a.target.value;
+        var value = _a.currentTarget.value;
         setSport(value);
     };
     var setDistanceCallback = function (_a) {
-        var _b = _a.target, value = _b.value, placeholder = _b.placeholder;
+        var _b = _a.currentTarget, value = _b.value, placeholder = _b.placeholder;
         setDistance(Number(value));
         if (placeholder === "Custom Distance" && Number(value) !== 0) {
             setCustomDistance(true);
@@ -89,13 +88,13 @@ var App = function () {
         }
     };
     var setFormatCallback = function (_a) {
-        var value = _a.target.value;
+        var value = _a.currentTarget.value;
         setFormat(value);
     };
     return (React.createElement("div", { id: "body" },
         React.createElement(Suspense, { fallback: React.createElement("div", { id: "upper-section" },
                 React.createElement(FBUserProfile, null),
-                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format })) },
+                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format, setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback })) },
             React.createElement("div", { id: "upper-section" },
                 React.createElement(UserProfile, null),
                 React.createElement(Radios, { setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, sport: sport, customDistance: customDistance, distance: distance, format: format }))),

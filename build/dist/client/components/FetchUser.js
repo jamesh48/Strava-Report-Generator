@@ -44,7 +44,7 @@ export var fetchDataUser = function () {
 };
 var wrapPromise = function (promise) {
     var status = "pending";
-    var result;
+    var result = "";
     var suspender = promise.then(function (res) {
         status = "success";
         result = res;

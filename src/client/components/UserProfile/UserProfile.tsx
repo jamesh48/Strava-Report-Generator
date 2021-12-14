@@ -7,10 +7,11 @@ import { fetchDataUser } from "../FetchUser.js";
 
 const resource = fetchDataUser();
 
-const Profile: React.FC<null> = () => {
+const Profile: React.FC<{}> = () => {
+  //@ts-ignore
   const profile: ProfileData = resource.user.read();
 
-  return (
+  return profile && (
     <div id="user-profile">
       <img id="user-img" src={profile.profile} />
       <UserNameSection profile={profile} />

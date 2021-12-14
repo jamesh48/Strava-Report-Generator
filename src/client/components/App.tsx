@@ -1,22 +1,21 @@
 import React, { Suspense } from "react";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
 
 import Report from "./Report";
 import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
-import Radios from "OptionsProfile/Radios/Radios";
+import Radios from "./OptionsProfile/Radios/Radios";
 import "../App.scss";
 
-const App = () => {
+const App: React.FC<{}> = () => {
   // Global
-  const [{ totalEntries }, globalDispatch] = useGlobalContext();
+  const [{}, globalDispatch] = useGlobalContext();
   // Radios
   const [sport, setSport] = React.useState("Run");
   const [format, setFormat] = React.useState("kph");
   const [distance, setDistance] = React.useState(0);
   const [customDistance, setCustomDistance] = React.useState(false);
-  const [progressBarProgress, setProgressBarProgress] = React.useState(0);
 
   // When Total Entries is defined, set isLoaded to true
   // entries_loaded_signal: React.useEffect(() => {
@@ -46,11 +45,15 @@ const App = () => {
     setCustomDistance(false);
   }, [sport]);
 
-  const setSportCallback = ({ target: { value } }) => {
+  const setSportCallback: React.MouseEventHandler<HTMLInputElement> = ({
+    currentTarget: { value }
+  }) => {
     setSport(value);
   };
 
-  const setDistanceCallback = ({ target: { value, placeholder } }) => {
+  const setDistanceCallback: React.MouseEventHandler<HTMLInputElement> = ({
+    currentTarget: { value, placeholder }
+  }) => {
     setDistance(Number(value));
 
     if (placeholder === "Custom Distance" && Number(value) !== 0) {
@@ -60,7 +63,9 @@ const App = () => {
     }
   };
 
-  const setFormatCallback = ({ target: { value } }) => {
+  const setFormatCallback: React.MouseEventHandler<HTMLInputElement> = ({
+    currentTarget: { value }
+  }) => {
     setFormat(value);
   };
 
@@ -75,6 +80,9 @@ const App = () => {
               customDistance={customDistance}
               distance={distance}
               format={format}
+              setSport={setSportCallback}
+              setDistance={setDistanceCallback}
+              setFormat={setFormatCallback}
             />
           </div>
         }
@@ -90,17 +98,10 @@ const App = () => {
             customDistance={customDistance}
             distance={distance}
             format={format}
-            // updateProgressBar={updateProgressBar}
-            // progressBarProgress={progressBarProgress}
           />
         </div>
       </Suspense>
-      <Report
-        sport={sport}
-        format={format}
-        distance={distance}
-        // progressBarProgress={progressBarProgress}
-      />
+      <Report sport={sport} format={format} distance={distance} />
     </div>
   );
 };

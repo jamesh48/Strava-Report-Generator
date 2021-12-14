@@ -1,11 +1,12 @@
+import React from "react";
+
 export interface RadiosProps {
-  setSport: () => void;
-  setDistance: () => void;
-  setFormat: () => void;
+  setSport: React.MouseEventHandler<HTMLInputElement>;
+  setDistance: React.MouseEventHandler<HTMLInputElement>;
+  setFormat: React.MouseEventHandler<HTMLInputElement>;
   sport: string;
   customDistance: boolean;
   distance: number;
-  placeholder: string;
   format: string;
 }
 
@@ -17,7 +18,7 @@ export interface RadioColumnProps {
   distance?: number;
   customDistance?: boolean;
   placeholder?: string;
-  setCallback: () => void;
+  setCallback: React.MouseEventHandler<HTMLInputElement>;
 }
 
 export interface SingleRadioProps {
@@ -31,7 +32,7 @@ export interface SingleRadioProps {
   placeholder?: string;
   labelText?: string | undefined;
   value?: string | undefined;
-  setCallback: () => void;
+  setCallback: React.MouseEventHandler<HTMLInputElement>
 }
 
 export type RadioValueProps = {

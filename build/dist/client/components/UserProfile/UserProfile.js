@@ -6,7 +6,7 @@ import { fetchDataUser } from "../FetchUser.js";
 var resource = fetchDataUser();
 var Profile = function () {
     var profile = resource.user.read();
-    return (React.createElement("div", { id: "user-profile" },
+    return profile && (React.createElement("div", { id: "user-profile" },
         React.createElement("img", { id: "user-img", src: profile.profile }),
         React.createElement(UserNameSection, { profile: profile }),
         React.createElement(RunningTotals, { profile: profile }),

@@ -79,7 +79,7 @@ export var getIndividualEntry = function (entryId) { return __awaiter(void 0, vo
                 return [2, individualEntryResponse];
             case 2:
                 err_2 = _a.sent();
-                console.log(err_2);
+                console.log(err_2.message);
                 return [3, 3];
             case 3: return [2];
         }

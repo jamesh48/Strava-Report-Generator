@@ -101,7 +101,7 @@ var Report = function (props) {
             switch (_a.label) {
                 case 0:
                     event.preventDefault();
-                    return [4, getIndividualEntry(event.currentTarget.dataset.indentry)];
+                    return [4, getIndividualEntry(Number(event.currentTarget.dataset.indentry))];
                 case 1:
                     individualEntry = _a.sent();
                     setCurrentActivity(individualEntry);

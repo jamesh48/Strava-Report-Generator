@@ -7,11 +7,11 @@ export const fetchDataUser = () => {
   };
 };
 
-const wrapPromise = (promise) => {
+const wrapPromise = (promise: Promise<any>) => {
   // set initial status;
   let status = "pending";
   // Store Result
-  let result;
+  let result = "";
   // Wait for promise
   let suspender = promise.then(
     (res) => {
@@ -24,6 +24,7 @@ const wrapPromise = (promise) => {
     }
   );
   return {
+    // @ts-ignore
     read() {
       if (status === "pending") {
         throw suspender;

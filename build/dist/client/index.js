@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "regenerator-runtime";
 import App from "./components/App.js";
-import { GlobalStoreProvider } from "GlobalStore";
+import { GlobalStoreProvider } from "./components/GlobalStore/globalStore.js";
 var Index = function () {
     return (React.createElement(GlobalStoreProvider, null,
         React.createElement(App, null)));

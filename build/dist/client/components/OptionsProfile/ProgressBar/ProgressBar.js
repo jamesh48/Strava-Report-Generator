@@ -88,7 +88,7 @@ var ProgressBar = function (props) {
             React.createElement("option", { value: "timeElapsedDesc" }, "Time Elapsed: Longest First"),
             React.createElement("option", { value: "timeElapsedAsc" }, "Time Elapsed: Shortest First")),
         React.createElement("input", { type: "button", className: "update-button", value: "Update!", onClick: updateEntries }),
-        React.createElement("input", { type: "button", className: "update-button", value: "Destroy!" }))) : (React.createElement("div", { className: "update-button-container" },
+        React.createElement("input", { type: "button", className: "update-button", value: "Destroy!", onClick: function () { return alert("This button does not do anything currently"); } }))) : (React.createElement("div", { className: "update-button-container" },
         React.createElement("div", { id: "progress-bar-container" },
             React.createElement("div", { className: "progress-bar-filler", style: fillerStyles },
                 React.createElement("span", { className: "progress-bar-counter" }, "".concat(progressBarProgress, "%"))))));

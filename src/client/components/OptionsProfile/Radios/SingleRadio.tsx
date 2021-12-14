@@ -37,6 +37,7 @@ const SingleRadio: React.FC<SingleRadioProps> = (props) => {
         disabled={!props.isLoaded ? true : false}
         id={props.id}
         name={props.name}
+        //@ts-ignore
         onChange={props.setCallback}
         type="text"
         placeholder={props.placeholder}
