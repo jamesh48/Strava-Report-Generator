@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Mostly Typescript now"
+          message: "Added a filter by title query input"
         }
       }
     },

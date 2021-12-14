@@ -4,7 +4,7 @@ import RadioColumn from "../Radios/RadioColumn";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useGlobalContext } from "../../GlobalStore/globalStore.js";
 import { RadiosProps } from "./RadioTypes";
-
+import AdditionalFilters from "./AdditionalFilters";
 
 const Radios: React.FC<RadiosProps> = (props) => {
   const [{ totalEntries }] = useGlobalContext();
@@ -53,6 +53,7 @@ const Radios: React.FC<RadiosProps> = (props) => {
           );
         })}
       </div>
+      <AdditionalFilters setTitleQuery={props.setTitleQuery} titleQuery={props.titleQuery} />
       <ProgressBar />
     </div>
   );

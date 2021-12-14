@@ -2,11 +2,12 @@ import create from "zustand";
 
 export const useEntriesStore = create((set) => ({
   entries: [],
-  filterAndSortEntries: (totalEntryPayload, sortCondition, distance, sport) =>
+  filterAndSortEntries: (totalEntryPayload, sortCondition, distance, sport, titleQuery) =>
     set((state) => ({
       entries: totalEntryPayload
         .filter((entry) => Number(distance) <= Number(entry.distance))
         .filter((remainingEntry) => sport === remainingEntry.type)
+        .filter((remainingEntry) => remainingEntry.name.indexOf(titleQuery) > -1)
         .slice()
         .sort(
           sortCondition === "speedDesc"

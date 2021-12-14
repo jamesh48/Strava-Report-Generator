@@ -2,7 +2,6 @@ import React from "react";
 import { PageNoLiProps } from "./PaginationTypes";
 
 const PageNoLi: React.FC<PageNoLiProps> = ({ handleClick, number, page }) => {
-  console.log(page, number);
   return (
     <li
       key={number}

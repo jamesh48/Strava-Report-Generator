@@ -46,8 +46,9 @@ var App = function () {
     var _a = useGlobalContext(), _b = _a[0], globalDispatch = _a[1];
     var _c = React.useState("Run"), sport = _c[0], setSport = _c[1];
     var _d = React.useState("kph"), format = _d[0], setFormat = _d[1];
-    var _e = React.useState(0), distance = _e[0], setDistance = _e[1];
-    var _f = React.useState(false), customDistance = _f[0], setCustomDistance = _f[1];
+    var _e = React.useState(""), titleQuery = _e[0], setTitleQuery = _e[1];
+    var _f = React.useState(0), distance = _f[0], setDistance = _f[1];
+    var _g = React.useState(false), customDistance = _g[0], setCustomDistance = _g[1];
     componentDidMount: React.useEffect(function () {
         document.title = "Strava Report Generator";
         var fetchEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -91,14 +92,17 @@ var App = function () {
         var value = _a.currentTarget.value;
         setFormat(value);
     };
+    var setTitleQueryCallback = function (event) {
+        setTitleQuery(event.currentTarget.value);
+    };
     return (React.createElement("div", { id: "body" },
         React.createElement(Suspense, { fallback: React.createElement("div", { id: "upper-section" },
                 React.createElement(FBUserProfile, null),
-                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format, setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback })) },
+                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format, titleQuery: titleQuery, setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback })) },
             React.createElement("div", { id: "upper-section" },
                 React.createElement(UserProfile, null),
-                React.createElement(Radios, { setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, sport: sport, customDistance: customDistance, distance: distance, format: format }))),
-        React.createElement(Report, { sport: sport, format: format, distance: distance })));
+                React.createElement(Radios, { setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback, titleQuery: titleQuery, sport: sport, customDistance: customDistance, distance: distance, format: format }))),
+        React.createElement(Report, { sport: sport, format: format, distance: distance, titleQuery: titleQuery })));
 };
 export default App;
 //# sourceMappingURL=App.js.map

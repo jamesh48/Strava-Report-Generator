@@ -14,6 +14,7 @@ const App: React.FC<{}> = () => {
   // Radios
   const [sport, setSport] = React.useState("Run");
   const [format, setFormat] = React.useState("kph");
+  const [titleQuery, setTitleQuery] = React.useState("");
   const [distance, setDistance] = React.useState(0);
   const [customDistance, setCustomDistance] = React.useState(false);
 
@@ -69,6 +70,12 @@ const App: React.FC<{}> = () => {
     setFormat(value);
   };
 
+  const setTitleQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    setTitleQuery(event.currentTarget.value);
+  };
+
   return (
     <div id="body">
       <Suspense
@@ -80,9 +87,11 @@ const App: React.FC<{}> = () => {
               customDistance={customDistance}
               distance={distance}
               format={format}
+              titleQuery={titleQuery}
               setSport={setSportCallback}
               setDistance={setDistanceCallback}
               setFormat={setFormatCallback}
+              setTitleQuery={setTitleQueryCallback}
             />
           </div>
         }
@@ -94,6 +103,8 @@ const App: React.FC<{}> = () => {
             setSport={setSportCallback}
             setDistance={setDistanceCallback}
             setFormat={setFormatCallback}
+            setTitleQuery={setTitleQueryCallback}
+            titleQuery={titleQuery}
             sport={sport}
             customDistance={customDistance}
             distance={distance}
@@ -101,7 +112,7 @@ const App: React.FC<{}> = () => {
           />
         </div>
       </Suspense>
-      <Report sport={sport} format={format} distance={distance} />
+      <Report sport={sport} format={format} distance={distance} titleQuery={titleQuery} />
     </div>
   );
 };

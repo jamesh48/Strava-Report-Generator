@@ -14,6 +14,7 @@ import InputJSON from "./input.json";
 import RadioColumn from "../Radios/RadioColumn";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useGlobalContext } from "../../GlobalStore/globalStore.js";
+import AdditionalFilters from "./AdditionalFilters";
 var Radios = function (props) {
     var totalEntries = useGlobalContext()[0].totalEntries;
     var initArr = [
@@ -48,6 +49,7 @@ var Radios = function (props) {
         React.createElement("div", { id: "button-layout" }, initArr.map(function (radioColumn, index) {
             return (React.createElement(RadioColumn, __assign({ key: index }, radioColumn, { isLoaded: !!totalEntries.length })));
         })),
+        React.createElement(AdditionalFilters, { setTitleQuery: props.setTitleQuery, titleQuery: props.titleQuery }),
         React.createElement(ProgressBar, null)));
 };
 export default Radios;

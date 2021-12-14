@@ -88,9 +88,9 @@ var Report = function (props) {
     }, [props.distance]);
     React.useEffect(function () {
         if (totalEntries.length) {
-            filterAndSortEntries(totalEntries, sortCondition, props.distance, props.sport);
+            filterAndSortEntries(totalEntries, sortCondition, props.distance, props.sport, props.titleQuery);
         }
-    }, [sortCondition, props.distance, props.sport, totalEntries]);
+    }, [sortCondition, props.distance, props.sport, props.titleQuery, totalEntries]);
     var handlePaginationClick = function (event) {
         var actualId = event === null || event === void 0 ? void 0 : event.currentTarget.id.split("-");
         setCurrentPage(Number(actualId[1]));

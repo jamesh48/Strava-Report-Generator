@@ -54,10 +54,11 @@ const Report: React.FC<ReportProps> = (props) => {
         totalEntries,
         sortCondition,
         props.distance,
-        props.sport
+        props.sport,
+        props.titleQuery
       );
     }
-  }, [sortCondition, props.distance, props.sport, totalEntries]);
+  }, [sortCondition, props.distance, props.sport, props.titleQuery, totalEntries]);
 
   const handlePaginationClick: React.MouseEventHandler<HTMLLIElement> = (
     event

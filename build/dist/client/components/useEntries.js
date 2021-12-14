@@ -1,11 +1,12 @@
 import create from "zustand";
 export var useEntriesStore = create(function (set) { return ({
     entries: [],
-    filterAndSortEntries: function (totalEntryPayload, sortCondition, distance, sport) {
+    filterAndSortEntries: function (totalEntryPayload, sortCondition, distance, sport, titleQuery) {
         return set(function (state) { return ({
             entries: totalEntryPayload
                 .filter(function (entry) { return Number(distance) <= Number(entry.distance); })
                 .filter(function (remainingEntry) { return sport === remainingEntry.type; })
+                .filter(function (remainingEntry) { return remainingEntry.name.indexOf(titleQuery) > -1; })
                 .slice()
                 .sort(sortCondition === "speedDesc"
                 ? function (a, b) { return b.distance / b.moving_time - a.distance / a.moving_time; }

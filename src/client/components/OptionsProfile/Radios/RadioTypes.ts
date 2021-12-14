@@ -4,6 +4,8 @@ export interface RadiosProps {
   setSport: React.MouseEventHandler<HTMLInputElement>;
   setDistance: React.MouseEventHandler<HTMLInputElement>;
   setFormat: React.MouseEventHandler<HTMLInputElement>;
+  setTitleQuery: React.ChangeEventHandler<HTMLInputElement>;
+  titleQuery: string;
   sport: string;
   customDistance: boolean;
   distance: number;
@@ -32,7 +34,7 @@ export interface SingleRadioProps {
   placeholder?: string;
   labelText?: string | undefined;
   value?: string | undefined;
-  setCallback: React.MouseEventHandler<HTMLInputElement>
+  setCallback: React.MouseEventHandler<HTMLInputElement>;
 }
 
 export type RadioValueProps = {
@@ -42,3 +44,8 @@ export type RadioValueProps = {
   value?: string | undefined;
   labelText?: string | undefined;
 };
+
+export interface AdditionalFilterProps {
+  setTitleQuery: React.ChangeEventHandler<HTMLInputElement>;
+  titleQuery: string;
+}
