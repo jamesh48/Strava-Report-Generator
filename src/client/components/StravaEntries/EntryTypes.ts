@@ -1,35 +1,12 @@
+import React from "react";
+
 export interface StravaEntryProps {
-  showIndividualEntry: () => void;
+  showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>
   sport: string;
-  entry: {
-    activityId: number;
-    name: string;
-    start_date: string;
-    max_speed: number;
-    distance: number;
-    moving_time: number;
-    elapsed_time: number;
-  };
-  format: string;
-  no: number;
-  currentActivity: {
-    id: number;
-    name: string;
-    kudos_count: number;
-    comment_count: number;
-    average_heartrate: number;
-    max_heartrate: number;
-    achievement_count: number;
-    description: string;
-    device_name: string;
-    photos: {
-      primary: {
-        urls: {
-          "600": string;
-        };
-      };
-    };
-  };
+  entry: Entry;
+  format: string | undefined;
+  no: number | undefined;
+  currentActivity: currentActivity;
   updateIndividualEntry: (currentActivityId: number) => void;
 }
 
@@ -41,48 +18,66 @@ export interface EntryDescriptorProps {
 export interface DetailedEntryProps {
   editing: boolean;
   editedDescription: string;
-  currentActivity: {
-    kudos_count: number;
-    comment_count: number;
-    average_heartrate: number;
-    max_heartrate: number;
-    achievement_count: number;
-    description: string;
-    device_name: string;
-    photos: {
-      primary: {
-        urls: {
-          "600": string;
-        };
-      };
-    };
-  };
-  handleEditingChange: React.MouseEventHandler<HTMLAnchorElement>;
+  currentActivity: currentActivity;
+  handleEditingChange: React.MouseEventHandler<HTMLAnchorElement>
   handleDescriptionChange: (e: { target: { value: string } }) => void;
   handleActivityUpdate: () => void;
 }
 
-export interface GeneralEntry {
-  no: number;
+export type Entry = {
+  activityId: number;
+  name: string;
+  start_date: string;
+  max_speed: number;
+  distance: number;
+  moving_time: number;
+  elapsed_time: number;
+};
+
+export interface GeneralEntryProps {
+  no: number | undefined;
   editing: boolean;
   editedName: string;
-  entry: {
-    activityId: number;
-    name: string;
-    start_date: string;
-    max_speed: number;
-    distance: number;
-    moving_time: number;
-    elapsed_time: number;
-  };
+  entry: Entry;
   sport: string;
-  format: string;
+  format: string | undefined;
   handleNameChange: (e: { target: { value: string } }) => void;
-  showIndividualEntry: () => void;
+  showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 export interface NestedEntryDescriptorProps {
   title: string;
   value: string;
   extra: string;
+}
+
+type currentActivity = {
+  id: number;
+  name: string;
+  kudos_count: number;
+  comment_count: number;
+  average_heartrate: number;
+  max_heartrate: number;
+  achievement_count: number;
+  description: string;
+  device_name: string;
+  photos: {
+    primary: {
+      urls: {
+        "600": string;
+      };
+    };
+  };
+}
+
+export interface EntryUIProps {
+  entries: Entry[];
+  entriesPerPage: number;
+  currentPage: number;
+  currentActivity: currentActivity;
+  invalidEntry: boolean;
+  sport: string;
+  format?: string | undefined;
+  showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
+  updateIndividualEntry: (entryId: number) => Promise<void>;
 }

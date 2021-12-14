@@ -52,6 +52,7 @@
     "build": "webpack --config configs/webpack/webpack.config.js",
     "grunt:build": "grunt build --gruntfile configs/grunt/Gruntfile.js",
     "dev:start": "nodemon ./build/dist/server/index.js",
+    "tsc:build": "tsc --watch",
     "dev:build": "export NODE_ENV=dev && webpack --config configs/webpack/webpack.config.js && concurrently \"webpack --config configs/webpack/webpack.config.js --watch\" \"npm run dev:start\"",
     "grunt:git": "grunt git --gruntfile configs/grunt/GruntFile.js",
     "grunt:deploy": "grunt deploy --gruntfile configs/grunt/Gruntfile.js",

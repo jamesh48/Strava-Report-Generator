@@ -46,22 +46,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import React from "react";
-import EntryUl from "StravaEntries/EntryUl.js";
-import PageNoUl from "PaginationContainer/PageNoUl.js";
+import EntryUl from "./StravaEntries/EntryUl.js";
+import PageNoUl from "./PaginationContainer/PageNoUl";
 import { getIndividualEntry } from "./AppUtils.js";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { useEntriesStore } from "./useEntries.js";
 var Report = function (props) {
-    var _a = useGlobalContext()[0], totalEntries = _a.totalEntries, isLoaded = _a.isLoaded, sortCondition = _a.sortCondition;
+    var _a = useGlobalContext()[0], totalEntries = _a.totalEntries, sortCondition = _a.sortCondition;
     var _b = React.useState(1), currentPage = _b[0], setCurrentPage = _b[1];
-    var _c = React.useState(7), entriesPerPage = _c[0], setEntriesPerPage = _c[1];
-    var _d = React.useState(false), invalidEntry = _d[0], setInvalidEntry = _d[1];
-    var _e = React.useState({}), currentActivity = _e[0], setCurrentActivity = _e[1];
-    var _f = useEntriesStore(function (state) { return state; }), entries = _f.entries, filterAndSortEntries = _f.filterAndSortEntries;
-    reset_page_on_sport_change: React.useEffect(function () {
+    var entriesPerPage = React.useState(7)[0];
+    var _c = React.useState(false), invalidEntry = _c[0], setInvalidEntry = _c[1];
+    var _d = React.useState({
+        id: 0,
+        name: "",
+        kudos_count: 0,
+        comment_count: 0,
+        average_heartrate: 0,
+        max_heartrate: 0,
+        achievement_count: 0,
+        description: "",
+        device_name: "",
+        photos: {
+            primary: {
+                urls: {
+                    "600": ""
+                }
+            }
+        }
+    }), currentActivity = _d[0], setCurrentActivity = _d[1];
+    var _e = useEntriesStore(function (state) { return state; }), entries = _e.entries, filterAndSortEntries = _e.filterAndSortEntries;
+    React.useEffect(function () {
         setCurrentPage(1);
     }, [props.sport]);
-    set_invalid_entry_on_distance_change: React.useEffect(function () {
+    React.useEffect(function () {
         if (typeof Number(props.distance) !== "number") {
             setInvalidEntry(true);
         }
@@ -69,32 +86,29 @@ var Report = function (props) {
             setInvalidEntry(false);
         }
     }, [props.distance]);
-    change_filtered_entries_on_change: React.useEffect(function () {
+    React.useEffect(function () {
         if (totalEntries.length) {
             filterAndSortEntries(totalEntries, sortCondition, props.distance, props.sport);
         }
     }, [sortCondition, props.distance, props.sport, totalEntries]);
-    var handlePaginationClick = function (_a) {
-        var id = _a.target.id;
-        setCurrentPage(Number(id));
+    var handlePaginationClick = function (event) {
+        var actualId = event === null || event === void 0 ? void 0 : event.currentTarget.id.split("-");
+        setCurrentPage(Number(actualId[1]));
     };
-    var showIndividualEntry = function (_a) {
-        var indentry = _a.target.dataset.indentry;
-        return __awaiter(void 0, void 0, void 0, function () {
-            var individualEntry;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        event.preventDefault();
-                        return [4, getIndividualEntry(indentry)];
-                    case 1:
-                        individualEntry = _b.sent();
-                        setCurrentActivity(individualEntry);
-                        return [2];
-                }
-            });
+    var showIndividualEntry = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+        var individualEntry;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    event.preventDefault();
+                    return [4, getIndividualEntry(event.currentTarget.dataset.indentry)];
+                case 1:
+                    individualEntry = _a.sent();
+                    setCurrentActivity(individualEntry);
+                    return [2];
+            }
         });
-    };
+    }); };
     var updateIndividualEntry = function (entryId) { return __awaiter(void 0, void 0, void 0, function () {
         var individualEntry;
         return __generator(this, function (_a) {

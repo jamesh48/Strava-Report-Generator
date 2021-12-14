@@ -1,9 +1,9 @@
 import React from "react";
 import EntryDescriptor from "./EntryDescriptor";
-import { GeneralEntry } from "./EntryTypes";
+import { GeneralEntryProps } from "./EntryTypes";
 import NestedEntryDescriptor from "./NestedEntryDescriptor";
 
-const GeneralEntry: React.FC<GeneralEntry> = ({
+const GeneralEntry: React.FC<GeneralEntryProps> = ({
   no,
   entry,
   sport,

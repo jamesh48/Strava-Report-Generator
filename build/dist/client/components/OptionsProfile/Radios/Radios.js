@@ -10,17 +10,17 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import React from "react";
-import InputJSON from "OptionsProfile/Radios/input.json";
-import RadioColumn from "OptionsProfile/Radios/RadioColumn";
-import ProgressBar from "OptionsProfile/ProgressBar/ProgressBar";
-import { useGlobalContext } from "GlobalStore";
-export default (function (props) {
+import InputJSON from "./input.json";
+import RadioColumn from "../Radios/RadioColumn";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import { useGlobalContext } from "../../GlobalStore/globalStore.js";
+var Radios = function (props) {
     var totalEntries = useGlobalContext()[0].totalEntries;
     var initArr = [
         {
             title: "Choose Sport",
             setCallback: props.setSport,
-            radioValues: InputJSON.chooseSportRadios,
+            radioValues: InputJSON.chooseSportRadios
         },
         {
             title: "Choose Distance",
@@ -31,7 +31,7 @@ export default (function (props) {
                     ? InputJSON.distanceSwimRadios
                     : [],
             customDistance: props.customDistance,
-            distance: props.distance,
+            distance: props.distance
         },
         {
             title: "Choose Format",
@@ -41,13 +41,14 @@ export default (function (props) {
                 : props.sport === "Swim"
                     ? InputJSON.formatSwimRadios
                     : [],
-            format: props.format,
-        },
+            format: props.format
+        }
     ];
     return (React.createElement("div", { id: "buttons-and-bar" },
         React.createElement("div", { id: "button-layout" }, initArr.map(function (radioColumn, index) {
             return (React.createElement(RadioColumn, __assign({ key: index }, radioColumn, { isLoaded: !!totalEntries.length })));
         })),
-        React.createElement(ProgressBar, { completed: props.progressBarProgress })));
-});
+        React.createElement(ProgressBar, null)));
+};
+export default Radios;
 //# sourceMappingURL=Radios.js.map

@@ -1,10 +1,14 @@
 import React from "react";
-import SingleRadio from "OptionsProfile/Radios/SingleRadio";
+import { RadioColumnProps } from "./RadioTypes";
+import SingleRadio from "./SingleRadio";
 
-export default (props) => {
+const RadioColumn: React.FC<RadioColumnProps> = (props) => {
   return (
     <div className="choose-radio-container">
-      <h4 className="choose-title" id={props.title.split(' ').join('-').toLowerCase()}>
+      <h4
+        className="choose-title"
+        id={props.title.split(" ").join("-").toLowerCase()}
+      >
         {props.title}
       </h4>
       <div className="multiple-radio-button-container">
@@ -15,3 +19,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default RadioColumn;

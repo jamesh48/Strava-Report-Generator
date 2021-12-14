@@ -10,12 +10,13 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import React from "react";
-import SingleRadio from "OptionsProfile/Radios/SingleRadio";
-export default (function (props) {
+import SingleRadio from "./SingleRadio";
+var RadioColumn = function (props) {
     return (React.createElement("div", { className: "choose-radio-container" },
-        React.createElement("h4", { className: "choose-title", id: props.title.split(' ').join('-').toLowerCase() }, props.title),
+        React.createElement("h4", { className: "choose-title", id: props.title.split(" ").join("-").toLowerCase() }, props.title),
         React.createElement("div", { className: "multiple-radio-button-container" }, props.radioValues.map(function (radio, index) {
             return React.createElement(SingleRadio, __assign({}, radio, props, { index: index }));
         }))));
-});
+};
+export default RadioColumn;
 //# sourceMappingURL=RadioColumn.js.map

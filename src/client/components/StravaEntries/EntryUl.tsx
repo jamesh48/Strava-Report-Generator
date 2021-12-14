@@ -1,9 +1,11 @@
 import React from "react";
-import StravaEntry from "StravaEntries/StravaEntry.js";
+import StravaEntry from "./StravaEntry.js";
 import EmptyEntry from "./EmptyEntry";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "../GlobalStore/globalStore.js";
+import { EntryUIProps } from "./EntryTypes.js";
 
-export default ({
+
+const EntryUI: React.FC<EntryUIProps> = ({
   showIndividualEntry,
   entries,
   entriesPerPage,
@@ -14,7 +16,7 @@ export default ({
   format,
   updateIndividualEntry
 }) => {
-  const [{isLoaded}] = useGlobalContext();
+  const [{ isLoaded }] = useGlobalContext();
   const currentEntries = entries.slice(
     currentPage * entriesPerPage - entriesPerPage,
     currentPage * entriesPerPage
@@ -47,3 +49,5 @@ export default ({
     </ul>
   );
 };
+
+export default EntryUI;

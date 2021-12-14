@@ -1,6 +1,7 @@
 import React from "react";
+import { SingleRadioProps } from "./RadioTypes";
 
-export default (props) => {
+const SingleRadio: React.FC<SingleRadioProps> = (props) => {
   return props.type === "radio" ? (
     <div className="single-radio-button-container">
       <input
@@ -10,7 +11,14 @@ export default (props) => {
         id={props.id}
         name={props.name}
         value={props.value}
-        checked={props.name.indexOf('distance') > - 1 && props.index === 0 && !props.distance ? "checked" : null}
+        // @ts-ignore
+        checked={
+          props.name.indexOf("distance") > -1 &&
+          props.index === 0 &&
+          !props.distance
+            ? "Checked"
+            : null
+        }
         onClick={props.setCallback}
       />
       <label htmlFor="allresults">{props.labelText}</label>
@@ -23,7 +31,7 @@ export default (props) => {
         name={props.name}
         disabled
         hidden
-        checked={props.customDistance ? "Checked" : null}
+        checked={props.customDistance}
       />
       <input
         disabled={!props.isLoaded ? true : false}
@@ -32,8 +40,11 @@ export default (props) => {
         onChange={props.setCallback}
         type="text"
         placeholder={props.placeholder}
+        // @ts-ignore
         value={props.customDistance ? null : ""}
       />
     </div>
   ) : null;
 };
+
+export default SingleRadio;

@@ -44,7 +44,7 @@ app.use(
     store: new redisStore({
       client: redisClient,
       disableTouch: true
-    }),
+    })
   })
 );
 

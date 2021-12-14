@@ -32,7 +32,7 @@ app.use(session({
     store: new redisStore({
         client: redisClient,
         disableTouch: true
-    }),
+    })
 }));
 app.use(function (req, res, next) {
     console.log(performance.now());

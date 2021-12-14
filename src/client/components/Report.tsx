@@ -1,28 +1,46 @@
-import React, { Suspense } from "react";
-import EntryUl from "StravaEntries/EntryUl.js";
-import PageNoUl from "PaginationContainer/PageNoUl.js";
+import React from "react";
+import EntryUl from "./StravaEntries/EntryUl.js";
+import PageNoUl from "./PaginationContainer/PageNoUl";
 import { getIndividualEntry } from "./AppUtils.js";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { useEntriesStore } from "./useEntries.js";
+import { ReportProps } from "./BaseProps";
 
-const Report = (props) => {
+const Report: React.FC<ReportProps> = (props) => {
   // Global Context
-  const [{ totalEntries, isLoaded, sortCondition }] = useGlobalContext();
+  const [{ totalEntries, sortCondition }] = useGlobalContext();
   // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [entriesPerPage, setEntriesPerPage] = React.useState(7);
+  const [entriesPerPage] = React.useState(7);
   // Entries
   const [invalidEntry, setInvalidEntry] = React.useState(false);
-  const [currentActivity, setCurrentActivity] = React.useState({});
+  const [currentActivity, setCurrentActivity] = React.useState({
+    id: 0,
+    name: "",
+    kudos_count: 0,
+    comment_count: 0,
+    average_heartrate: 0,
+    max_heartrate: 0,
+    achievement_count: 0,
+    description: "",
+    device_name: "",
+    photos: {
+      primary: {
+        urls: {
+          "600": ""
+        }
+      }
+    }
+  });
   // const [entries, setEntries] = React.useState([]);
 
   const { entries, filterAndSortEntries } = useEntriesStore((state) => state);
 
-  reset_page_on_sport_change: React.useEffect(() => {
+  React.useEffect(() => {
     setCurrentPage(1);
   }, [props.sport]);
 
-  set_invalid_entry_on_distance_change: React.useEffect(() => {
+  React.useEffect(() => {
     if (typeof Number(props.distance) !== "number") {
       setInvalidEntry(true);
     } else {
@@ -30,7 +48,7 @@ const Report = (props) => {
     }
   }, [props.distance]);
 
-  change_filtered_entries_on_change: React.useEffect(() => {
+  React.useEffect(() => {
     if (totalEntries.length) {
       filterAndSortEntries(
         totalEntries,
@@ -41,21 +59,23 @@ const Report = (props) => {
     }
   }, [sortCondition, props.distance, props.sport, totalEntries]);
 
-  const handlePaginationClick = ({ target: { id } }) => {
-    setCurrentPage(Number(id));
+  const handlePaginationClick: React.MouseEventHandler<HTMLLIElement> = (
+    event
+  ) => {
+    const actualId = event?.currentTarget.id.split("-");
+    setCurrentPage(Number(actualId[1]));
   };
 
-  const showIndividualEntry = async ({
-    target: {
-      dataset: { indentry }
-    }
-  }) => {
-    event.preventDefault();
-    const individualEntry = await getIndividualEntry(indentry);
-    setCurrentActivity(individualEntry);
-  };
+  const showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement> =
+    async (event) => {
+      event.preventDefault();
+      const individualEntry = await getIndividualEntry(
+        event.currentTarget.dataset.indentry
+      );
+      setCurrentActivity(individualEntry);
+    };
 
-  const updateIndividualEntry = async (entryId) => {
+  const updateIndividualEntry = async (entryId: number) => {
     const individualEntry = await getIndividualEntry(entryId);
     setCurrentActivity(individualEntry);
   };

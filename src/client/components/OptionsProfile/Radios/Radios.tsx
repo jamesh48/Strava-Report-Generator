@@ -1,17 +1,19 @@
 import React from "react";
-import InputJSON from "OptionsProfile/Radios/input.json";
-import RadioColumn from "OptionsProfile/Radios/RadioColumn";
-import ProgressBar from "OptionsProfile/ProgressBar/ProgressBar";
-import { useGlobalContext } from "GlobalStore";
+import InputJSON from "./input.json";
+import RadioColumn from "../Radios/RadioColumn";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import { useGlobalContext } from "../../GlobalStore/globalStore.js";
+import { RadiosProps } from "./RadioTypes";
 
-export default (props) => {
+
+const Radios: React.FC<RadiosProps> = (props) => {
   const [{ totalEntries }] = useGlobalContext();
 
   const initArr = [
     {
       title: "Choose Sport",
       setCallback: props.setSport,
-      radioValues: InputJSON.chooseSportRadios,
+      radioValues: InputJSON.chooseSportRadios
     },
     {
       title: "Choose Distance",
@@ -23,7 +25,7 @@ export default (props) => {
           ? InputJSON.distanceSwimRadios
           : [],
       customDistance: props.customDistance,
-      distance: props.distance,
+      distance: props.distance
     },
     {
       title: "Choose Format",
@@ -34,8 +36,8 @@ export default (props) => {
           : props.sport === "Swim"
           ? InputJSON.formatSwimRadios
           : [],
-      format: props.format,
-    },
+      format: props.format
+    }
   ];
 
   return (
@@ -43,11 +45,17 @@ export default (props) => {
       <div id="button-layout">
         {initArr.map((radioColumn, index) => {
           return (
-            <RadioColumn key={index} {...radioColumn} isLoaded={!!totalEntries.length} />
+            <RadioColumn
+              key={index}
+              {...radioColumn}
+              isLoaded={!!totalEntries.length}
+            />
           );
         })}
       </div>
-      <ProgressBar completed={props.progressBarProgress} />
+      <ProgressBar />
     </div>
   );
 };
+
+export default Radios;

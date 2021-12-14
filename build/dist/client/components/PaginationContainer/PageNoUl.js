@@ -7,17 +7,19 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import React from 'react';
-import PageNo from './PageNoLi.js';
-export default (function (_a) {
+import React from "react";
+import PageNo from "./PageNoLi";
+var PageNoUl = function (_a) {
     var entries = _a.entries, entriesPerPage = _a.entriesPerPage, currentPage = _a.currentPage, handleClick = _a.handleClick;
     var renderPageNumbers = function () {
         return __spreadArray([], new Array(Math.ceil(entries.length / entriesPerPage)), true).map(function (x, index) {
-            return (index + 1);
-        }).map(function (number) {
+            return index + 1;
+        })
+            .map(function (number) {
             return (React.createElement(PageNo, { key: number, number: number, page: currentPage, handleClick: handleClick }));
         });
     };
-    return (React.createElement("ul", { className: 'page-no-uls', id: 'page-numbers' }, renderPageNumbers()));
-});
+    return (React.createElement("ul", { className: "page-no-uls", id: "page-numbers" }, renderPageNumbers()));
+};
+export default PageNoUl;
 //# sourceMappingURL=PageNoUl.js.map

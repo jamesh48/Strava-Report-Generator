@@ -110,8 +110,8 @@
     },
     {
       "type": "radioAndText",
-      "name": "swimdistance",
       "id": "custom-distance",
+      "name": "swimdistance",
       "placeholder": "Custom Distance"
     }
   ],

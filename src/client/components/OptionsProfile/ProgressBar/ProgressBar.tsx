@@ -2,9 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useProgressBarProgressStore } from "./useProgressBarProgress";
 import { useInterval } from "./useInterval";
-import { useGlobalContext } from "GlobalStore";
+import { useGlobalContext } from "../../GlobalStore/globalStore.js";
+import { ProgressBarProps } from "./ProgressBarTypes";
 
-const ProgressBar = (props) => {
+const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   const [{ isLoaded }, globalDispatch] = useGlobalContext();
   const {
     progressBarProgress,
@@ -31,7 +32,7 @@ const ProgressBar = (props) => {
     width: `${progressBarProgress}%`
   };
 
-  const updateEntries = async () => {
+  const updateEntries: () => Promise<void> = async () => {
     globalDispatch({ type: "TOGGLE LOADED OFF" });
     const { data: allActivities } = await axios.post("/addAllActivities");
     globalDispatch({ type: "TOGGLE LOADED ON" });
@@ -41,8 +42,13 @@ const ProgressBar = (props) => {
     });
   };
 
-  const setSortCondition = (e) => {
-    globalDispatch({ type: "SET SORT CONDITION", payload: e.target.value });
+  const setSortCondition: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    globalDispatch({
+      type: "SET SORT CONDITION",
+      payload: event.currentTarget.value
+    });
   };
 
   return progressBarProgress === 0 ? (
