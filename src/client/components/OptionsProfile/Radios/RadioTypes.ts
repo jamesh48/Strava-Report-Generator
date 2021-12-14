@@ -5,6 +5,8 @@ export interface RadiosProps {
   setDistance: React.MouseEventHandler<HTMLInputElement>;
   setFormat: React.MouseEventHandler<HTMLInputElement>;
   setTitleQuery: React.ChangeEventHandler<HTMLInputElement>;
+  setFromDateQuery: React.ChangeEventHandler<HTMLInputElement>;
+  setToDateQuery: React.ChangeEventHandler<HTMLInputElement>;
   titleQuery: string;
   sport: string;
   customDistance: boolean;
@@ -47,5 +49,7 @@ export type RadioValueProps = {
 
 export interface AdditionalFilterProps {
   setTitleQuery: React.ChangeEventHandler<HTMLInputElement>;
+  setFromDateQuery: React.ChangeEventHandler<HTMLInputElement>;
+  setToDateQuery: React.ChangeEventHandler<HTMLInputElement>;
   titleQuery: string;
 }

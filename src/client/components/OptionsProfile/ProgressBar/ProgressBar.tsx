@@ -4,6 +4,7 @@ import { useProgressBarProgressStore } from "./useProgressBarProgress";
 import { useInterval } from "./useInterval";
 import { useGlobalContext } from "../../GlobalStore/globalStore.js";
 import { ProgressBarProps } from "./ProgressBarTypes";
+import "./progressBar.scss";
 
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   const [{ isLoaded }, globalDispatch] = useGlobalContext();
@@ -55,6 +56,8 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     <div className="update-button-container">
       <select className="update-button" onChange={setSortCondition}>
         <option value="speedDesc">Speed: Fastest First</option>
+        <option value="dateDesc">Date: Most Recent</option>
+        <option value="dateAsc">Date: Least Recent</option>
         <option value="movingTimeDesc">Moving Time: Longest First</option>
         <option value="movingTimeAsc">Moving Time: Shortest First</option>
         <option value="timeElapsedDesc">Time Elapsed: Longest First</option>

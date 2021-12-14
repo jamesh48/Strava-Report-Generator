@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import React, { Suspense } from "react";
 import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
-import Report from "./Report";
+import Report from "./StravaEntries/Report";
 import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
 import Radios from "./OptionsProfile/Radios/Radios";
@@ -47,8 +47,10 @@ var App = function () {
     var _c = React.useState("Run"), sport = _c[0], setSport = _c[1];
     var _d = React.useState("kph"), format = _d[0], setFormat = _d[1];
     var _e = React.useState(""), titleQuery = _e[0], setTitleQuery = _e[1];
-    var _f = React.useState(0), distance = _f[0], setDistance = _f[1];
-    var _g = React.useState(false), customDistance = _g[0], setCustomDistance = _g[1];
+    var _f = React.useState(""), fromDateQuery = _f[0], setFromDateQuery = _f[1];
+    var _g = React.useState(""), toDateQuery = _g[0], setToDateQuery = _g[1];
+    var _h = React.useState(0), distance = _h[0], setDistance = _h[1];
+    var _j = React.useState(false), customDistance = _j[0], setCustomDistance = _j[1];
     componentDidMount: React.useEffect(function () {
         document.title = "Strava Report Generator";
         var fetchEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -95,14 +97,20 @@ var App = function () {
     var setTitleQueryCallback = function (event) {
         setTitleQuery(event.currentTarget.value);
     };
+    var setFromDateQueryCallback = function (event) {
+        setFromDateQuery(event.currentTarget.value);
+    };
+    var setToDateQueryCallback = function (event) {
+        setToDateQuery(event.currentTarget.value);
+    };
     return (React.createElement("div", { id: "body" },
         React.createElement(Suspense, { fallback: React.createElement("div", { id: "upper-section" },
                 React.createElement(FBUserProfile, null),
-                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format, titleQuery: titleQuery, setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback })) },
+                React.createElement(Radios, { sport: sport, customDistance: customDistance, distance: distance, format: format, titleQuery: titleQuery, setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback, setFromDateQuery: setFromDateQueryCallback, setToDateQuery: setToDateQueryCallback })) },
             React.createElement("div", { id: "upper-section" },
                 React.createElement(UserProfile, null),
-                React.createElement(Radios, { setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback, titleQuery: titleQuery, sport: sport, customDistance: customDistance, distance: distance, format: format }))),
-        React.createElement(Report, { sport: sport, format: format, distance: distance, titleQuery: titleQuery })));
+                React.createElement(Radios, { setSport: setSportCallback, setDistance: setDistanceCallback, setFormat: setFormatCallback, setTitleQuery: setTitleQueryCallback, setFromDateQuery: setFromDateQueryCallback, setToDateQuery: setToDateQueryCallback, titleQuery: titleQuery, sport: sport, customDistance: customDistance, distance: distance, format: format }))),
+        React.createElement(Report, { sport: sport, format: format, distance: distance, titleQuery: titleQuery, fromDateQuery: fromDateQuery, toDateQuery: toDateQuery })));
 };
 export default App;
 //# sourceMappingURL=App.js.map

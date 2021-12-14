@@ -39,6 +39,7 @@ import axios from "axios";
 import { useProgressBarProgressStore } from "./useProgressBarProgress";
 import { useInterval } from "./useInterval";
 import { useGlobalContext } from "../../GlobalStore/globalStore.js";
+import "./progressBar.scss";
 var ProgressBar = function (props) {
     var _a = useGlobalContext(), isLoaded = _a[0].isLoaded, globalDispatch = _a[1];
     var _b = useProgressBarProgressStore(function (state) { return state; }), progressBarProgress = _b.progressBarProgress, incrementProgressBarProgress = _b.incrementProgressBarProgress, completeProgressBarProgress = _b.completeProgressBarProgress, resetProgressBarProgress = _b.resetProgressBarProgress;
@@ -83,6 +84,8 @@ var ProgressBar = function (props) {
     return progressBarProgress === 0 ? (React.createElement("div", { className: "update-button-container" },
         React.createElement("select", { className: "update-button", onChange: setSortCondition },
             React.createElement("option", { value: "speedDesc" }, "Speed: Fastest First"),
+            React.createElement("option", { value: "dateDesc" }, "Date: Most Recent"),
+            React.createElement("option", { value: "dateAsc" }, "Date: Least Recent"),
             React.createElement("option", { value: "movingTimeDesc" }, "Moving Time: Longest First"),
             React.createElement("option", { value: "movingTimeAsc" }, "Moving Time: Shortest First"),
             React.createElement("option", { value: "timeElapsedDesc" }, "Time Elapsed: Longest First"),

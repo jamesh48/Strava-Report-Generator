@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
 
-import Report from "./Report";
+import Report from "./StravaEntries/Report";
 import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
 import Radios from "./OptionsProfile/Radios/Radios";
@@ -15,6 +15,8 @@ const App: React.FC<{}> = () => {
   const [sport, setSport] = React.useState("Run");
   const [format, setFormat] = React.useState("kph");
   const [titleQuery, setTitleQuery] = React.useState("");
+  const [fromDateQuery, setFromDateQuery] = React.useState("");
+  const [toDateQuery, setToDateQuery] = React.useState("");
   const [distance, setDistance] = React.useState(0);
   const [customDistance, setCustomDistance] = React.useState(false);
 
@@ -76,6 +78,18 @@ const App: React.FC<{}> = () => {
     setTitleQuery(event.currentTarget.value);
   };
 
+  const setFromDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    setFromDateQuery(event.currentTarget.value);
+  };
+
+  const setToDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    setToDateQuery(event.currentTarget.value);
+  };
+
   return (
     <div id="body">
       <Suspense
@@ -92,6 +106,8 @@ const App: React.FC<{}> = () => {
               setDistance={setDistanceCallback}
               setFormat={setFormatCallback}
               setTitleQuery={setTitleQueryCallback}
+              setFromDateQuery={setFromDateQueryCallback}
+              setToDateQuery={setToDateQueryCallback}
             />
           </div>
         }
@@ -104,6 +120,8 @@ const App: React.FC<{}> = () => {
             setDistance={setDistanceCallback}
             setFormat={setFormatCallback}
             setTitleQuery={setTitleQueryCallback}
+            setFromDateQuery={setFromDateQueryCallback}
+            setToDateQuery={setToDateQueryCallback}
             titleQuery={titleQuery}
             sport={sport}
             customDistance={customDistance}
@@ -112,7 +130,14 @@ const App: React.FC<{}> = () => {
           />
         </div>
       </Suspense>
-      <Report sport={sport} format={format} distance={distance} titleQuery={titleQuery} />
+      <Report
+        sport={sport}
+        format={format}
+        distance={distance}
+        titleQuery={titleQuery}
+        fromDateQuery={fromDateQuery}
+        toDateQuery={toDateQuery}
+      />
     </div>
   );
 };

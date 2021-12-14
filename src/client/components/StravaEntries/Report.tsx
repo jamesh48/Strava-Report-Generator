@@ -1,10 +1,11 @@
 import React from "react";
-import EntryUl from "./StravaEntries/EntryUl.js";
-import PageNoUl from "./PaginationContainer/PageNoUl";
-import { getIndividualEntry } from "./AppUtils.js";
-import { useGlobalContext } from "./GlobalStore/globalStore.js";
-import { useEntriesStore } from "./useEntries.js";
-import { ReportProps } from "./BaseProps";
+import EntryUl from "./EntryUl.js";
+import PageNoUl from "../PaginationContainer/PageNoUl";
+import { getIndividualEntry } from "../AppUtils.js";
+import { useGlobalContext } from "../GlobalStore/globalStore.js";
+import { useEntriesStore } from "../useEntries.js";
+import { ReportProps } from "../BaseProps";
+import "./report.scss";
 
 const Report: React.FC<ReportProps> = (props) => {
   // Global Context
@@ -55,10 +56,20 @@ const Report: React.FC<ReportProps> = (props) => {
         sortCondition,
         props.distance,
         props.sport,
-        props.titleQuery
+        props.titleQuery,
+        props.fromDateQuery,
+        props.toDateQuery
       );
     }
-  }, [sortCondition, props.distance, props.sport, props.titleQuery, totalEntries]);
+  }, [
+    sortCondition,
+    props.distance,
+    props.sport,
+    props.titleQuery,
+    props.fromDateQuery,
+    props.toDateQuery,
+    totalEntries
+  ]);
 
   const handlePaginationClick: React.MouseEventHandler<HTMLLIElement> = (
     event

@@ -3,4 +3,6 @@ export interface ReportProps {
   distance: number;
   format: string;
   titleQuery: string;
+  fromDateQuery: string;
+  toDateQuery: string;
 }
