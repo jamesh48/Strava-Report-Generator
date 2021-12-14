@@ -39,7 +39,7 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
     );
 
     // Update the entry
-    updateIndividualEntry(currentActivity.id);
+    updateIndividualEntry(currentActivity.id, editedName);
   };
 
   const handleDescriptionChange: (e: { target: { value: string } }) => void = (
@@ -70,6 +70,7 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
         format={format}
         editing={editing}
         editedName={editedName}
+        currentActivity={currentActivity}
         handleNameChange={handleNameChange}
         showIndividualEntry={showIndividualEntry}
       />

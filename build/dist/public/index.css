@@ -152,7 +152,7 @@
       border-right: 1px solid orangered; }
     .additional-filters .additional-filter-container .date-filter {
       display: flex;
-      flex: .2; }
+      flex: .25; }
       .additional-filters .additional-filter-container .date-filter label {
         color: orangered;
         display: flex;

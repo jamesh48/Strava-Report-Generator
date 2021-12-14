@@ -8,8 +8,13 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
   entry,
   sport,
   format,
-  showIndividualEntry
+  editing,
+  editedName,
+  currentActivity,
+  showIndividualEntry,
+  handleNameChange
 }) => {
+  console.log(currentActivity.id, entry.activityId)
   const m2y = 1.094;
   const mps2kph = 3.6;
 
@@ -58,15 +63,18 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
             : "general-entry"
         }
       >
-        <a
-          className="entry-title"
-          data-indentry={entry.activityId}
-          href=""
-          onClick={showIndividualEntry}
-        >
-          {entry.name}
-        </a>
-
+        {editing ? (
+          <input type="text" value={editedName} onChange={handleNameChange} />
+        ) : (
+          <a
+            className="entry-title"
+            data-indentry={entry.activityId}
+            href=""
+            onClick={showIndividualEntry}
+          >
+            {entry.name}
+          </a>
+        )}
         {format !== "avgypace" ? (
           <EntryDescriptor
             title={`Distance ${pastTense}`}

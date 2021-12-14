@@ -53,11 +53,11 @@ import { useGlobalContext } from "../GlobalStore/globalStore.js";
 import { useEntriesStore } from "../useEntries.js";
 import "./report.scss";
 var Report = function (props) {
-    var _a = useGlobalContext()[0], totalEntries = _a.totalEntries, sortCondition = _a.sortCondition;
-    var _b = React.useState(1), currentPage = _b[0], setCurrentPage = _b[1];
+    var _a = useGlobalContext(), _b = _a[0], totalEntries = _b.totalEntries, sortCondition = _b.sortCondition, globalDispatch = _a[1];
+    var _c = React.useState(1), currentPage = _c[0], setCurrentPage = _c[1];
     var entriesPerPage = React.useState(7)[0];
-    var _c = React.useState(false), invalidEntry = _c[0], setInvalidEntry = _c[1];
-    var _d = React.useState({
+    var _d = React.useState(false), invalidEntry = _d[0], setInvalidEntry = _d[1];
+    var _e = React.useState({
         id: 0,
         name: "",
         kudos_count: 0,
@@ -74,8 +74,8 @@ var Report = function (props) {
                 }
             }
         }
-    }), currentActivity = _d[0], setCurrentActivity = _d[1];
-    var _e = useEntriesStore(function (state) { return state; }), entries = _e.entries, filterAndSortEntries = _e.filterAndSortEntries;
+    }), currentActivity = _e[0], setCurrentActivity = _e[1];
+    var _f = useEntriesStore(function (state) { return state; }), entries = _f.entries, filterAndSortEntries = _f.filterAndSortEntries;
     React.useEffect(function () {
         setCurrentPage(1);
     }, [props.sport]);
@@ -118,11 +118,20 @@ var Report = function (props) {
             }
         });
     }); };
-    var updateIndividualEntry = function (entryId) { return __awaiter(void 0, void 0, void 0, function () {
-        var individualEntry;
+    var updateIndividualEntry = function (entryId, updatingName) { return __awaiter(void 0, void 0, void 0, function () {
+        var updatedEntries, individualEntry;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, getIndividualEntry(entryId)];
+                case 0:
+                    updatedEntries = totalEntries.reduce(function (total, entry) {
+                        if (Number(entry.activityId) === entryId) {
+                            entry.name = updatingName;
+                        }
+                        total.push(entry);
+                        return total;
+                    }, []);
+                    globalDispatch({ type: "SET TOTAL ENTRIES", payload: updatedEntries });
+                    return [4, getIndividualEntry(entryId)];
                 case 1:
                     individualEntry = _a.sent();
                     setCurrentActivity(individualEntry);

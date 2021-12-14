@@ -2,7 +2,8 @@ import React from "react";
 import EntryDescriptor from "./EntryDescriptor";
 import NestedEntryDescriptor from "./NestedEntryDescriptor";
 var GeneralEntry = function (_a) {
-    var no = _a.no, entry = _a.entry, sport = _a.sport, format = _a.format, showIndividualEntry = _a.showIndividualEntry;
+    var no = _a.no, entry = _a.entry, sport = _a.sport, format = _a.format, editing = _a.editing, editedName = _a.editedName, currentActivity = _a.currentActivity, showIndividualEntry = _a.showIndividualEntry, handleNameChange = _a.handleNameChange;
+    console.log(currentActivity.id, entry.activityId);
     var m2y = 1.094;
     var mps2kph = 3.6;
     var pastTense = sport === "Walk"
@@ -35,7 +36,7 @@ var GeneralEntry = function (_a) {
         React.createElement("div", { className: Number(no) >= 0 && Number(no) <= 2
                 ? "".concat("general-entry", " ").concat("special-entry")
                 : "general-entry" },
-            React.createElement("a", { className: "entry-title", "data-indentry": entry.activityId, href: "", onClick: showIndividualEntry }, entry.name),
+            editing ? (React.createElement("input", { type: "text", value: editedName, onChange: handleNameChange })) : (React.createElement("a", { className: "entry-title", "data-indentry": entry.activityId, href: "", onClick: showIndividualEntry }, entry.name)),
             format !== "avgypace" ? (React.createElement(EntryDescriptor, { title: "Distance ".concat(pastTense), value: "".concat(entry.distance, " Meters") })) : (React.createElement(EntryDescriptor, { title: "Distance ".concat(pastTense), value: "".concat((entry.distance * 1.094).toFixed(), " Yards") })),
             React.createElement(EntryDescriptor, { title: "Time Elapsed- ", value: handleTime(entry.elapsed_time) }),
             React.createElement(EntryDescriptor, { title: "Moving Time- ", value: handleTime(entry.moving_time) }),

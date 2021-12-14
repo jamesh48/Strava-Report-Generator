@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Webpack/file re-organization for compiling scss files, and also implemented a date filter and sort"
+          message: "Title now updatable in addition to description"
         }
       }
     },

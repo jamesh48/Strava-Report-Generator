@@ -7,7 +7,7 @@ export interface StravaEntryProps {
   format: string | undefined;
   no: number | undefined;
   currentActivity: currentActivity;
-  updateIndividualEntry: (currentActivityId: number) => void;
+  updateIndividualEntry: (entryId: number, updatedName: string) => Promise<void>;
 }
 
 export interface EntryDescriptorProps {
@@ -41,6 +41,7 @@ export interface GeneralEntryProps {
   entry: Entry;
   sport: string;
   format: string | undefined;
+  currentActivity: currentActivity;
   handleNameChange: (e: { target: { value: string } }) => void;
   showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
 }
@@ -79,5 +80,5 @@ export interface EntryUIProps {
   sport: string;
   format?: string | undefined;
   showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
-  updateIndividualEntry: (entryId: number) => Promise<void>;
+  updateIndividualEntry: (entryId: number, updatedName: string) => Promise<void>;
 }

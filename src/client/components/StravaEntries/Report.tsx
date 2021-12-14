@@ -6,10 +6,11 @@ import { useGlobalContext } from "../GlobalStore/globalStore.js";
 import { useEntriesStore } from "../useEntries.js";
 import { ReportProps } from "../BaseProps";
 import "./report.scss";
+import { Entry } from "./EntryTypes.js";
 
 const Report: React.FC<ReportProps> = (props) => {
   // Global Context
-  const [{ totalEntries, sortCondition }] = useGlobalContext();
+  const [{ totalEntries, sortCondition }, globalDispatch] = useGlobalContext();
   // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
   const [entriesPerPage] = React.useState(7);
@@ -88,7 +89,21 @@ const Report: React.FC<ReportProps> = (props) => {
       setCurrentActivity(individualEntry);
     };
 
-  const updateIndividualEntry = async (entryId: number) => {
+  const updateIndividualEntry = async (
+    entryId: number,
+    updatingName: string
+  ) => {
+    const updatedEntries = totalEntries.reduce(
+      (total: Entry[], entry: Entry) => {
+        if (Number(entry.activityId) === entryId) {
+          entry.name = updatingName;
+        }
+        total.push(entry);
+        return total;
+      },
+      []
+    );
+    globalDispatch({ type: "SET TOTAL ENTRIES", payload: updatedEntries });
     const individualEntry = await getIndividualEntry(entryId);
     setCurrentActivity(individualEntry);
   };

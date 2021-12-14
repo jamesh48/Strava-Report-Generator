@@ -64,7 +64,7 @@ var StravaEntry = function (_a) {
                         })];
                 case 1:
                     _updatedActivity = (_a.sent()).data;
-                    updateIndividualEntry(currentActivity.id);
+                    updateIndividualEntry(currentActivity.id, editedName);
                     return [2];
             }
         });
@@ -82,7 +82,7 @@ var StravaEntry = function (_a) {
         toggleEditing(function (x) { return !x; });
     };
     return (React.createElement("div", null,
-        React.createElement(GeneralEntry, { sport: sport, no: no, entry: entry, format: format, editing: editing, editedName: editedName, handleNameChange: handleNameChange, showIndividualEntry: showIndividualEntry }),
+        React.createElement(GeneralEntry, { sport: sport, no: no, entry: entry, format: format, editing: editing, editedName: editedName, currentActivity: currentActivity, handleNameChange: handleNameChange, showIndividualEntry: showIndividualEntry }),
         currentActivity.id === Number(entry.activityId) && (React.createElement(DetailedEntry, { editing: editing, currentActivity: currentActivity, editedDescription: editedDescription, handleEditingChange: handleEditingChange, handleDescriptionChange: handleDescriptionChange, handleActivityUpdate: handleActivityUpdate }))));
 };
 export default StravaEntry;
