@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Testing if deploy works with comptatible node version"
+          message: "One shot deploy script"
         }
       }
     },
@@ -35,9 +35,9 @@ module.exports = function (grunt) {
   grunt.registerTask("build", "webpack");
 
   // Deploy To AWS First
-  grunt.registerTask("deploy", ["build", "uglify", "cssmin"]);
+  // grunt.registerTask("deploy", ["build", "uglify", "cssmin"]);
   // Push to Github
-  grunt.registerTask("git", ["gitadd", "gitcommit", "gitpush"]);
+  grunt.registerTask("deploy", ["build", "gitadd", "gitcommit", "gitpush"]);
 
   // Nuclear Option
   grunt.registerTask("deploy-all", ["deploy", "git"]);

@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "argon2": "^0.28.2",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "bluebird": "^3.7.2",
@@ -60,8 +59,7 @@
     "compile:styles": "webpack --config configs/webpack/webpack.config.styles.js",
     "dev:build": "export NODE_ENV=dev && webpack --config configs/webpack/webpack.config.js && concurrently \"webpack --config configs/webpack/webpack.config.js --watch\" \"npm run dev:start\"",
     "grunt:git": "grunt git --gruntfile configs/grunt/GruntFile.js",
-    "grunt:deploy": "grunt deploy --gruntfile configs/grunt/Gruntfile.js",
-    "deploy": "grunt deploy-all --gruntfile configs/grunt/GruntFile.js",
+    "deploy": "grunt deploy --gruntfile configs/grunt/Gruntfile.js",
     "postdeploy": "pm2 deploy configs/pm2/ecosystem.config.js production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "database": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate"
