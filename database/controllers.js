@@ -162,5 +162,39 @@ module.exports = {
     } catch (err) {
       throw new Error(err.message);
     }
+  },
+  deleteEntries: async (cookiedAthleteId) => {
+    const { Activity } = sequelize.models;
+    await sequelize.connect();
+    try {
+      // Delete All Entries for the given user
+      await Activity.destroy({
+        where: {
+          athleteId: cookiedAthleteId
+        }
+      });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
+  deleteTokens: async (cookiedAthleteId) => {
+    const { AccessToken, RefreshToken } = sequelize.models;
+    await sequelize.connect();
+    try {
+      await AccessToken.destroy({
+        where: {
+          athleteId: cookiedAthleteId
+        }
+      });
+
+      await RefreshToken.destroy({
+        where: {
+          athleteId: cookiedAthleteId
+        }
+      });
+      return "ok";
+    } catch (err) {
+      throw new Error(err.message);
+    }
   }
 };

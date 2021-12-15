@@ -40,7 +40,7 @@ var axios = require("axios");
 var express = require("express");
 var dataRouter = express.Router();
 var path = require("path");
-var _a = require(path.resolve("database/controllers")), addActivity = _a.addActivity, addAllActivities = _a.addAllActivities, getAllUserActivities = _a.getAllUserActivities, updateOneActivity = _a.updateOneActivity;
+var _a = require(path.resolve("database/controllers")), addActivity = _a.addActivity, addAllActivities = _a.addAllActivities, getAllUserActivities = _a.getAllUserActivities, updateOneActivity = _a.updateOneActivity, deleteTokens = _a.deleteTokens, deleteEntries = _a.deleteEntries;
 var _b = require("./apiConfigs.js"), getAthleteAuthConfig = _b.getAthleteAuthConfig, getAllEntriesConfig = _b.getAllEntriesConfig, getStatsConfig = _b.getStatsConfig, getIndEntryConfig = _b.getIndEntryConfig, getRefreshedAccessTokenConfig = _b.getRefreshedAccessTokenConfig;
 var _c = require("./serverUtils.js"), getStravaResults = _c.getStravaResults, recurseResults = _c.recurseResults, refreshAccessToken = _c.refreshAccessToken;
 var getCurrCredentials = require("./serverUtils").getCurrCredentials;
@@ -219,9 +219,28 @@ dataRouter.put("/putActivityUpdate", function (req, res) { return __awaiter(_thi
         }
     });
 }); });
-dataRouter.delete("/destroy-user", function (req, res) {
-    console.log(req.session.athleteId);
-    res.send("ok");
-});
+dataRouter.delete("/destroy-user", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var err_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4, deleteEntries(req.session.athleteId)];
+            case 1:
+                _a.sent();
+                return [4, deleteTokens(req.session.athleteId)];
+            case 2:
+                _a.sent();
+                req.session.destroy();
+                res.status(200).send("Deleted!");
+                return [3, 4];
+            case 3:
+                err_6 = _a.sent();
+                res.status(500).send("Server Error!");
+                return [3, 4];
+            case 4: return [2];
+        }
+    });
+}); });
 module.exports = dataRouter;
 //# sourceMappingURL=dataRouter.js.map

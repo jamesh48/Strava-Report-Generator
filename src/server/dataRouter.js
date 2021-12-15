@@ -7,7 +7,9 @@ const {
   addActivity,
   addAllActivities,
   getAllUserActivities,
-  updateOneActivity
+  updateOneActivity,
+  deleteTokens,
+  deleteEntries
 } = require(path.resolve("database/controllers"));
 const {
   getAthleteAuthConfig,
@@ -132,13 +134,15 @@ dataRouter.put("/putActivityUpdate", async (req, res) => {
   }
 });
 
-dataRouter.delete("/destroy-user", (req, res) => {
-  // destroy database entries
-  // destroy access and refresh token data
-  // destroy cookie
-  // req.session.destroy();
-  console.log(req.session.athleteId)
-  res.send("ok");
+dataRouter.delete("/destroy-user", async (req, res) => {
+  try {
+    await deleteEntries(req.session.athleteId);
+    await deleteTokens(req.session.athleteId);
+    req.session.destroy();
+    res.status(200).send("Deleted!");
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 });
 
 module.exports = dataRouter;
