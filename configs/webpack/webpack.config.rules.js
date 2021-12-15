@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports.imageRules = {
   test: /\.(png|jpeg)$/,
-  include: rootPath("build/dist/client/images"),
+  include: rootPath("frontend/images"),
   loader: "file-loader",
   options: {
     name: "[name].[ext]",
@@ -14,7 +14,7 @@ module.exports.imageRules = {
 
 module.exports.cssRules = {
   test: /\.(css|scss)$/,
-  include: rootPath("build/dist/client"),
+  include: rootPath("dist/client"),
   exclude: /node_modules/,
   use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
 };

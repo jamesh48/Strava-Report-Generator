@@ -9,5 +9,6 @@ oauth2instructions.txt
 configs/aws
 configs/dotenv
 configs/grunt
-src/client/TestData
-build/dist/client
+TestData
+dist/server
+dist/client

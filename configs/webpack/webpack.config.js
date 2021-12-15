@@ -16,47 +16,47 @@ const clientConfig = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      OptionsProfile: rootPath("build/dist/client/components/OptionsProfile"),
-      UserProfile: rootPath("build/dist/client/components/UserProfile"),
+      OptionsProfile: rootPath("dist/client/components/OptionsProfile"),
+      UserProfile: rootPath("dist/client/components/UserProfile"),
       PaginationContainer: rootPath(
-        "build/dist/client/components/PaginationContainer"
+        "dist/client/components/PaginationContainer"
       ),
-      StravaEntries: rootPath("build/dist/client/components/StravaEntries"),
-      StaticImages: rootPath("build/dist/client/images"),
-      GlobalStore: rootPath(
-        "build/dist/client/components/GlobalStore/globalStore.js"
-      )
+      StravaEntries: rootPath("dist/client/components/StravaEntries"),
+      StaticImages: rootPath("frontend/images"),
+      GlobalStore: rootPath("dist/client/components/GlobalStore/globalStore.js")
     }
   },
   plugins: [
     new CopyPlugin({
       patterns: [
         {
-          from: rootPath("src/client/App.scss"),
-          to: rootPath("build/dist/client"),
+          from: rootPath("frontend/src/App.scss"),
+          to: rootPath("dist/client"),
           globOptions: {
             ignore: ["**.*.js"]
           }
         },
         {
           from: rootPath(
-            "src/client/components/OptionsProfile/Radios/AdditionalFilters/additionalFilters.scss"
+            "frontend/src/components/OptionsProfile/Radios/AdditionalFilters/additionalFilters.scss"
           ),
           to: rootPath(
-            "build/dist/client/components/OptionsProfile/Radios/AdditionalFilters"
+            "dist/client/components/OptionsProfile/Radios/AdditionalFilters"
           )
         },
         {
           from: rootPath(
-            "src/client/components/OptionsProfile/ProgressBar/progressBar.scss"
+            "frontend/src/components/OptionsProfile/ProgressBar/progressBar.scss"
           ),
-          to: rootPath(
-            "build/dist/client/components/OptionsProfile/ProgressBar"
-          )
+          to: rootPath("dist/client/components/OptionsProfile/ProgressBar")
         },
         {
-          from: rootPath("src/client/components/StravaEntries/report.scss"),
-          to: rootPath("build/dist/client/components/StravaEntries")
+          from: rootPath("frontend/src/components/StravaEntries/report.scss"),
+          to: rootPath("dist/client/components/StravaEntries")
+        },
+        {
+          from: rootPath("frontend/index.html"),
+          to: rootPath("dist/public/index.html")
         }
       ],
       options: {
@@ -69,11 +69,19 @@ const clientConfig = {
     })
   ],
   entry: {
-    index: rootPath("build/dist/client/index.js")
+    index: rootPath("dist/client/index.js")
   },
   output: {
-    path: rootPath("build/dist/public"),
+    path: rootPath("dist/public"),
     filename: "bundle.js"
+  },
+  stats: {
+    cached: false,
+    cachedAssets: false,
+    chunks: false,
+    chunkModules: false,
+    chunkOrigins: false,
+    modules: false
   }
 };
 
