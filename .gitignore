@@ -11,4 +11,3 @@ configs/dotenv
 configs/grunt
 src/client/TestData
 build/dist/client
-build/dist/server
