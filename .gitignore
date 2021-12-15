@@ -10,5 +10,4 @@ configs/aws
 configs/dotenv
 configs/grunt
 TestData
-dist/server
 dist/client
