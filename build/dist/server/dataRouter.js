@@ -208,7 +208,7 @@ dataRouter.put("/putActivityUpdate", function (req, res) { return __awaiter(_thi
                 return [4, updateOneActivity(id, name_1)];
             case 3:
                 _a.sent();
-                res.send('updatedActivity');
+                res.send("updatedActivity");
                 return [3, 5];
             case 4:
                 err_5 = _a.sent();
@@ -219,5 +219,9 @@ dataRouter.put("/putActivityUpdate", function (req, res) { return __awaiter(_thi
         }
     });
 }); });
+dataRouter.delete("/destroy-user", function (req, res) {
+    console.log(req.session.athleteId);
+    res.send("ok");
+});
 module.exports = dataRouter;
 //# sourceMappingURL=dataRouter.js.map

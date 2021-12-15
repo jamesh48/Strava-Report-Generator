@@ -52,6 +52,10 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     });
   };
 
+  const destroyUser: React.MouseEventHandler<HTMLInputElement> = async () => {
+    await axios.delete("/destroy-user");
+  };
+
   return progressBarProgress === 0 ? (
     <div className="update-button-container">
       <select className="update-button" onChange={setSortCondition}>
@@ -73,7 +77,7 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         type="button"
         className="update-button"
         value="Destroy!"
-        onClick={() => alert("This button does not do anything currently")}
+        onClick={destroyUser}
       />
     </div>
   ) : (

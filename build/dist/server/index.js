@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(/(exchange_token|authLink)?/, authRouter);
-app.use(/(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate)?/, dataRouter);
+app.use(/(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate|destroy-user)?/, dataRouter);
 var port = process.env.PORT;
 app.listen(port, function () {
     return console.log("Strava Report Generator Listening on port ".concat(port));

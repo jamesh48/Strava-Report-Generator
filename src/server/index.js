@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 
 app.use(/(exchange_token|authLink)?/, authRouter);
 app.use(
-  /(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate)?/,
+  /(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate|destroy-user)?/,
   dataRouter
 );
 

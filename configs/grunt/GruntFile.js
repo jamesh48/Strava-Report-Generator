@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Title now updatable in addition to description"
+          message: "Starting to build out destroy route"
         }
       }
     },

@@ -81,6 +81,16 @@ var ProgressBar = function (props) {
             payload: event.currentTarget.value
         });
     };
+    var destroyUser = function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, axios.delete("/destroy-user")];
+                case 1:
+                    _a.sent();
+                    return [2];
+            }
+        });
+    }); };
     return progressBarProgress === 0 ? (React.createElement("div", { className: "update-button-container" },
         React.createElement("select", { className: "update-button", onChange: setSortCondition },
             React.createElement("option", { value: "speedDesc" }, "Speed: Fastest First"),
@@ -91,7 +101,7 @@ var ProgressBar = function (props) {
             React.createElement("option", { value: "timeElapsedDesc" }, "Time Elapsed: Longest First"),
             React.createElement("option", { value: "timeElapsedAsc" }, "Time Elapsed: Shortest First")),
         React.createElement("input", { type: "button", className: "update-button", value: "Update!", onClick: updateEntries }),
-        React.createElement("input", { type: "button", className: "update-button", value: "Destroy!", onClick: function () { return alert("This button does not do anything currently"); } }))) : (React.createElement("div", { className: "update-button-container" },
+        React.createElement("input", { type: "button", className: "update-button", value: "Destroy!", onClick: destroyUser }))) : (React.createElement("div", { className: "update-button-container" },
         React.createElement("div", { id: "progress-bar-container" },
             React.createElement("div", { className: "progress-bar-filler", style: fillerStyles },
                 React.createElement("span", { className: "progress-bar-counter" }, "".concat(progressBarProgress, "%"))))));

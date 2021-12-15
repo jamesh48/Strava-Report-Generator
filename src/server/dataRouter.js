@@ -111,7 +111,9 @@ dataRouter.post("/addAllActivities", async ({ currentAccessToken }, res) => {
 dataRouter.put("/putActivityUpdate", async (req, res) => {
   const putActivityUpdateConfig = {
     method: "PUT",
-    url: encodeURI(`https://www.strava.com/api/v3/activities/${req.query.activityId}?name=${req.query.name}&description=${req.query.description}`),
+    url: encodeURI(
+      `https://www.strava.com/api/v3/activities/${req.query.activityId}?name=${req.query.name}&description=${req.query.description}`
+    ),
     headers: {
       Authorization: req.currentAccessToken
     }
@@ -123,11 +125,20 @@ dataRouter.put("/putActivityUpdate", async (req, res) => {
     const { name, id } = updatedActivity;
     await updateOneActivity(id, name);
 
-    res.send('updatedActivity');
+    res.send("updatedActivity");
   } catch (err) {
     console.log(err.message);
     res.send(err.message);
   }
+});
+
+dataRouter.delete("/destroy-user", (req, res) => {
+  // destroy database entries
+  // destroy access and refresh token data
+  // destroy cookie
+  // req.session.destroy();
+  console.log(req.session.athleteId)
+  res.send("ok");
 });
 
 module.exports = dataRouter;
