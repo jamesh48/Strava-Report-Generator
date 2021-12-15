@@ -40,6 +40,7 @@
     "file-loader": "^6.2.0",
     "grunt": "^1.4.1",
     "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-uglify": "^5.0.1",
     "grunt-git": "^1.1.1",
     "grunt-webpack": "^5.0.0",
     "mini-css-extract-plugin": "^2.4.4",

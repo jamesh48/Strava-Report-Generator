@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "One shot deploy script"
+          message: "One shot deploy script pt2 with uglify"
         }
       }
     },
@@ -46,16 +46,26 @@ module.exports = function (grunt) {
           }
         ]
       }
+    },
+    uglify: {
+      my_target: {
+        files: {
+          '../../build/dist/public/bundle.js': [
+            path.join(rootPath, 'build/dist/public/bundle.js')
+          ]
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-git");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
 
   grunt.registerTask("build", "webpack");
   // Deploy To AWS First
-  grunt.registerTask("deploy", ["build", /*"uglify",*/ "cssmin"]);
+  grunt.registerTask("deploy", ["build", "uglify", "cssmin"]);
   // Push to Github
   grunt.registerTask("git", ["gitadd", "gitcommit", "gitpush"]);
 
