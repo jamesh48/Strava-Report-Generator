@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "Destroy route now works, but not atomic yet"
+          message: "Testing if deploy works with comptatible node version"
         }
       }
     },
