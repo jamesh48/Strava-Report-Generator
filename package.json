@@ -39,6 +39,7 @@
     "css-loader": "^5.2.4",
     "file-loader": "^6.2.0",
     "grunt": "^1.4.1",
+    "grunt-contrib-cssmin": "^4.0.0",
     "grunt-git": "^1.1.1",
     "grunt-webpack": "^5.0.0",
     "mini-css-extract-plugin": "^2.4.4",
@@ -59,7 +60,7 @@
     "compile:styles": "webpack --config configs/webpack/webpack.config.styles.js",
     "dev:build": "export NODE_ENV=dev && webpack --config configs/webpack/webpack.config.js && concurrently \"webpack --config configs/webpack/webpack.config.js --watch\" \"npm run dev:start\"",
     "grunt:git": "grunt git --gruntfile configs/grunt/GruntFile.js",
-    "deploy": "grunt deploy --gruntfile configs/grunt/Gruntfile.js",
+    "deploy": "grunt deploy-all --gruntfile configs/grunt/Gruntfile.js",
     "postdeploy": "pm2 deploy configs/pm2/ecosystem.config.js production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "database": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate"
