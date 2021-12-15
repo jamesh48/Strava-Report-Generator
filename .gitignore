@@ -8,5 +8,7 @@ oauth2instructions.txt
 .DS_Store
 configs/aws
 configs/dotenv
+configs/grunt
 src/client/TestData
-build/dist/client/TestData
+build/dist/client
+build/dist/server
