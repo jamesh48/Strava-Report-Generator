@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     gitcommit: {
       task: {
         options: {
-          message: "One shot deploy script pt2 with uglify"
+          message: "One shot deploy script pt3 with uglify"
         }
       }
     },
