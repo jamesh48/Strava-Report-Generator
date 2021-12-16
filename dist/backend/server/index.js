@@ -22,12 +22,6 @@ app.use((0, cors_1.default)({
     origin: ["http://localhost:8000", "https://www.stravareportgenerator.app"],
     credentials: true
 }));
-app.use(async (_req, _res, next) => {
-    await config_1.dbConfig.authenticate();
-    console.log("connected to db");
-    next();
-});
-app.use(express_1.default.static(path_1.default.resolve("dist/public")));
 app.use((0, express_session_1.default)({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
     secret: process.env.EXPRESS_SESSION_SECRET,
@@ -44,9 +38,15 @@ app.use((0, express_session_1.default)({
         disableTouch: true
     })
 }));
+app.use(express_1.default.static(path_1.default.resolve("dist/public")));
 app.use((req, _res, next) => {
     console.log(performance.now());
     console.log(`${req.method} ${req.url}`.blue);
+    next();
+});
+app.use(async (_req, _res, next) => {
+    await config_1.dbConfig.authenticate();
+    console.log("connected to db");
     next();
 });
 app.use(/(exchange_token|authLink)?/, authRouter_1.default);

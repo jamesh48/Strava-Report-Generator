@@ -24,14 +24,6 @@ app.use(
   })
 );
 
-app.use(async (_req, _res, next) => {
-  await dbConfig.authenticate();
-  console.log("connected to db");
-  next();
-});
-
-app.use(express.static(path.resolve("dist/public")));
-
 app.use(
   session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
@@ -52,9 +44,16 @@ app.use(
   })
 );
 
+app.use(express.static(path.resolve("dist/public")));
 app.use((req, _res, next) => {
   console.log(performance.now());
   console.log(`${req.method} ${req.url}`.blue);
+  next();
+});
+
+app.use(async (_req, _res, next) => {
+  await dbConfig.authenticate();
+  console.log("connected to db");
   next();
 });
 
