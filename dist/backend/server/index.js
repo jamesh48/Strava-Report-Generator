@@ -15,9 +15,9 @@ const express_session_1 = __importDefault(require("express-session"));
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
 const config_1 = require("../database/config");
-const redisStore = (0, connect_redis_1.default)(express_session_1.default);
-const redisClient = redis_1.default.createClient();
 const main = async () => {
+    const redisStore = (0, connect_redis_1.default)(express_session_1.default);
+    const redisClient = redis_1.default.createClient();
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
         origin: [
@@ -36,7 +36,7 @@ const main = async () => {
     app.use(express_1.default.static(path_1.default.resolve("dist/public")));
     app.use((0, express_session_1.default)({
         name: process.env.EXPRESS_SESSION_COOKIE_NAME,
-        secret: process.env.EXPRESS_SESSION_SECRET || "",
+        secret: process.env.EXPRESS_SESSION_SECRET,
         saveUninitialized: false,
         resave: false,
         cookie: {

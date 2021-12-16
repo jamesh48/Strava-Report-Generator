@@ -10,12 +10,12 @@ import session from "express-session";
 import dataRouter from "./dataRouter";
 import authRouter from "./authRouter";
 import { dbConfig } from "../database/config";
-
-// Redis ->
-const redisStore = connectRedis(session);
-const redisClient = redis.createClient();
 // ->
 const main = async () => {
+  // Redis ->
+  const redisStore = connectRedis(session);
+  const redisClient = redis.createClient();
+
   const app = express();
 
   app.use(
@@ -40,7 +40,8 @@ const main = async () => {
   app.use(
     session({
       name: process.env.EXPRESS_SESSION_COOKIE_NAME,
-      secret: process.env.EXPRESS_SESSION_SECRET || "",
+      // @ts-ignore
+      secret: process.env.EXPRESS_SESSION_SECRET,
       saveUninitialized: false,
       resave: false,
       cookie: {
