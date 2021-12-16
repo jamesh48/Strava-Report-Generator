@@ -229,3 +229,21 @@ body {
 .achievements > p {
   display: inline-block;
 }
+
+#rate-limit-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .rate-limit-message {
+    &:first-child{
+      text-decoration: underline;
+    }
+    display: flex;
+    justify-content: center;
+    color: orangered;
+    width: 100%;
+    padding: .5% 0;
+  }
+
+}

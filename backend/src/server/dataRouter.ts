@@ -1,5 +1,5 @@
 // const { performance } = require("perf_hooks");
-import  { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import express = require("express");
 import { Response } from "express";
 const axios = require("axios");
@@ -27,12 +27,13 @@ import {
 } from "./serverUtils";
 
 import { getCurrCredentials } from "./serverUtils";
-import { send400, send500 } from "./sendErrorCodes";
+import { send400, send500, send429 } from "./sendErrorCodes";
 
 const dataRouter = express.Router();
 
 dataRouter.use(async (req: any, res: Response, next) => {
-  if (!req.session.athleteId) return send400(res, "No Cookied User");
+  if (!req.session.athleteId) return send400(res, "No Cookied User!!!");
+  console.log('xxx');
   try {
     const { accessToken, expiresAt } = await getCurrCredentials(
       req.session.athleteId
@@ -51,6 +52,7 @@ dataRouter.use(async (req: any, res: Response, next) => {
       req.currentAccessToken = accessToken;
     }
   } catch (err) {
+    console.log(err.statusCode);
     return send500(res, err.message);
   }
   next();
@@ -63,6 +65,9 @@ dataRouter.get(
       const athleteAuthConfig = getAthleteAuthConfig(currentAccessToken);
       var athlete = await axios(athleteAuthConfig);
     } catch (err) {
+      if (err.request.res.statusCode === 429) {
+        return send429(res, err.message);
+      }
       return send500(res, err.message);
     }
     try {

@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 
 export const authorizeApp = async () => {
-  const { data: authLink }: AxiosResponse = await axios("/authLink");
-  location = authLink;
+  const response: AxiosResponse = await axios("/authLink");
+  location = response.data;
 };
 
 export const getUserActivities = async () => {

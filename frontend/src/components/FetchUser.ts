@@ -42,7 +42,10 @@ const fetchUser = async () => {
     const { data } = await axios("/loggedInUser");
     return data;
   } catch (err) {
-    console.log(err);
-    authorizeApp();
+    if (err.message.indexOf("429") === -1) {
+      authorizeApp();
+    } else {
+      return 429;
+    }
   }
 };

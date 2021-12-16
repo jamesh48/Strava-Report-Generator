@@ -10,7 +10,8 @@ const sendErrorCodes_1 = require("./sendErrorCodes");
 const dataRouter = express.Router();
 dataRouter.use(async (req, res, next) => {
     if (!req.session.athleteId)
-        return (0, sendErrorCodes_1.send400)(res, "No Cookied User");
+        return (0, sendErrorCodes_1.send400)(res, "No Cookied User!!!");
+    console.log('xxx');
     try {
         const { accessToken, expiresAt } = await (0, serverUtils_2.getCurrCredentials)(req.session.athleteId);
         const now = new Date();
@@ -25,6 +26,7 @@ dataRouter.use(async (req, res, next) => {
         }
     }
     catch (err) {
+        console.log(err.statusCode);
         return (0, sendErrorCodes_1.send500)(res, err.message);
     }
     next();
@@ -35,6 +37,9 @@ dataRouter.get("/loggedInUser", async ({ currentAccessToken }, res) => {
         var athlete = await axios(athleteAuthConfig);
     }
     catch (err) {
+        if (err.request.res.statusCode === 429) {
+            return (0, sendErrorCodes_1.send429)(res, err.message);
+        }
         return (0, sendErrorCodes_1.send500)(res, err.message);
     }
     try {
