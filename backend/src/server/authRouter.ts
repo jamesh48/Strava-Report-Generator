@@ -9,6 +9,8 @@ const authRouter = express.Router();
 
 authRouter.get("/authLink", (_req, res) => {
   res.send(process.env.AUTH_LINK);
+  //@ts-ignore
+  // res.redirect(process.env.AUTH_LINK)
 });
 
 authRouter.get(
