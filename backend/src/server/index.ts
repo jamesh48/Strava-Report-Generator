@@ -9,6 +9,7 @@ import cors = require("cors");
 import session = require("express-session");
 import dataRouter from "./dataRouter";
 import authRouter from "./authRouter";
+const cookieParser = require("cookie-parser");
 
 // Redis ->
 const redisStore = connectRedis(session);
@@ -23,6 +24,8 @@ app.use(
     credentials: true
   })
 );
+
+app.use(cookieParser());
 app.use(express.static(path.resolve("dist/public")));
 
 app.use(
@@ -33,10 +36,10 @@ app.use(
     saveUninitialized: false,
     resave: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
       httpOnly: true,
       sameSite: "lax",
-      secure: false
+      secure: true
     },
     store: new redisStore({
       client: redisClient,
@@ -48,7 +51,10 @@ app.use(
 app.use((req, _res, next) => {
   console.log(performance.now());
   //@ts-ignore
-  console.log(`${req.method} ${req.url} ${req.session.athleteId || 'No Athlete Id'}`.blue);
+  console.log(
+    //@ts-ignore
+    `${req.method} ${req.url} ${req.session.athleteId || "No Athlete Id"}`.blue
+  );
   next();
 });
 

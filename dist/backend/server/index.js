@@ -14,6 +14,7 @@ const cors = require("cors");
 const session = require("express-session");
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
+const cookieParser = require("cookie-parser");
 const redisStore = connectRedis(session);
 const redisClient = redis.createClient();
 const app = express();
@@ -22,6 +23,7 @@ app.use(cors({
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true
 }));
+app.use(cookieParser());
 app.use(express.static(path.resolve("dist/public")));
 app.use(session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
@@ -29,10 +31,10 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
         sameSite: "lax",
-        secure: false
+        secure: true
     },
     store: new redisStore({
         client: redisClient,
@@ -41,7 +43,7 @@ app.use(session({
 }));
 app.use((req, _res, next) => {
     console.log(performance.now());
-    console.log(`${req.method} ${req.url} ${req.session.athleteId || 'No Athlete Id'}`.blue);
+    console.log(`${req.method} ${req.url} ${req.session.athleteId || "No Athlete Id"}`.blue);
     next();
 });
 app.use(/(exchange_token|authLink)?/, authRouter_1.default);
