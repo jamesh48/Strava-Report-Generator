@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 
 export const authorizeApp = async () => {
   const { data: authLink }: AxiosResponse = await axios("/authLink");
-  window.open(authLink);
+  window.open(authLink, '_blank');
 };
 
 export const getUserActivities = async () => {
