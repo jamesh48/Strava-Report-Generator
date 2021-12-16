@@ -9,7 +9,7 @@ import cors = require("cors");
 import session = require("express-session");
 import dataRouter from "./dataRouter";
 import authRouter from "./authRouter";
-const cookieParser = require("cookie-parser");
+import cookieParser = require("cookie-parser");
 
 // Redis ->
 const redisStore = connectRedis(session);
@@ -20,13 +20,12 @@ const app = express();
 app.use(
   cors({
     origin: "https://www.stravareportgenerator.app",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true
   })
 );
 
-app.use(cookieParser());
 app.use(express.static(path.resolve("dist/public")));
+app.use(cookieParser());
 
 app.use(
   session({
@@ -39,7 +38,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
       httpOnly: true,
       sameSite: "lax",
-      secure: true
+      secure: false
     },
     store: new redisStore({
       client: redisClient,
@@ -50,7 +49,6 @@ app.use(
 
 app.use((req, _res, next) => {
   console.log(performance.now());
-  //@ts-ignore
   console.log(
     //@ts-ignore
     `${req.method} ${req.url} ${req.session.athleteId || "No Athlete Id"}`.blue

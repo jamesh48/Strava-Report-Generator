@@ -20,11 +20,10 @@ const redisClient = redis.createClient();
 const app = express();
 app.use(cors({
     origin: "https://www.stravareportgenerator.app",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true
 }));
-app.use(cookieParser());
 app.use(express.static(path.resolve("dist/public")));
+app.use(cookieParser());
 app.use(session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
     secret: process.env.EXPRESS_SESSION_SECRET,
@@ -34,7 +33,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
         sameSite: "lax",
-        secure: true
+        secure: false
     },
     store: new redisStore({
         client: redisClient,
