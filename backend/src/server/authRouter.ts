@@ -58,7 +58,7 @@ authRouter.get(
     // Save in Express Session
     session.athleteId = athleteId;
     session.save(() => {
-      res.redirect("/test");
+      res.redirect("/");
     });
   }
 );
