@@ -32,7 +32,6 @@ import { send400, send500 } from "./sendErrorCodes";
 const dataRouter = express.Router();
 
 dataRouter.use(async (req: any, res: Response, next) => {
-  // console.log(performance.now());
   if (!req.session.athleteId) return send400(res, "No Cookied User");
   try {
     const { accessToken, expiresAt } = await getCurrCredentials(

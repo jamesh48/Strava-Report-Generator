@@ -14,7 +14,6 @@ const cors = require("cors");
 const session = require("express-session");
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
-const cookieParser = require("cookie-parser");
 const redisStore = connectRedis(session);
 const redisClient = redis.createClient();
 const app = express();
@@ -23,7 +22,6 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.static(path.resolve("dist/public")));
-app.use(cookieParser());
 app.use(session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
     secret: process.env.EXPRESS_SESSION_SECRET,
@@ -33,7 +31,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
         sameSite: "lax",
-        secure: false
+        secure: true
     },
     store: new redisStore({
         client: redisClient,

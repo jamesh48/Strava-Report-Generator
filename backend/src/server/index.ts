@@ -9,7 +9,6 @@ import cors = require("cors");
 import session = require("express-session");
 import dataRouter from "./dataRouter";
 import authRouter from "./authRouter";
-import cookieParser = require("cookie-parser");
 
 // Redis ->
 const redisStore = connectRedis(session);
@@ -25,7 +24,6 @@ app.use(
 );
 
 app.use(express.static(path.resolve("dist/public")));
-app.use(cookieParser());
 
 app.use(
   session({
@@ -38,7 +36,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
       httpOnly: true,
       sameSite: "lax",
-      secure: false
+      secure: true
     },
     store: new redisStore({
       client: redisClient,
