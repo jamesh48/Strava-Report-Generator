@@ -19,10 +19,11 @@ const app = express();
 app.use(
   cors({
     origin: "https://www.stravareportgenerator.app",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true
   })
 );
+app.use(express.static(path.resolve("dist/public")));
 
 app.use(
   session({
@@ -44,7 +45,10 @@ app.use(
   })
 );
 
-app.use(express.static(path.resolve("dist/public")));
+app.get("/test", (_req, res) => {
+  console.log("hello");
+  res.send("ok");
+});
 
 app.use((req, _res, next) => {
   console.log(performance.now());

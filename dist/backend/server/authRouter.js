@@ -39,7 +39,7 @@ authRouter.get("/exchange_token", async ({ session, query: { error, scope, code:
     });
     session.athleteId = athleteId;
     session.save(() => {
-        res.redirect("/");
+        res.redirect("/test");
     });
 });
 exports.default = authRouter;
