@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
-
 import Report from "./StravaEntries/Report";
 import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
