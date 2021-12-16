@@ -51,12 +51,12 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "start": "nodemon ./dist/server/index.js",
+    "start": "nodemon ./dist/backend/server/index.js",
     "build": "webpack --config configs/webpack/webpack.config.js",
     "grunt:build": "grunt build --gruntfile configs/grunt/Gruntfile.js",
     "tsc:build": "tsc --project ./backend/tsconfig.json --watch & tsc --project ./frontend/tsconfig.json --watch",
     "compile:styles": "webpack --config configs/webpack/webpack.config.styles.js",
-    "dev:start": "nodemon ./dist/server/index.js",
+    "dev:start": "nodemon ./dist/backend/server/index.js",
     "dev:build": "export NODE_ENV=dev && webpack --config configs/webpack/webpack.config.js && concurrently \"webpack --config configs/webpack/webpack.config.js --watch\" \"npm run dev:start\"",
     "grunt:git": "grunt git --gruntfile configs/grunt/GruntFile.js",
     "deploy": "grunt deploy-all --gruntfile configs/grunt/Gruntfile.js",

@@ -14,7 +14,6 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
   showIndividualEntry,
   handleNameChange
 }) => {
-  console.log(currentActivity.id, entry.activityId)
   const m2y = 1.094;
   const mps2kph = 3.6;
 

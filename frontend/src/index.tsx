@@ -12,6 +12,7 @@ const Index = () => {
   );
 };
 
+
 // @ts-ignore
 ReactDOM.createRoot(document.getElementById("root")).render(<Index />);
 
