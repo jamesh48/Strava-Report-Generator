@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "configs/dotenv/.env" });
-import express, { Response } from "express";
-import axios from "axios";
+import express = require("express");
+import { Response } from "express";
+const axios = require("axios");
 
 import { upsertAccessToken, upsertRefreshToken } from "../database/controllers";
 

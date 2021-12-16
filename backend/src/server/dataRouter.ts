@@ -1,6 +1,8 @@
 // const { performance } = require("perf_hooks");
-import axios, { AxiosRequestConfig } from "axios";
-import express, { Response } from "express";
+import  { AxiosRequestConfig } from "axios";
+import express = require("express");
+import { Response } from "express";
+const axios = require("axios");
 
 import {
   addAllActivities,
@@ -25,13 +27,13 @@ import {
 } from "./serverUtils";
 
 import { getCurrCredentials } from "./serverUtils";
-import { send500 } from "./sendErrorCodes";
+import { send400, send500 } from "./sendErrorCodes";
 
 const dataRouter = express.Router();
 
 dataRouter.use(async (req: any, res: Response, next) => {
   // console.log(performance.now());
-  if (!req.session.athleteId) return send500(res, "No Cookied User");
+  if (!req.session.athleteId) return send400(res, "No Cookied User");
   try {
     const { accessToken, expiresAt } = await getCurrCredentials(
       req.session.athleteId

@@ -45,14 +45,10 @@ app.use(
   })
 );
 
-app.get("/test", (_req, res) => {
-  console.log("hello");
-  res.send("ok");
-});
-
 app.use((req, _res, next) => {
   console.log(performance.now());
-  console.log(`${req.method} ${req.url}`.blue);
+  //@ts-ignore
+  console.log(`${req.method} ${req.url} ${req.session.athleteId || 'No Athlete Id'}`.blue);
   next();
 });
 
