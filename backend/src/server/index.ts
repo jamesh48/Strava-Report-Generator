@@ -36,7 +36,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
       httpOnly: true,
       sameSite: "lax",
-      secure: true
+      secure: false
     },
     store: new redisStore({
       client: redisClient,
