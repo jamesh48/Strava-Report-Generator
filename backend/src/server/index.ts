@@ -68,5 +68,3 @@ const port = process.env.PORT;
 app.listen(port, () =>
   console.log(`Strava Report Generator Listening on port ${port}`)
 );
-
-// main().catch((err) => console.log(err.message));
