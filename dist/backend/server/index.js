@@ -15,50 +15,42 @@ const express_session_1 = __importDefault(require("express-session"));
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
 const config_1 = require("../database/config");
-const main = async () => {
-    const redisStore = (0, connect_redis_1.default)(express_session_1.default);
-    const redisClient = redis_1.default.createClient();
-    const app = (0, express_1.default)();
-    app.use((0, cors_1.default)({
-        origin: [
-            "http://localhost:8000",
-            "https://www.stravareportgenerator.app"
-        ],
-        credentials: true
-    }));
-    try {
-        await config_1.dbConfig.authenticate();
-        console.log("connected to db");
-    }
-    catch (err) {
-        throw new Error(err.message);
-    }
-    app.use(express_1.default.static(path_1.default.resolve("dist/public")));
-    app.use((0, express_session_1.default)({
-        name: process.env.EXPRESS_SESSION_COOKIE_NAME,
-        secret: process.env.EXPRESS_SESSION_SECRET,
-        saveUninitialized: false,
-        resave: false,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
-            httpOnly: true,
-            sameSite: "lax",
-            secure: false
-        },
-        store: new redisStore({
-            client: redisClient,
-            disableTouch: true
-        })
-    }));
-    app.use((req, _res, next) => {
-        console.log(performance.now());
-        console.log(`${req.method} ${req.url}`.blue);
-        next();
-    });
-    app.use(/(exchange_token|authLink)?/, authRouter_1.default);
-    app.use(/(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate|destroy-user)?/, dataRouter_1.default);
-    const port = process.env.PORT;
-    app.listen(port, () => console.log(`Strava Report Generator Listening on port ${port}`));
-};
-main().catch((err) => console.log(err.message));
+const redisStore = (0, connect_redis_1.default)(express_session_1.default);
+const redisClient = redis_1.default.createClient();
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: ["http://localhost:8000", "https://www.stravareportgenerator.app"],
+    credentials: true
+}));
+app.use(async (_req, _res, next) => {
+    await config_1.dbConfig.authenticate();
+    console.log("connected to db");
+    next();
+});
+app.use(express_1.default.static(path_1.default.resolve("dist/public")));
+app.use((0, express_session_1.default)({
+    name: process.env.EXPRESS_SESSION_COOKIE_NAME,
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 1,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false
+    },
+    store: new redisStore({
+        client: redisClient,
+        disableTouch: true
+    })
+}));
+app.use((req, _res, next) => {
+    console.log(performance.now());
+    console.log(`${req.method} ${req.url}`.blue);
+    next();
+});
+app.use(/(exchange_token|authLink)?/, authRouter_1.default);
+app.use(/(loggedInUser|allEntries|individualEntry|addAllActivities|putActivityUpdate|destroy-user)?/, dataRouter_1.default);
+const port = process.env.PORT;
+app.listen(port, () => console.log(`Strava Report Generator Listening on port ${port}`));
 //# sourceMappingURL=index.js.map
