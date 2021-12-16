@@ -6,24 +6,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config({ path: "configs/dotenv/.env" });
 const { performance } = require("perf_hooks");
 require("colors");
-const path_1 = __importDefault(require("path"));
-const express_1 = __importDefault(require("express"));
+const path = require("path");
+const express = require("express");
 const redis = require("redis");
 const connectRedis = require("connect-redis");
-const cors_1 = __importDefault(require("cors"));
-const express_session_1 = __importDefault(require("express-session"));
+const cors = require("cors");
+const session = require("express-session");
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
-const config_1 = require("../database/config");
-const redisStore = connectRedis(express_session_1.default);
+const redisStore = connectRedis(session);
 const redisClient = redis.createClient();
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
+const app = express();
+app.use(cors({
     origin: "https://www.stravareportgenerator.app",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true
 }));
-app.use((0, express_session_1.default)({
+app.use(session({
     name: process.env.EXPRESS_SESSION_COOKIE_NAME,
     secret: process.env.EXPRESS_SESSION_SECRET,
     saveUninitialized: false,
@@ -39,15 +38,10 @@ app.use((0, express_session_1.default)({
         disableTouch: true
     })
 }));
-app.use(express_1.default.static(path_1.default.resolve("dist/public")));
+app.use(express.static(path.resolve("dist/public")));
 app.use((req, _res, next) => {
     console.log(performance.now());
     console.log(`${req.method} ${req.url}`.blue);
-    next();
-});
-app.use(async (_req, _res, next) => {
-    await config_1.dbConfig.authenticate();
-    console.log("connected to db");
     next();
 });
 app.use(/(exchange_token|authLink)?/, authRouter_1.default);

@@ -1,15 +1,14 @@
 require("dotenv").config({ path: "configs/dotenv/.env" });
 const { performance } = require("perf_hooks");
 import "colors";
-import path from "path";
-import express from "express";
+import path = require("path");
+import express = require("express");
 import redis = require("redis");
 import connectRedis = require("connect-redis");
-import cors from "cors";
-import session from "express-session";
+import cors = require("cors");
+import session = require("express-session");
 import dataRouter from "./dataRouter";
 import authRouter from "./authRouter";
-import { dbConfig } from "../database/config";
 
 // Redis ->
 const redisStore = connectRedis(session);
@@ -50,12 +49,6 @@ app.use(express.static(path.resolve("dist/public")));
 app.use((req, _res, next) => {
   console.log(performance.now());
   console.log(`${req.method} ${req.url}`.blue);
-  next();
-});
-
-app.use(async (_req, _res, next) => {
-  await dbConfig.authenticate();
-  console.log("connected to db");
   next();
 });
 
