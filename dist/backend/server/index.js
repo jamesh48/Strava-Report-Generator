@@ -8,18 +8,19 @@ const { performance } = require("perf_hooks");
 require("colors");
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
-const redis_1 = __importDefault(require("redis"));
-const connect_redis_1 = __importDefault(require("connect-redis"));
+const redis = require("redis");
+const connectRedis = require("connect-redis");
 const cors_1 = __importDefault(require("cors"));
 const express_session_1 = __importDefault(require("express-session"));
 const dataRouter_1 = __importDefault(require("./dataRouter"));
 const authRouter_1 = __importDefault(require("./authRouter"));
 const config_1 = require("../database/config");
-const redisStore = (0, connect_redis_1.default)(express_session_1.default);
-const redisClient = redis_1.default.createClient();
+const redisStore = connectRedis(express_session_1.default);
+const redisClient = redis.createClient();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:8000", "https://www.stravareportgenerator.app"],
+    origin: "https://www.stravareportgenerator.app",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true
 }));
 app.use((0, express_session_1.default)({

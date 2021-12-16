@@ -3,8 +3,8 @@ const { performance } = require("perf_hooks");
 import "colors";
 import path from "path";
 import express from "express";
-import redis from "redis";
-import connectRedis from "connect-redis";
+import redis = require("redis");
+import connectRedis = require("connect-redis");
 import cors from "cors";
 import session from "express-session";
 import dataRouter from "./dataRouter";
@@ -19,7 +19,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:8000", "https://www.stravareportgenerator.app"],
+    origin: "https://www.stravareportgenerator.app",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true
   })
 );
@@ -45,6 +46,7 @@ app.use(
 );
 
 app.use(express.static(path.resolve("dist/public")));
+
 app.use((req, _res, next) => {
   console.log(performance.now());
   console.log(`${req.method} ${req.url}`.blue);
