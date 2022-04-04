@@ -9,23 +9,19 @@ export const useEntriesStore = create((set) => ({
     sport,
     titleQuery,
     fromDateQuery,
-    toDateQuery
+    toDateQuery,
   ) =>
     set((state) => ({
       entries: totalEntryPayload
         .filter((entry) => Number(distance) <= Number(entry.distance))
         .filter((remainingEntry) => sport === remainingEntry.type)
-        .filter(
-          (remainingEntry) => remainingEntry.name.indexOf(titleQuery) > -1
-        )
+        .filter((remainingEntry) => remainingEntry.name.indexOf(titleQuery) > -1)
         .filter((remainingEntry) => {
           if (fromDateQuery === "" && toDateQuery === "") {
             return remainingEntry;
           }
 
-          const candidateDate = new Date(
-            remainingEntry.start_date.slice(0, 10)
-          );
+          const candidateDate = new Date(remainingEntry.start_date.slice(0, 10));
 
           if (toDateQuery === "") {
             const filterFrom = new Date(fromDateQuery);
@@ -60,12 +56,18 @@ export const useEntriesStore = create((set) => ({
             : sortCondition === "movingTimeAsc"
             ? (a, b) => a.moving_time - b.moving_time
             : sortCondition === "dateDesc"
-            ? (a, b) =>
-                (new Date(b.start_date) > new Date(a.start_date) && 1) || -1
+            ? (a, b) => (new Date(b.start_date) > new Date(a.start_date) && 1) || -1
             : sortCondition === "dateAsc"
-            ? (a, b) =>
-                (new Date(a.start_date) > new Date(b.start_date) && 1) || -1
-            : null
-        )
-    }))
+            ? (a, b) => (new Date(a.start_date) > new Date(b.start_date) && 1) || -1
+            : sortCondition === "distanceDesc"
+            ? (a, b) => {
+                return b.distance - a.distance;
+              }
+            : sortCondition === "distanceAsc"
+            ? (a, b) => {
+                return a.distance - b.distance;
+              }
+            : null,
+        ),
+    })),
 }));

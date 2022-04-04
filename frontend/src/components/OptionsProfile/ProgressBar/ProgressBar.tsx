@@ -12,7 +12,7 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     progressBarProgress,
     incrementProgressBarProgress,
     completeProgressBarProgress,
-    resetProgressBarProgress
+    resetProgressBarProgress,
   } = useProgressBarProgressStore((state) => state);
 
   useInterval(
@@ -26,11 +26,11 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         incrementProgressBarProgress();
       }
     },
-    isLoaded === true || isLoaded === null ? -1 : 75
+    isLoaded === true || isLoaded === null ? -1 : 75,
   );
 
   const fillerStyles = {
-    width: `${progressBarProgress}%`
+    width: `${progressBarProgress}%`,
   };
 
   const updateEntries: () => Promise<void> = async () => {
@@ -39,16 +39,14 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     globalDispatch({ type: "TOGGLE LOADED ON" });
     globalDispatch({
       type: "SET TOTAL ENTRIES",
-      payload: allActivities
+      payload: allActivities,
     });
   };
 
-  const setSortCondition: React.ChangeEventHandler<HTMLSelectElement> = (
-    event
-  ) => {
+  const setSortCondition: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     globalDispatch({
       type: "SET SORT CONDITION",
-      payload: event.currentTarget.value
+      payload: event.currentTarget.value,
     });
   };
 
@@ -62,23 +60,15 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         <option value="speedDesc">Speed: Fastest First</option>
         <option value="dateDesc">Date: Most Recent</option>
         <option value="dateAsc">Date: Least Recent</option>
+        <option value="distanceDesc">Distance: Longest First</option>
+        <option value="distanceAsc">Distance: Shortest First</option>
         <option value="movingTimeDesc">Moving Time: Longest First</option>
         <option value="movingTimeAsc">Moving Time: Shortest First</option>
         <option value="timeElapsedDesc">Time Elapsed: Longest First</option>
         <option value="timeElapsedAsc">Time Elapsed: Shortest First</option>
       </select>
-      <input
-        type="button"
-        className="update-button"
-        value="Update!"
-        onClick={updateEntries}
-      />
-      <input
-        type="button"
-        className="update-button"
-        value="Destroy!"
-        onClick={destroyUser}
-      />
+      <input type="button" className="update-button" value="Update!" onClick={updateEntries} />
+      <input type="button" className="update-button" value="Destroy!" onClick={destroyUser} />
     </div>
   ) : (
     <div className="update-button-container">
