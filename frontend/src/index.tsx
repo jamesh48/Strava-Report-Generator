@@ -1,19 +1,23 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 import "regenerator-runtime";
 import App from "./components/App";
-import { GlobalStoreProvider } from "./components/GlobalStore/globalStore.js";
+import { GlobalStoreProvider } from "./components/GlobalStore/globalStore";
+// import { GlobalStoreProvider } from "./components/GlobalStore/globalStore.js";
+import { createStore } from "./components/GlobalStore/store";
 
 const Index = () => {
   return (
     <GlobalStoreProvider>
-      <App />
+      <Provider store={createStore()}>
+        <App />
+      </Provider>
     </GlobalStoreProvider>
   );
 };
 
-
 // @ts-ignore
-ReactDOM.createRoot(document.getElementById("root")).render(<Index />);
+createRoot(document.getElementById("root")).render(<Index />);
 
 // ReactDOM.render(<Index/>, document.getElementById('root'));

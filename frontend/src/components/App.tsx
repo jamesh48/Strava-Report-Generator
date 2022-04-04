@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback, useEffect } from "react";
 import { useGlobalContext } from "./GlobalStore/globalStore.js";
 import { getUserActivities } from "./AppUtils.js";
 import Report from "./StravaEntries/Report";
@@ -6,6 +6,7 @@ import FBUserProfile from "./UserProfile/FallbackProfile/FBUserProfile";
 import UserProfile from "./UserProfile/UserProfile";
 import Radios from "./OptionsProfile/Radios/Radios";
 import "../App.scss";
+import { usePrefetch } from "./GlobalStore/services/entriesApi.js";
 
 const App: React.FC<{}> = () => {
   // Global
@@ -26,6 +27,12 @@ const App: React.FC<{}> = () => {
   //   }
   // }, [totalEntries]);
 
+  const prefetchEntries = usePrefetch("getAllEntries");
+
+  const fetchEntries = useCallback(() => {
+    prefetchEntries();
+  }, [prefetchEntries]);
+
   componentDidMount: React.useEffect(() => {
     document.title = "Strava Report Generator";
     const fetchEntries = async () => {
@@ -33,6 +40,10 @@ const App: React.FC<{}> = () => {
       globalDispatch({ type: "SET TOTAL ENTRIES", payload: returningEntries });
     };
     fetchEntries();
+  }, []);
+
+  useEffect(() => {
+    prefetchEntries();
   }, []);
 
   reset_distance_on_sport_change: React.useEffect(() => {
@@ -48,13 +59,13 @@ const App: React.FC<{}> = () => {
   }, [sport]);
 
   const setSportCallback: React.MouseEventHandler<HTMLInputElement> = ({
-    currentTarget: { value }
+    currentTarget: { value },
   }) => {
     setSport(value);
   };
 
   const setDistanceCallback: React.MouseEventHandler<HTMLInputElement> = ({
-    currentTarget: { value, placeholder }
+    currentTarget: { value, placeholder },
   }) => {
     setDistance(Number(value));
 
@@ -66,26 +77,20 @@ const App: React.FC<{}> = () => {
   };
 
   const setFormatCallback: React.MouseEventHandler<HTMLInputElement> = ({
-    currentTarget: { value }
+    currentTarget: { value },
   }) => {
     setFormat(value);
   };
 
-  const setTitleQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const setTitleQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setTitleQuery(event.currentTarget.value);
   };
 
-  const setFromDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const setFromDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setFromDateQuery(event.currentTarget.value);
   };
 
-  const setToDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const setToDateQueryCallback: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setToDateQuery(event.currentTarget.value);
   };
 

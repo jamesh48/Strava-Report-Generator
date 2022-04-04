@@ -9,7 +9,7 @@ import {
   getAllUserActivities,
   updateOneActivity,
   deleteTokens,
-  deleteEntries
+  deleteEntries,
 } from "../database/controllers";
 
 import {
@@ -17,14 +17,10 @@ import {
   getAllEntriesConfig,
   getStatsConfig,
   getIndEntryConfig,
-  getRefreshedAccessTokenConfig
+  getRefreshedAccessTokenConfig,
 } from "./apiConfigs.js";
 
-import {
-  getStravaResults,
-  recurseResults,
-  refreshAccessToken
-} from "./serverUtils";
+import { getStravaResults, recurseResults, refreshAccessToken } from "./serverUtils";
 
 import { getCurrCredentials } from "./serverUtils";
 import { send400, send500, send429 } from "./sendErrorCodes";
@@ -33,11 +29,9 @@ const dataRouter = express.Router();
 
 dataRouter.use(async (req: any, res: Response, next) => {
   if (!req.session.athleteId) return send400(res, "No Cookied User!!!");
-  console.log('xxx');
+  console.log("Cookied user");
   try {
-    const { accessToken, expiresAt } = await getCurrCredentials(
-      req.session.athleteId
-    );
+    const { accessToken, expiresAt } = await getCurrCredentials(req.session.athleteId);
     // Compare expiration date with now, and refresh the token if it has expired.
     const now = new Date();
     const later = new Date(expiresAt);
@@ -45,7 +39,7 @@ dataRouter.use(async (req: any, res: Response, next) => {
       console.log("refreshing access token!");
       const newAccessToken = await refreshAccessToken(
         getRefreshedAccessTokenConfig,
-        req.session.athleteId
+        req.session.athleteId,
       );
       req.currentAccessToken = newAccessToken;
     } else {
@@ -58,44 +52,34 @@ dataRouter.use(async (req: any, res: Response, next) => {
   next();
 });
 
-dataRouter.get(
-  "/loggedInUser",
-  async ({ currentAccessToken }: any, res: Response) => {
-    try {
-      const athleteAuthConfig = getAthleteAuthConfig(currentAccessToken);
-      var athlete = await axios(athleteAuthConfig);
-    } catch (err) {
-      if (err.request.res.statusCode === 429) {
-        return send429(res, err.message);
-      }
-      return send500(res, err.message);
+dataRouter.get("/loggedInUser", async ({ currentAccessToken }: any, res: Response) => {
+  try {
+    const athleteAuthConfig = getAthleteAuthConfig(currentAccessToken);
+    var athlete = await axios(athleteAuthConfig);
+  } catch (err) {
+    if (err.request.res.statusCode === 429) {
+      return send429(res, err.message);
     }
-    try {
-      const statsConfig: AxiosRequestConfig = getStatsConfig(
-        currentAccessToken,
-        athlete.data.id
-      );
-      var stats = await axios(statsConfig);
-    } catch (err) {
-      return send500(res, err.message);
-    }
-
-    const fullAthlete = Object.assign(athlete.data, stats.data);
-    res.status(200).send(fullAthlete);
+    return send500(res, err.message);
   }
-);
-
-dataRouter.get(
-  "/allEntries",
-  async ({ currentAccessToken }: any, res: Response) => {
-    res.send(
-      (await getAllUserActivities(currentAccessToken)).sort(
-        (a: any, b: any) =>
-          b.distance / b.moving_time - a.distance / a.moving_time
-      )
-    );
+  try {
+    const statsConfig: AxiosRequestConfig = getStatsConfig(currentAccessToken, athlete.data.id);
+    var stats = await axios(statsConfig);
+  } catch (err) {
+    return send500(res, err.message);
   }
-);
+
+  const fullAthlete = Object.assign(athlete.data, stats.data);
+  res.status(200).send(fullAthlete);
+});
+
+dataRouter.get("/allEntries", async ({ currentAccessToken }: any, res: Response) => {
+  res.send(
+    (await getAllUserActivities(currentAccessToken)).sort(
+      (a: any, b: any) => b.distance / b.moving_time - a.distance / a.moving_time,
+    ),
+  );
+});
 
 dataRouter.get(
   "/individualEntry",
@@ -108,42 +92,36 @@ dataRouter.get(
     } catch (err) {
       return res.send(err.message);
     }
-  }
+  },
 );
 
-dataRouter.post(
-  "/addAllActivities",
-  async ({ currentAccessToken }: any, res: Response) => {
-    const callback = async (finalEntriesArr: any[]) => {
-      const totalEntries = finalEntriesArr
-        .sort((a, b) => b.distance / b.moving_time - a.distance / a.moving_time)
-        .filter(
-          (x) =>
-            x.type === "Walk" ||
-            x.type === "Swim" ||
-            x.type === "Run" ||
-            x.type === "Ride"
-        );
-      console.log(`Done: ${totalEntries.length} Results Fetched`.red);
-      console.log(`Uploading ${totalEntries.length} Entries to Database`);
-      const allActivities = await addAllActivities(totalEntries);
-      console.log(`Done- Uploaded ${allActivities.length} Entries to Database`);
-      res.json(allActivities);
-    };
+dataRouter.post("/addAllActivities", async ({ currentAccessToken }: any, res: Response) => {
+  const callback = async (finalEntriesArr: any[]) => {
+    const totalEntries = finalEntriesArr
+      .sort((a, b) => b.distance / b.moving_time - a.distance / a.moving_time)
+      .filter(
+        (x) => x.type === "Walk" || x.type === "Swim" || x.type === "Run" || x.type === "Ride",
+      );
+    console.log(`Done: ${totalEntries.length} Results Fetched`.red);
+    console.log(`Uploading ${totalEntries.length} Entries to Database`);
+    const allActivities = await addAllActivities(totalEntries);
+    console.log(`Done- Uploaded ${allActivities.length} Entries to Database`);
+    res.json(allActivities);
+  };
 
-    recurseResults(getAllEntriesConfig(currentAccessToken), [], callback);
-  }
-);
+  recurseResults(getAllEntriesConfig(currentAccessToken), [], callback);
+});
 
 dataRouter.put("/putActivityUpdate", async (req: any, res: Response) => {
+  console.log(req.query);
   const putActivityUpdateConfig: AxiosRequestConfig = {
     method: "PUT",
     url: encodeURI(
-      `https://www.strava.com/api/v3/activities/${req.query.activityId}?name=${req.query.name}&description=${req.query.description}`
+      `https://www.strava.com/api/v3/activities/${req.query.activityId}?name=${req.query.name}&description=${req.query.description}`,
     ),
     headers: {
-      Authorization: req.currentAccessToken
-    }
+      Authorization: req.currentAccessToken,
+    },
   };
 
   try {

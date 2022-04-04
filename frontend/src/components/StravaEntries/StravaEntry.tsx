@@ -1,8 +1,8 @@
 import React from "react";
 import GeneralEntry from "./GeneralEntry";
 import DetailedEntry from "./DetailedEntry.js";
-import axios, { AxiosResponse } from "axios";
 import { StravaEntryProps } from "./EntryTypes";
+import { usePutActivityUpdateMutation } from "../GlobalStore/services/entriesApi";
 
 const StravaEntry: React.FC<StravaEntryProps> = ({
   showIndividualEntry,
@@ -11,40 +11,31 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
   format,
   no,
   currentActivity,
-  updateIndividualEntry
 }) => {
   const [editing, toggleEditing] = React.useState(false);
   const [editedName, setEditedName] = React.useState("");
   const [editedDescription, setEditedDescription] = React.useState("");
-
+  const [putActivityUpdate] = usePutActivityUpdateMutation();
   React.useEffect(() => {
-    if (currentActivity.id === Number(entry.activityId)) {
+    if (currentActivity?.id === Number(entry.activityId)) {
       setEditedName(currentActivity.name);
       setEditedDescription(currentActivity.description);
     }
   }, [currentActivity]);
 
   const handleActivityUpdate = async () => {
-    toggleEditing(false);
-    const { data: _updatedActivity }: AxiosResponse = await axios.put(
-      "/putActivityUpdate",
-      null,
-      {
-        params: {
-          activityId: currentActivity.id,
-          name: editedName,
-          description: editedDescription
-        }
-      }
-    );
-
-    // Update the entry
-    updateIndividualEntry(currentActivity.id, editedName);
+    if (currentActivity) {
+      toggleEditing(false);
+      const payload = {
+        activityId: currentActivity.id,
+        name: editedName,
+        description: editedDescription,
+      };
+      putActivityUpdate(payload);
+    }
   };
 
-  const handleDescriptionChange: (e: { target: { value: string } }) => void = (
-    e
-  ) => {
+  const handleDescriptionChange: (e: { target: { value: string } }) => void = (e) => {
     setEditedDescription(e.target.value);
   };
 
@@ -52,13 +43,13 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
     setEditedName(e.target.value);
   };
 
-  const handleEditingChange: React.MouseEventHandler<HTMLAnchorElement> = (
-    event
-  ) => {
-    if (event.currentTarget.innerHTML === "Cancel") {
-      setEditedDescription(currentActivity.description);
+  const handleEditingChange: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (currentActivity) {
+      if (event.currentTarget.innerHTML === "Cancel") {
+        setEditedDescription(currentActivity.description);
+      }
+      toggleEditing((x) => !x);
     }
-    toggleEditing((x) => !x);
   };
 
   return (
@@ -70,11 +61,10 @@ const StravaEntry: React.FC<StravaEntryProps> = ({
         format={format}
         editing={editing}
         editedName={editedName}
-        currentActivity={currentActivity}
         handleNameChange={handleNameChange}
         showIndividualEntry={showIndividualEntry}
       />
-      {currentActivity.id === Number(entry.activityId) && (
+      {currentActivity?.id === Number(entry.activityId) && (
         <DetailedEntry
           editing={editing}
           currentActivity={currentActivity}

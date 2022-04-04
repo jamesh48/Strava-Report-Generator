@@ -10,9 +10,8 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
   format,
   editing,
   editedName,
-  currentActivity,
   showIndividualEntry,
-  handleNameChange
+  handleNameChange,
 }) => {
   const m2y = 1.094;
   const mps2kph = 3.6;
@@ -28,10 +27,7 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
       ? "Ran"
       : "traveled-";
 
-  const handleTime: (movingTime: number, pace?: string) => string = (
-    movingTime,
-    pace
-  ) => {
+  const handleTime: (movingTime: number, pace?: string) => string = (movingTime, pace) => {
     if (movingTime !== Infinity) {
       if (pace) {
         return new Date(movingTime * 1000).toISOString().substr(15, 4);
@@ -45,13 +41,7 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
   return (
     <div
       id={
-        Number(no) === 0
-          ? "entry1"
-          : Number(no) === 1
-          ? "entry2"
-          : Number(no) === 2
-          ? "entry3"
-          : ""
+        Number(no) === 0 ? "entry1" : Number(no) === 1 ? "entry2" : Number(no) === 2 ? "entry3" : ""
       }
       className="inner-entry"
     >
@@ -75,10 +65,7 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
           </a>
         )}
         {format !== "avgypace" ? (
-          <EntryDescriptor
-            title={`Distance ${pastTense}`}
-            value={`${entry.distance} Meters`}
-          />
+          <EntryDescriptor title={`Distance ${pastTense}`} value={`${entry.distance} Meters`} />
         ) : (
           <EntryDescriptor
             title={`Distance ${pastTense}`}
@@ -86,15 +73,9 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
           />
         )}
 
-        <EntryDescriptor
-          title="Time Elapsed- "
-          value={handleTime(entry.elapsed_time)}
-        />
+        <EntryDescriptor title="Time Elapsed- " value={handleTime(entry.elapsed_time)} />
 
-        <EntryDescriptor
-          title="Moving Time- "
-          value={handleTime(entry.moving_time)}
-        />
+        <EntryDescriptor title="Moving Time- " value={handleTime(entry.moving_time)} />
 
         {/* For Debugging  */}
         {/* <p className="entry-descriptor">id = {entry.activityId}</p> */}
@@ -121,19 +102,13 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
         ) : format === "avgypace" ? (
           <NestedEntryDescriptor
             title="Avg Pace- "
-            value={handleTime(
-              entry.moving_time / ((entry.distance * 1.094) / 100),
-              "pace"
-            )}
+            value={handleTime(entry.moving_time / ((entry.distance * 1.094) / 100), "pace")}
             extra="/100 Yards"
           />
         ) : format === "avgmpace" ? (
           <NestedEntryDescriptor
             title="Avg Pace- "
-            value={handleTime(
-              entry.moving_time / (entry.distance / 100),
-              "pace"
-            )}
+            value={handleTime(entry.moving_time / (entry.distance / 100), "pace")}
             extra="/100 Meters"
           />
         ) : null}
@@ -171,9 +146,7 @@ const GeneralEntry: React.FC<GeneralEntryProps> = ({
           />
         ) : null}
 
-        <p className="entry-descriptor">
-          {new Date(entry.start_date).toLocaleString()}
-        </p>
+        <p className="entry-descriptor">{new Date(entry.start_date).toLocaleString()}</p>
       </div>
     </div>
   );

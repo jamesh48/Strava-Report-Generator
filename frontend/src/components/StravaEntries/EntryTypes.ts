@@ -1,13 +1,12 @@
 import React from "react";
 
 export interface StravaEntryProps {
-  showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>
+  showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
   sport: string;
   entry: Entry;
   format: string | undefined;
   no: number | undefined;
-  currentActivity: currentActivity;
-  updateIndividualEntry: (entryId: number, updatedName: string) => Promise<void>;
+  currentActivity?: CurrentActivity;
 }
 
 export interface EntryDescriptorProps {
@@ -18,8 +17,8 @@ export interface EntryDescriptorProps {
 export interface DetailedEntryProps {
   editing: boolean;
   editedDescription: string;
-  currentActivity: currentActivity;
-  handleEditingChange: React.MouseEventHandler<HTMLAnchorElement>
+  currentActivity: CurrentActivity;
+  handleEditingChange: React.MouseEventHandler<HTMLAnchorElement>;
   handleDescriptionChange: (e: { target: { value: string } }) => void;
   handleActivityUpdate: () => void;
 }
@@ -41,7 +40,6 @@ export interface GeneralEntryProps {
   entry: Entry;
   sport: string;
   format: string | undefined;
-  currentActivity: currentActivity;
   handleNameChange: (e: { target: { value: string } }) => void;
   showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
 }
@@ -52,7 +50,7 @@ export interface NestedEntryDescriptorProps {
   extra: string;
 }
 
-type currentActivity = {
+export type CurrentActivity = {
   id: number;
   name: string;
   kudos_count: number;
@@ -69,16 +67,15 @@ type currentActivity = {
       };
     };
   };
-}
+};
 
 export interface EntryUIProps {
   entries: Entry[];
   entriesPerPage: number;
   currentPage: number;
-  currentActivity: currentActivity;
+  currentActivity?: CurrentActivity;
   invalidEntry: boolean;
   sport: string;
   format?: string | undefined;
   showIndividualEntry: React.MouseEventHandler<HTMLAnchorElement>;
-  updateIndividualEntry: (entryId: number, updatedName: string) => Promise<void>;
 }
